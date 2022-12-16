@@ -39,14 +39,14 @@ func parseInputURL(inputURL string) string {
 	switch {
 
 	// We received a URL via positional argument.
-	case len(flag.Args()) >= 1:
+	case len(flag.Args()) > 0:
 
 		if strings.TrimSpace(flag.Args()[0]) == "" {
 			fmt.Println("Invalid URL provided.")
 			os.Exit(1)
 		}
 
-		inputURL = cleanURL(flag.Args()[1])
+		inputURL = cleanURL(flag.Args()[0])
 
 	// We received a URL via flag.
 	case inputURL != "":
