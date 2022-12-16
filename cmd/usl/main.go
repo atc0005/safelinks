@@ -12,7 +12,6 @@ import (
 	"log"
 	"net/url"
 	"os"
-	"sort"
 )
 
 func main() {
@@ -32,34 +31,11 @@ func main() {
 	}
 
 	switch {
-	case !cfg.Verbose:
-		urlValues := safelink.Query()
-		maskedURL := urlValues.Get("url")
-
-		if maskedURL != "" {
-			fmt.Printf("\nOriginal URL:\n\n%v\n", maskedURL)
-			return
-		}
-
-		fmt.Println("Unable to resolve original URL")
-		os.Exit(1)
+	case cfg.Verbose:
+		verboseOutput(safelink, os.Stdout)
 
 	default:
-		urlValues := safelink.Query()
-		urlValues.Add("host", safelink.Host)
-		keys := make([]string, 0, len(urlValues))
-		for k := range urlValues {
-			keys = append(keys, k)
-		}
-		sort.Strings(keys)
-
-		fmt.Printf("\nExpanded values from the given link:\n\n")
-
-		for _, key := range keys {
-			if len(urlValues[key]) > 0 {
-				fmt.Printf("  %-10s: %s\n", key, urlValues[key][0])
-			}
-		}
+		simpleOutput(safelink, os.Stdout)
 	}
 
 }
