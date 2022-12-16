@@ -18,17 +18,22 @@ import (
 // builds.
 var version = "x.y.z"
 
-const myAppName string = "usl"
-const myAppURL string = "https://github.com/atc0005/" + myAppName
+// Application metadata for easy reference.
+const (
+	myAppName string = "usl"
+	myAppURL  string = "https://github.com/atc0005/" + myAppName
+)
 
-type config struct {
+// Config represents configuration details for this application.
+type Config struct {
 	URL     string
 	Verbose bool
 	Version bool
 }
 
-func NewConfig() *config {
-	var cfg config
+// NewConfig processes flag values and returns an application configuration.
+func NewConfig() *Config {
+	var cfg Config
 	setupFlags(&cfg)
 
 	return &cfg
@@ -47,7 +52,8 @@ func usage() {
 	flag.PrintDefaults()
 }
 
-func setupFlags(c *config) {
+// setupFlags processes given flag values.
+func setupFlags(c *Config) {
 	flag.StringVar(&c.URL, "url", "", "Safe Links URL to decode")
 	flag.StringVar(&c.URL, "u", "", "Safe Links URL to decode"+" (shorthand)")
 	flag.BoolVar(&c.Verbose, "verbose", false, "Display additional information about a given Safe Links URL")

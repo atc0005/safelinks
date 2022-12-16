@@ -16,6 +16,8 @@ import (
 	"strings"
 )
 
+// readURLFromUser attempts to read a given URL pattern from the user via
+// stdin prompt.
 func readURLFromUser() (string, error) {
 	fmt.Print("Enter URL: ")
 
@@ -31,6 +33,8 @@ func readURLFromUser() (string, error) {
 	return scanner.Text(), scanner.Err()
 }
 
+// parseInputURL processes an input string via flag or stdin as a URL value.
+// The URL is unescaped and quoting removed.
 func parseInputURL(inputURL string) string {
 	switch {
 
@@ -67,6 +71,7 @@ func parseInputURL(inputURL string) string {
 	return inputURL
 }
 
+// cleanURL strips away quoting or escaping of characters in a given URL.
 func cleanURL(s string) string {
 	// Strip off any quoting that may be present.
 	s = strings.ReplaceAll(s, `'`, "")
