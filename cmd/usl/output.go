@@ -11,7 +11,6 @@ import (
 	"fmt"
 	"io"
 	"net/url"
-	"os"
 	"sort"
 )
 
@@ -21,13 +20,7 @@ func simpleOutput(u *url.URL, w io.Writer) {
 	urlValues := u.Query()
 	maskedURL := urlValues.Get("url")
 
-	if maskedURL != "" {
-		fmt.Fprintf(w, "\nOriginal URL:\n\n%v\n", maskedURL)
-		return
-	}
-
-	fmt.Fprintln(w, "Unable to resolve original URL")
-	os.Exit(1)
+	fmt.Fprintf(w, "\nOriginal URL:\n\n%v\n", maskedURL)
 }
 
 // verboseOutput handles generating extended or "verbose" output when
@@ -35,6 +28,7 @@ func simpleOutput(u *url.URL, w io.Writer) {
 func verboseOutput(u *url.URL, w io.Writer) {
 	urlValues := u.Query()
 	urlValues.Add("host", u.Host)
+
 	keys := make([]string, 0, len(urlValues))
 	for k := range urlValues {
 		keys = append(keys, k)

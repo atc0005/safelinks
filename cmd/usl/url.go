@@ -12,6 +12,7 @@ import (
 	"flag"
 	"fmt"
 	"html"
+	"net/url"
 	"os"
 	"strings"
 )
@@ -33,42 +34,40 @@ func readURLFromUser() (string, error) {
 	return scanner.Text(), scanner.Err()
 }
 
-// parseInputURL processes an input string via flag or stdin as a URL value.
-// The URL is unescaped and quoting removed.
-func parseInputURL(inputURL string) string {
+// processInputAsURL processes a given input string as a URL value. If not
+// provided, this function will attempt to read the input URL from the first
+// positional argument. The URL is unescaped and quoting removed.
+func processInputAsURL(inputURL string) (string, error) {
 	switch {
 
 	// We received a URL via positional argument.
 	case len(flag.Args()) > 0:
 
 		if strings.TrimSpace(flag.Args()[0]) == "" {
-			fmt.Println("Invalid URL provided.")
-			os.Exit(1)
+			return "", ErrInvalidURL
 		}
 
 		inputURL = cleanURL(flag.Args()[0])
 
 	// We received a URL via flag.
 	case inputURL != "":
-		inputURL = cleanURL(flag.Args()[1])
+		inputURL = cleanURL(inputURL)
 
 	// Input URL not given via positional argument, not given via flag either.
 	default:
 		input, err := readURLFromUser()
 		if err != nil {
-			fmt.Println("Error reading URL:", err)
-			os.Exit(1)
+			return "", fmt.Errorf("error reading URL: %w", err)
 		}
 
 		if strings.TrimSpace(input) == "" {
-			fmt.Println("Invalid URL provided.")
-			os.Exit(1)
+			return "", ErrInvalidURL
 		}
 
 		inputURL = cleanURL(input)
 	}
 
-	return inputURL
+	return inputURL, nil
 }
 
 // cleanURL strips away quoting or escaping of characters in a given URL.
@@ -85,4 +84,15 @@ func cleanURL(s string) string {
 	s = html.UnescapeString(s)
 
 	return s
+}
+
+// assertValidURLParameter requires that the given url.URL contains a
+// non-empty parameter named url.
+func assertValidURLParameter(u *url.URL) error {
+	urlValues := u.Query()
+	if urlValues.Get("url") == "" {
+		return ErrOriginalURLNotResolved
+	}
+
+	return nil
 }

@@ -9,7 +9,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/url"
 	"os"
 )
@@ -23,11 +22,21 @@ func main() {
 		os.Exit(0)
 	}
 
-	inputURL := parseInputURL(cfg.URL)
+	inputURL, err := processInputAsURL(cfg.URL)
+	if err != nil {
+		fmt.Printf("Failed to parse input as URL: %v\n", err)
+		os.Exit(1)
+	}
 
 	safelink, err := url.Parse(inputURL)
 	if err != nil {
-		log.Fatal("Failed to parse URL")
+		fmt.Printf("Failed to parse URL: %v\n", err)
+		os.Exit(1)
+	}
+
+	if err := assertValidURLParameter(safelink); err != nil {
+		fmt.Printf("Invalid Safelinks URL: %v\n", err)
+		os.Exit(1)
 	}
 
 	switch {
