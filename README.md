@@ -9,7 +9,6 @@ Go-based tooling to manipulate (e.g., normalize/decode) Microsoft Office 365
 [![go.mod Go version](https://img.shields.io/github/go-mod/go-version/atc0005/safelinks)](https://github.com/atc0005/safelinks)
 [![Lint and Build](https://github.com/atc0005/safelinks/actions/workflows/lint-and-build.yml/badge.svg)](https://github.com/atc0005/safelinks/actions/workflows/lint-and-build.yml)
 [![Project Analysis](https://github.com/atc0005/safelinks/actions/workflows/project-analysis.yml/badge.svg)](https://github.com/atc0005/safelinks/actions/workflows/project-analysis.yml)
-[![Push Validation](https://github.com/atc0005/safelinks/actions/workflows/push-validation.yml/badge.svg)](https://github.com/atc0005/safelinks/actions/workflows/push-validation.yml)
 
 <!-- omit in toc -->
 ## Table of Contents
