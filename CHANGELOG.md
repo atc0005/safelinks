@@ -26,6 +26,35 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.2.0] - 2023-04-11
+
+### Overview
+
+- Add support for generating DEB, RPM packages
+- Build improvements
+- Generated binary changes
+  - filename patterns
+  - compression (~ 66% smaller)
+  - executable metadata
+- built using Go 1.19.8
+  - Statically linked
+  - Windows (x86, x64)
+  - Linux (x86, x64)
+
+### Added
+
+- (GH-37) Generate RPM/DEB packages using nFPM
+- (GH-36) Add version details to Windows executables
+
+### Changed
+
+- (GH-38) Switch to semantic versioning (semver) compatible versioning
+  pattern
+- (GH-35) Makefile: Compress binaries & use fixed filenames
+- (GH-34) Makefile: Refresh recipes to add "standard" set, new
+  package-related options
+- (GH-33) Build dev/stable releases using go-ci Docker image
+
 ## [v0.1.1] - 2023-04-11
 
 ### Overview
@@ -78,6 +107,7 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.2.0...HEAD
+[v0.2.0]: https://github.com/atc0005/safelinks/releases/tag/v0.2.0
 [v0.1.1]: https://github.com/atc0005/safelinks/releases/tag/v0.1.1
 [v0.1.0]: https://github.com/atc0005/safelinks/releases/tag/v0.1.0
