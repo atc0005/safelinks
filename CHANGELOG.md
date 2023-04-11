@@ -26,6 +26,36 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.1.1] - 2023-04-11
+
+### Overview
+
+- Bug fixes
+- GitHub Actions workflow updates
+- Dependency updates
+- built using Go 1.19.8
+  - Statically linked
+  - Windows (x86, x64)
+  - Linux (x86, x64)
+
+### Added
+
+- (GH-22) Add Go Module Validation, Dependency Updates jobs
+
+### Changed
+
+- Dependencies
+  - `Go`
+    - `1.19.4` to `1.19.8`
+- CI
+  - (GH-24) Drop `Push Validation` workflow
+  - (GH-25) Rework workflow scheduling
+  - (GH-27) Remove `Push Validation` workflow status badge
+
+### Fixed
+
+- (GH-29) Update vuln analysis GHAW to use on.push hook
+
 ## [v0.1.0] - 2022-12-16
 
 ### Overview
@@ -48,5 +78,6 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.1.1...HEAD
+[v0.1.1]: https://github.com/atc0005/safelinks/releases/tag/v0.1.1
 [v0.1.0]: https://github.com/atc0005/safelinks/releases/tag/v0.1.0
