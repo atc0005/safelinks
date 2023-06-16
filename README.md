@@ -29,10 +29,12 @@ Go-based tooling to manipulate (e.g., normalize/decode) Microsoft Office 365
   - [Command-line arguments](#command-line-arguments)
     - [`usl`](#usl)
       - [Flags](#flags)
-    - [Positional Argument](#positional-argument)
+      - [Positional Argument](#positional-argument)
+      - [Just Hit Enter](#just-hit-enter)
 - [Examples](#examples)
   - [Using positional argument](#using-positional-argument)
   - [Using flag](#using-flag)
+  - [Using input prompt](#using-input-prompt)
   - [Verbose output](#verbose-output)
 - [License](#license)
 - [References](#references)
@@ -170,10 +172,18 @@ binaries.
 | `v`, `verbose` | No       | `false` | No     | `v`, `verbose` | Toggles listing of all processes. WARNING: This may produce a LOT of output. Disabled by default. |
 | `u`, `url`     |
 
-#### Positional Argument
+##### Positional Argument
 
 A URL pattern is accepted as a single positional argument in place of the `u`
-or `url` flag.
+or `url` flag. It is recommended that you quote the URL pattern to help
+prevent some of the characters from being interpreted as shell commands (e.g.,
+`&` as an attempt to background a command).
+
+##### Just Hit Enter
+
+The `usl` tool can also be called without any flags or positional argument. In
+this scenario it will prompt you to insert/paste the URL pattern (quoted or
+otherwise).
 
 ## Examples
 
@@ -194,6 +204,20 @@ https://go.dev/dl/
 
 ```console
 $ ./usl --url 'SafeLinksURLHere'
+
+Original URL:
+
+https://go.dev/dl/
+```
+
+### Using input prompt
+
+In this example we just press enter so that we will be prompted for the input
+URL pattern.
+
+```console
+$ ./usl
+Enter URL: SafeLinksURLHere
 
 Original URL:
 
