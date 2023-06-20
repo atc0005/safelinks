@@ -26,6 +26,32 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.2.1] - 2023-06-20
+
+### Overview
+
+- Bug fixes
+- Dependency updates
+- built using Go 1.19.10
+  - Statically linked
+  - Windows (x86, x64)
+  - Linux (x86, x64)
+
+### Changed
+
+- Dependencies
+  - `Go`
+    - `1.19.8` to `1.19.10`
+  - `atc0005/go-ci`
+    - `go-ci-oldstable-build-v0.10.6` to `go-ci-oldstable-build-v0.11.0`
+- (GH-48) Update vuln analysis GHAW to remove on.push hook
+
+### Fixed
+
+- (GH-45) Disable depguard linter
+- (GH-49) Restore local CodeQL workflow
+- (GH-51) README: adjust section header, note input prompt
+
 ## [v0.2.0] - 2023-04-11
 
 ### Overview
@@ -107,7 +133,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.2.1...HEAD
+[v0.2.1]: https://github.com/atc0005/safelinks/releases/tag/v0.2.1
 [v0.2.0]: https://github.com/atc0005/safelinks/releases/tag/v0.2.0
 [v0.1.1]: https://github.com/atc0005/safelinks/releases/tag/v0.1.1
 [v0.1.0]: https://github.com/atc0005/safelinks/releases/tag/v0.1.0
