@@ -137,9 +137,11 @@ binary first before deploying it (e.g., `xz -d usl-linux-amd64.xz`).
 
 ### Using release binaries
 
-1. Download the [latest release][repo-url] binaries
+1. Download the [latest release][releases-url] binaries
 1. Decompress binaries
    - e.g., `xz -d usl-linux-amd64.xz`
+   - 7-Zip also works well for this on Windows systems (e.g., for systems
+     without Git for Windows or WSL)
 1. Copy the applicable binaries to whatever systems needs to run them so that
    they can be deployed
 
@@ -251,6 +253,8 @@ See the [LICENSE](LICENSE) file for details.
 <!-- Footnotes here  -->
 
 [repo-url]: <https://github.com/atc0005/safelinks>  "This project's GitHub repo"
+
+[releases-url]: <https://github.com/atc0005/safelinks/releases> "This project's releases"
 
 [go-docs-download]: <https://golang.org/dl>  "Download Go"
 
