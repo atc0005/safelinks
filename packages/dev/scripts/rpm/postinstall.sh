@@ -17,9 +17,6 @@ project_releases="${project_repo}/releases"
 project_issues="${project_repo}/issues"
 project_discussions="${project_repo}/discussions"
 
-plugin_name=""
-plugin_path="/usr/lib64/nagios/plugins"
-
 
 echo
 echo "Thank you for installing packages provided by the ${project_fq_name} project!"
