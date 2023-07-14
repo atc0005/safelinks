@@ -26,6 +26,31 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.2.2] - 2023-07-14
+
+### Overview
+
+- RPM package improvements
+- Bug fixes
+- Dependency updates
+- built using Go 1.19.11
+  - Statically linked
+  - Windows (x86, x64)
+  - Linux (x86, x64)
+
+### Changed
+
+- Dependencies
+  - `Go`
+    - `1.19.10` to `1.19.11`
+  - `atc0005/go-ci`
+    - `go-ci-oldstable-build-v0.11.0` to `go-ci-oldstable-build-v0.11.4`
+
+### Fixed
+
+- (GH-55) Update README to link to releases page
+- (GH-57) Remove deploy logic from postinstall scripts
+
 ## [v0.2.1] - 2023-06-20
 
 ### Overview
@@ -133,7 +158,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.2.2...HEAD
+[v0.2.2]: https://github.com/atc0005/safelinks/releases/tag/v0.2.2
 [v0.2.1]: https://github.com/atc0005/safelinks/releases/tag/v0.2.1
 [v0.2.0]: https://github.com/atc0005/safelinks/releases/tag/v0.2.0
 [v0.1.1]: https://github.com/atc0005/safelinks/releases/tag/v0.1.1
