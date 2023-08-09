@@ -172,7 +172,10 @@ binaries.
 | `h`, `help`    | No       | `false` | No     | `h`, `help`    | Show Help text along with the list of supported flags.                        |
 | `version`      | No       | `false` | No     | `version`      | Whether to display application version and then immediately exit application. |
 | `v`, `verbose` | No       | `false` | No     | `v`, `verbose` | Display additional information about a given Safe Links URL.                  |
-| `u`, `url`     |
+| `u`, `url`     | *maybe*  |         | No     | `u`, `url`     | Safe Links URL to decode                                                      |
+
+NOTE: If the `url` flag is not specified a prompt is provided to enter a Safe
+Links URL.
 
 ##### Positional Argument
 
