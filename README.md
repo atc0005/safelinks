@@ -167,11 +167,11 @@ binaries.
 
 ##### Flags
 
-| Flag           | Required | Default | Repeat | Possible       | Description                                                                                       |
-| -------------- | -------- | ------- | ------ | -------------- | ------------------------------------------------------------------------------------------------- |
-| `h`, `help`    | No       | `false` | No     | `h`, `help`    | Show Help text along with the list of supported flags.                                            |
-| `version`      | No       | `false` | No     | `version`      | Whether to display application version and then immediately exit application.                     |
-| `v`, `verbose` | No       | `false` | No     | `v`, `verbose` | Toggles listing of all processes. WARNING: This may produce a LOT of output. Disabled by default. |
+| Flag           | Required | Default | Repeat | Possible       | Description                                                                   |
+| -------------- | -------- | ------- | ------ | -------------- | ----------------------------------------------------------------------------- |
+| `h`, `help`    | No       | `false` | No     | `h`, `help`    | Show Help text along with the list of supported flags.                        |
+| `version`      | No       | `false` | No     | `version`      | Whether to display application version and then immediately exit application. |
+| `v`, `verbose` | No       | `false` | No     | `v`, `verbose` | Display additional information about a given Safe Links URL.                  |
 | `u`, `url`     |
 
 ##### Positional Argument
