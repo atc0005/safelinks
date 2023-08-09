@@ -30,8 +30,8 @@ PROJECT_NAME			:= safelinks
 
 # What package holds the "version" variable used in branding/version output?
 # VERSION_VAR_PKG			= $(shell go list -m)
-VERSION_VAR_PKG			:= $(shell go list -m)/internal/config
-# VERSION_VAR_PKG			= main
+# VERSION_VAR_PKG			:= $(shell go list -m)/internal/config
+VERSION_VAR_PKG			= main
 
 OUTPUTDIR 				:= release_assets
 
