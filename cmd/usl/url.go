@@ -12,6 +12,7 @@ import (
 	"flag"
 	"fmt"
 	"html"
+	"io"
 	"net/url"
 	"os"
 	"strings"
@@ -34,40 +35,99 @@ func readURLFromUser() (string, error) {
 	return scanner.Text(), scanner.Err()
 }
 
-// processInputAsURL processes a given input string as a URL value. If not
-// provided, this function will attempt to read the input URL from the first
-// positional argument. The URL is unescaped and quoting removed.
-func processInputAsURL(inputURL string) (string, error) {
-	switch {
+// readURLsFromFile attempts to read URL patterns from a given file
+// (io.Reader).
+//
+// The collection of input URLs is returned or an error if one occurs.
+func readURLsFromFile(r io.Reader) ([]string, error) {
+	var inputURLs []string
 
-	// We received a URL via positional argument.
-	case len(flag.Args()) > 0:
+	// Loop over input "reader" and attempt to collect each item.
+	scanner := bufio.NewScanner((r))
+	for scanner.Scan() {
+		txt := scanner.Text()
 
-		if strings.TrimSpace(flag.Args()[0]) == "" {
-			return "", ErrInvalidURL
+		if strings.TrimSpace(txt) == "" {
+			continue
 		}
 
-		inputURL = cleanURL(flag.Args()[0])
+		inputURLs = append(inputURLs, txt)
+	}
+
+	if err := scanner.Err(); err != nil {
+		return nil, fmt.Errorf("error reading URLs: %w", err)
+	}
+
+	if len(inputURLs) == 0 {
+		return nil, ErrInvalidURL
+	}
+
+	return inputURLs, nil
+}
+
+// processInputAsURL processes a given input string as a URL value. This
+// input string represents a single URL given via CLI flag.
+//
+// If an input string is not provided, this function will attempt to read
+// input URLs from stdin. Each input URL is unescaped and quoting removed.
+//
+// The collection of input URLs is returned or an error if one occurs.
+func processInputAsURL(inputURL string) ([]string, error) {
+	var inputURLs []string
+
+	// https://stackoverflow.com/questions/22744443/check-if-there-is-something-to-read-on-stdin-in-golang
+	// https://stackoverflow.com/a/26567513/903870
+	// stat, _ := os.Stdin.Stat()
+	// if (stat.Mode() & os.ModeCharDevice) == 0 {
+	// 	fmt.Println("data is being piped to stdin")
+	// } else {
+	// 	fmt.Println("stdin is from a terminal")
+	// }
+
+	stat, _ := os.Stdin.Stat()
+
+	switch {
+
+	// We received one or more URLs via standard input.
+	case (stat.Mode() & os.ModeCharDevice) == 0:
+		// fmt.Fprintln(os.Stderr, "Received URL via standard input")
+		return readURLsFromFile(os.Stdin)
+
+	// We received a URL via positional argument. We ignore all but the first
+	// one.
+	case len(flag.Args()) > 0:
+		// fmt.Fprintln(os.Stderr, "Received URL via positional argument")
+
+		if strings.TrimSpace(flag.Args()[0]) == "" {
+			return nil, ErrInvalidURL
+		}
+
+		inputURLs = append(inputURLs, cleanURL(flag.Args()[0]))
 
 	// We received a URL via flag.
 	case inputURL != "":
-		inputURL = cleanURL(inputURL)
+		// fmt.Fprintln(os.Stderr, "Received URL via flag")
+
+		inputURLs = append(inputURLs, cleanURL(inputURL))
 
 	// Input URL not given via positional argument, not given via flag either.
+	// We prompt the user for a single input value.
 	default:
+		// fmt.Fprintln(os.Stderr, "default switch case triggered")
+
 		input, err := readURLFromUser()
 		if err != nil {
-			return "", fmt.Errorf("error reading URL: %w", err)
+			return nil, fmt.Errorf("error reading URL: %w", err)
 		}
 
 		if strings.TrimSpace(input) == "" {
-			return "", ErrInvalidURL
+			return nil, ErrInvalidURL
 		}
 
-		inputURL = cleanURL(input)
+		inputURLs = append(inputURLs, cleanURL(input))
 	}
 
-	return inputURL, nil
+	return inputURLs, nil
 }
 
 // cleanURL strips away quoting or escaping of characters in a given URL.

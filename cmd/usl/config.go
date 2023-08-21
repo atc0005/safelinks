@@ -26,9 +26,10 @@ const (
 
 // Config represents configuration details for this application.
 type Config struct {
-	URL     string
-	Verbose bool
-	Version bool
+	URL      string
+	Filename string
+	Verbose  bool
+	Version  bool
 }
 
 // NewConfig processes flag values and returns an application configuration.
@@ -56,6 +57,8 @@ func usage() {
 func setupFlags(c *Config) {
 	flag.StringVar(&c.URL, "url", "", "Safe Links URL to decode")
 	flag.StringVar(&c.URL, "u", "", "Safe Links URL to decode"+" (shorthand)")
+	flag.StringVar(&c.Filename, "inputfile", "", "Path to file containing Safe Links URLs to decode")
+	flag.StringVar(&c.Filename, "f", "", "Path to file containing Safe Links URL to decode"+" (shorthand)")
 	flag.BoolVar(&c.Verbose, "verbose", false, "Display additional information about a given Safe Links URL")
 	flag.BoolVar(&c.Verbose, "v", false, "Display additional information about a given Safe Links URL"+" (shorthand)")
 	flag.BoolVar(&c.Version, "version", false, "Display version information and immediately exit")
