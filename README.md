@@ -30,11 +30,14 @@ Go-based tooling to manipulate (e.g., normalize/decode) Microsoft Office 365
     - [`usl`](#usl)
       - [Flags](#flags)
       - [Positional Argument](#positional-argument)
+      - [Standard input (e.g., "piping")](#standard-input-eg-piping)
       - [Just Hit Enter](#just-hit-enter)
 - [Examples](#examples)
-  - [Using positional argument](#using-positional-argument)
-  - [Using flag](#using-flag)
+  - [Using url positional argument](#using-url-positional-argument)
+  - [Using url flag](#using-url-flag)
   - [Using input prompt](#using-input-prompt)
+  - [Using standard input (e.g., "piping")](#using-standard-input-eg-piping)
+  - [Using filename flag](#using-filename-flag)
   - [Verbose output](#verbose-output)
 - [License](#license)
 - [References](#references)
@@ -58,8 +61,13 @@ This repo is intended to provide various tools used to monitor processes.
 
 Small CLI tool for decoding a given Safe Links URL.
 
-- Specify Safe Links URL via CLI argument or flag
-
+- Specify single Safe Links URL
+  - via positional argument
+  - via flag
+  - via interactive prompt
+- Specify multiple Safe Links URLs
+  - via standard input ("piping")
+  - via file (using flag)
 - Optional verbose listing of query parameter values within a given Safe Links
   URL.
 
@@ -167,15 +175,16 @@ binaries.
 
 ##### Flags
 
-| Flag           | Required | Default | Repeat | Possible       | Description                                                                   |
-| -------------- | -------- | ------- | ------ | -------------- | ----------------------------------------------------------------------------- |
-| `h`, `help`    | No       | `false` | No     | `h`, `help`    | Show Help text along with the list of supported flags.                        |
-| `version`      | No       | `false` | No     | `version`      | Whether to display application version and then immediately exit application. |
-| `v`, `verbose` | No       | `false` | No     | `v`, `verbose` | Display additional information about a given Safe Links URL.                  |
-| `u`, `url`     | *maybe*  |         | No     | `u`, `url`     | Safe Links URL to decode                                                      |
+| Flag             | Required | Default | Repeat | Possible             | Description                                                                   |
+| ---------------- | -------- | ------- | ------ | -------------------- | ----------------------------------------------------------------------------- |
+| `h`, `help`      | No       | `false` | No     | `h`, `help`          | Show Help text along with the list of supported flags.                        |
+| `version`        | No       | `false` | No     | `version`            | Whether to display application version and then immediately exit application. |
+| `v`, `verbose`   | No       | `false` | No     | `v`, `verbose`       | Display additional information about a given Safe Links URL.                  |
+| `u`, `url`       | *maybe*  |         | No     | `u`, `url`           | Safe Links URL to decode                                                      |
+| `f`, `inputfile` | *maybe*  |         | No     | *valid path to file* | Path to file containing Safe Links URL to decode                              |
 
-NOTE: If the `url` flag is not specified a prompt is provided to enter a Safe
-Links URL.
+NOTE: If an input `url` is not specified (e.g., via flag, positional argument
+or standard input) a prompt is provided to enter a Safe Links URL.
 
 ##### Positional Argument
 
@@ -184,34 +193,37 @@ or `url` flag. It is recommended that you quote the URL pattern to help
 prevent some of the characters from being interpreted as shell commands (e.g.,
 `&` as an attempt to background a command).
 
+##### Standard input (e.g., "piping")
+
+One or more URL patterns can be provided by piping them to the `usl` tool.
+
+An attempt is made to decode all input URLs (no early exit). Successful
+decoding results are emitted to `stdout` with decoding failures emitted to
+`stderr`. This allows for splitting success results and error output across
+different files (e.g., for later review).
+
 ##### Just Hit Enter
 
-The `usl` tool can also be called without any flags or positional argument. In
-this scenario it will prompt you to insert/paste the URL pattern (quoted or
-otherwise).
+The `usl` tool can also be called without any input (e.g., flags, positional
+argument, standard input). In this scenario it will prompt you to insert/paste
+the URL pattern (quoted or otherwise).
 
 ## Examples
 
 Though probably not required for all terminals, we quote the Safe Links URL to
 prevent unintended interpretation of characters in the URL.
 
-### Using positional argument
+### Using url positional argument
 
 ```console
-$ ./usl 'SafeLinksURLHere'
-
-Original URL:
-
+$ usl 'SafeLinksURLHere'
 https://go.dev/dl/
 ```
 
-### Using flag
+### Using url flag
 
 ```console
-$ ./usl --url 'SafeLinksURLHere'
-
-Original URL:
-
+$ usl --url 'SafeLinksURLHere'
 https://go.dev/dl/
 ```
 
@@ -221,18 +233,38 @@ In this example we just press enter so that we will be prompted for the input
 URL pattern.
 
 ```console
-$ ./usl
+$ usl
 Enter URL: SafeLinksURLHere
-
-Original URL:
-
 https://go.dev/dl/
+```
+
+### Using standard input (e.g., "piping")
+
+```console
+$ cat file.with.links | usl
+https://go.dev/dl/
+http://example.com
+http://example.net
+```
+
+```console
+$ echo 'SafeLinksURLHere' | usl
+https://go.dev/dl/
+```
+
+### Using filename flag
+
+```console
+$ usl --filename file.with.links
+https://go.dev/dl/
+http://example.com
+http://example.net
 ```
 
 ### Verbose output
 
 ```console
-$ ./usl --verbose --url 'SafeLinksURLHere'
+$ usl --verbose --url 'SafeLinksURLHere'
 
 Expanded values from the given link:
 

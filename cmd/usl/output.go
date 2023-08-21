@@ -14,13 +14,25 @@ import (
 	"sort"
 )
 
+// emitOutput emits a given URL to the specified output sink. If specified,
+// verbose output is used.
+func emitOutput(u *url.URL, w io.Writer, verbose bool) {
+	switch {
+	case verbose:
+		verboseOutput(u, w)
+
+	default:
+		simpleOutput(u, w)
+	}
+}
+
 // simpleOutput handles generating reduced or "simple" output when verbose
 // mode is not invoked.
 func simpleOutput(u *url.URL, w io.Writer) {
 	urlValues := u.Query()
 	maskedURL := urlValues.Get("url")
 
-	fmt.Fprintf(w, "\nOriginal URL:\n\n%v\n", maskedURL)
+	fmt.Fprintln(w, maskedURL)
 }
 
 // verboseOutput handles generating extended or "verbose" output when
