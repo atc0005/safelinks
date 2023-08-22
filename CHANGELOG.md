@@ -26,6 +26,22 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.2.4] - 2023-08-22
+
+### Changed
+
+- Dependencies
+  - `Go`
+    - `1.19.12` to `1.20.7`
+  - `atc0005/go-ci`
+    - `go-ci-oldstable-build-v0.13.2` to `go-ci-oldstable-build-v0.13.5`
+- (GH-91) Update project to Go 1.20 series
+
+### Fixed
+
+- (GH-85) README: Fix verbose flag description
+- (GH-86) README: Add missing coverage for url flag
+
 ## [v0.2.3] - 2023-08-09
 
 ### Added
@@ -178,7 +194,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.2.3...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.2.4...HEAD
+[v0.2.4]: https://github.com/atc0005/safelinks/releases/tag/v0.2.4
 [v0.2.3]: https://github.com/atc0005/safelinks/releases/tag/v0.2.3
 [v0.2.2]: https://github.com/atc0005/safelinks/releases/tag/v0.2.2
 [v0.2.1]: https://github.com/atc0005/safelinks/releases/tag/v0.2.1
