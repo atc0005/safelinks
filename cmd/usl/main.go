@@ -11,7 +11,6 @@ package main
 
 import (
 	"fmt"
-	"net/url"
 	"os"
 )
 
@@ -52,34 +51,10 @@ func main() {
 		inputURLs = input
 	}
 
-	var errEncountered bool
-	for _, inputURL := range inputURLs {
-		safelink, err := url.Parse(inputURL)
-		if err != nil {
-			fmt.Printf("Failed to parse URL: %v\n", err)
-
-			errEncountered = true
-			continue
-		}
-
-		if err := assertValidURLParameter(safelink); err != nil {
-			fmt.Fprintf(os.Stderr, "Invalid Safelinks URL %q: %v\n", safelink, err)
-
-			errEncountered = true
-			continue
-		}
-
-		switch {
-		case cfg.Verbose:
-			verboseOutput(safelink, os.Stdout)
-
-		default:
-			simpleOutput(safelink, os.Stdout)
-		}
-	}
+	hasErr := processInputURLs(inputURLs, os.Stdout, os.Stderr, cfg.Verbose)
 
 	// Ensure unsuccessful error code if one encountered.
-	if errEncountered {
+	if hasErr {
 		os.Exit(1)
 	}
 }
