@@ -26,6 +26,26 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.2.3] - 2023-08-09
+
+### Added
+
+- (GH-62) Add initial automated release notes config
+- (GH-64) Add initial automated release build workflow
+
+### Changed
+
+- Dependencies
+  - `Go`
+    - `1.19.11` to `1.19.12`
+  - `atc0005/go-ci`
+    - `go-ci-oldstable-build-v0.11.4` to `go-ci-oldstable-build-v0.13.2`
+- (GH-66) Update Dependabot config to monitor both branches
+
+### Fixed
+
+- (GH-80) Makefile: Fix version output
+
 ## [v0.2.2] - 2023-07-14
 
 ### Overview
@@ -158,7 +178,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.2.2...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.2.3...HEAD
+[v0.2.3]: https://github.com/atc0005/safelinks/releases/tag/v0.2.3
 [v0.2.2]: https://github.com/atc0005/safelinks/releases/tag/v0.2.2
 [v0.2.1]: https://github.com/atc0005/safelinks/releases/tag/v0.2.1
 [v0.2.0]: https://github.com/atc0005/safelinks/releases/tag/v0.2.0
