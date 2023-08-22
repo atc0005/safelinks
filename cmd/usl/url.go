@@ -156,3 +156,36 @@ func assertValidURLParameter(u *url.URL) error {
 
 	return nil
 }
+
+// processInputURLs processes a given collection of input URL strings and
+// emits successful decoding results to the specified results output sink.
+// Errors are emitted to the specified error output sink if encountered but
+// bulk processing continues until all input URLs have been evaluated.
+//
+// If requested decoded URLs are emitted in verbose format.
+//
+// A boolean value is returned indicating whether any errors occurred.
+func processInputURLs(inputURLs []string, okOut io.Writer, errOut io.Writer, verbose bool) bool {
+	var errEncountered bool
+
+	for _, inputURL := range inputURLs {
+		safelink, err := url.Parse(inputURL)
+		if err != nil {
+			fmt.Printf("Failed to parse URL: %v\n", err)
+
+			errEncountered = true
+			continue
+		}
+
+		if err := assertValidURLParameter(safelink); err != nil {
+			fmt.Fprintf(errOut, "Invalid Safelinks URL %q: %v\n", safelink, err)
+
+			errEncountered = true
+			continue
+		}
+
+		emitOutput(safelink, okOut, verbose)
+	}
+
+	return errEncountered
+}
