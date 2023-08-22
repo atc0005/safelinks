@@ -24,29 +24,62 @@ func main() {
 		os.Exit(0)
 	}
 
-	inputURL, err := processInputAsURL(cfg.URL)
-	if err != nil {
-		fmt.Printf("Failed to parse input as URL: %v\n", err)
-		os.Exit(1)
-	}
-
-	safelink, err := url.Parse(inputURL)
-	if err != nil {
-		fmt.Printf("Failed to parse URL: %v\n", err)
-		os.Exit(1)
-	}
-
-	if err := assertValidURLParameter(safelink); err != nil {
-		fmt.Printf("Invalid Safelinks URL: %v\n", err)
-		os.Exit(1)
-	}
+	var inputURLs []string
 
 	switch {
-	case cfg.Verbose:
-		verboseOutput(safelink, os.Stdout)
+	case cfg.Filename != "":
+		f, err := os.Open(cfg.Filename)
+		if err != nil {
+			fmt.Printf("Failed to open %q: %v\n", cfg.Filename, err)
+			os.Exit(1)
+		}
+
+		input, err := readURLsFromFile(f)
+		if err != nil {
+			fmt.Printf("Failed to read URLs from %q: %v\n", cfg.Filename, err)
+			os.Exit(1)
+		}
+
+		inputURLs = input
 
 	default:
-		simpleOutput(safelink, os.Stdout)
+		input, err := processInputAsURL(cfg.URL)
+		if err != nil {
+			fmt.Printf("Failed to parse input as URL: %v\n", err)
+			os.Exit(1)
+		}
+
+		inputURLs = input
 	}
 
+	var errEncountered bool
+	for _, inputURL := range inputURLs {
+		safelink, err := url.Parse(inputURL)
+		if err != nil {
+			fmt.Printf("Failed to parse URL: %v\n", err)
+
+			errEncountered = true
+			continue
+		}
+
+		if err := assertValidURLParameter(safelink); err != nil {
+			fmt.Fprintf(os.Stderr, "Invalid Safelinks URL %q: %v\n", safelink, err)
+
+			errEncountered = true
+			continue
+		}
+
+		switch {
+		case cfg.Verbose:
+			verboseOutput(safelink, os.Stdout)
+
+		default:
+			simpleOutput(safelink, os.Stdout)
+		}
+	}
+
+	// Ensure unsuccessful error code if one encountered.
+	if errEncountered {
+		os.Exit(1)
+	}
 }

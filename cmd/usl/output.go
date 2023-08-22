@@ -20,7 +20,7 @@ func simpleOutput(u *url.URL, w io.Writer) {
 	urlValues := u.Query()
 	maskedURL := urlValues.Get("url")
 
-	fmt.Fprintf(w, "\nOriginal URL:\n\n%v\n", maskedURL)
+	fmt.Fprintln(w, maskedURL)
 }
 
 // verboseOutput handles generating extended or "verbose" output when
