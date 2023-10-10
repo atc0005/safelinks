@@ -26,6 +26,18 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.3.1] - 2023-10-10
+
+### Changed
+
+## Dependency Updates
+
+- (GH-116) canary: bump golang from 1.20.7 to 1.20.8 in /dependabot/docker/go
+- (GH-118) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.13.7 to go-ci-oldstable-build-v0.13.8 in /dependabot/docker/builds
+- (GH-125) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.13.8 to go-ci-oldstable-build-v0.13.9 in /dependabot/docker/builds
+- (GH-128) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.13.9 to go-ci-oldstable-build-v0.13.10 in /dependabot/docker/builds
+- (GH-115) ghaw: bump actions/checkout from 3 to 4
+
 ## [v0.3.0] - 2023-08-25
 
 ### Added
@@ -206,7 +218,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.3.1...HEAD
+[v0.3.1]: https://github.com/atc0005/safelinks/releases/tag/v0.3.1
 [v0.3.0]: https://github.com/atc0005/safelinks/releases/tag/v0.3.0
 [v0.2.4]: https://github.com/atc0005/safelinks/releases/tag/v0.2.4
 [v0.2.3]: https://github.com/atc0005/safelinks/releases/tag/v0.2.3
