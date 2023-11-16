@@ -24,6 +24,10 @@ const (
 	myAppURL  string = "https://github.com/atc0005/" + myAppName
 )
 
+// shorthandFlagSuffix is appended to short flag help text to emphasize that
+// the flag is a shorthand version of a longer flag.
+const shorthandFlagSuffix = " (shorthand)"
+
 // Config represents configuration details for this application.
 type Config struct {
 	URL      string
@@ -56,11 +60,11 @@ func usage() {
 // setupFlags processes given flag values.
 func setupFlags(c *Config) {
 	flag.StringVar(&c.URL, "url", "", "Safe Links URL to decode")
-	flag.StringVar(&c.URL, "u", "", "Safe Links URL to decode"+" (shorthand)")
+	flag.StringVar(&c.URL, "u", "", "Safe Links URL to decode"+shorthandFlagSuffix)
 	flag.StringVar(&c.Filename, "inputfile", "", "Path to file containing Safe Links URLs to decode")
-	flag.StringVar(&c.Filename, "f", "", "Path to file containing Safe Links URL to decode"+" (shorthand)")
+	flag.StringVar(&c.Filename, "f", "", "Path to file containing Safe Links URL to decode"+shorthandFlagSuffix)
 	flag.BoolVar(&c.Verbose, "verbose", false, "Display additional information about a given Safe Links URL")
-	flag.BoolVar(&c.Verbose, "v", false, "Display additional information about a given Safe Links URL"+" (shorthand)")
+	flag.BoolVar(&c.Verbose, "v", false, "Display additional information about a given Safe Links URL"+shorthandFlagSuffix)
 	flag.BoolVar(&c.Version, "version", false, "Display version information and immediately exit")
 	flag.Usage = usage
 	flag.Parse()
