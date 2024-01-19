@@ -26,6 +26,22 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.3.3] - 2024-01-19
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-153) canary: bump golang from 1.20.11 to 1.20.12 in /dependabot/docker/go
+- (GH-158) canary: bump golang from 1.20.12 to 1.20.13 in /dependabot/docker/go
+- (GH-155) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.14.1 to go-ci-oldstable-build-v0.14.2 in /dependabot/docker/builds
+- (GH-161) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.14.2 to go-ci-oldstable-build-v0.14.3 in /dependabot/docker/builds
+- (GH-156) ghaw: bump github/codeql-action from 2 to 3
+
+### Fixed
+
+- (GH-164) Update flag help text
+
 ## [v0.3.2] - 2023-11-16
 
 ### Changed
@@ -233,7 +249,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.3.2...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.3.3...HEAD
+[v0.3.3]: https://github.com/atc0005/safelinks/releases/tag/v0.3.3
 [v0.3.2]: https://github.com/atc0005/safelinks/releases/tag/v0.3.2
 [v0.3.1]: https://github.com/atc0005/safelinks/releases/tag/v0.3.1
 [v0.3.0]: https://github.com/atc0005/safelinks/releases/tag/v0.3.0
