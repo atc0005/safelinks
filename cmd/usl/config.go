@@ -62,7 +62,7 @@ func setupFlags(c *Config) {
 	flag.StringVar(&c.URL, "url", "", "Safe Links URL to decode")
 	flag.StringVar(&c.URL, "u", "", "Safe Links URL to decode"+shorthandFlagSuffix)
 	flag.StringVar(&c.Filename, "inputfile", "", "Path to file containing Safe Links URLs to decode")
-	flag.StringVar(&c.Filename, "f", "", "Path to file containing Safe Links URL to decode"+shorthandFlagSuffix)
+	flag.StringVar(&c.Filename, "f", "", "Path to file containing Safe Links URLs to decode"+shorthandFlagSuffix)
 	flag.BoolVar(&c.Verbose, "verbose", false, "Display additional information about a given Safe Links URL")
 	flag.BoolVar(&c.Verbose, "v", false, "Display additional information about a given Safe Links URL"+shorthandFlagSuffix)
 	flag.BoolVar(&c.Version, "version", false, "Display version information and immediately exit")
