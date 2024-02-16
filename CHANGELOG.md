@@ -26,6 +26,19 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.3.4] - 2024-02-16
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-175) canary: bump golang from 1.20.13 to 1.20.14 in /dependabot/docker/go
+- (GH-162) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.14.3 to go-ci-oldstable-build-v0.14.4 in /dependabot/docker/builds
+- (GH-168) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.14.4 to go-ci-oldstable-build-v0.14.5 in /dependabot/docker/builds
+- (GH-169) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.14.5 to go-ci-oldstable-build-v0.14.6 in /dependabot/docker/builds
+- (GH-177) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.14.6 to go-ci-oldstable-build-v0.14.9 in /dependabot/docker/builds
+- (GH-181) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.14.9 to go-ci-oldstable-build-v0.15.0 in /dependabot/docker/builds
+
 ## [v0.3.3] - 2024-01-19
 
 ### Changed
@@ -249,7 +262,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.3.3...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.3.4...HEAD
+[v0.3.4]: https://github.com/atc0005/safelinks/releases/tag/v0.3.4
 [v0.3.3]: https://github.com/atc0005/safelinks/releases/tag/v0.3.3
 [v0.3.2]: https://github.com/atc0005/safelinks/releases/tag/v0.3.2
 [v0.3.1]: https://github.com/atc0005/safelinks/releases/tag/v0.3.1
