@@ -5,7 +5,7 @@
 // Licensed under the MIT License. See LICENSE file in the project root for
 // full license information.
 
-package main
+package safelinks
 
 import (
 	"bufio"
@@ -18,9 +18,9 @@ import (
 	"strings"
 )
 
-// readURLFromUser attempts to read a given URL pattern from the user via
+// ReadURLFromUser attempts to read a given URL pattern from the user via
 // stdin prompt.
-func readURLFromUser() (string, error) {
+func ReadURLFromUser() (string, error) {
 	fmt.Print("Enter URL: ")
 
 	// NOTE: fmt.Scanln does not seem to handle the length of the input URL
@@ -35,11 +35,11 @@ func readURLFromUser() (string, error) {
 	return scanner.Text(), scanner.Err()
 }
 
-// readURLsFromFile attempts to read URL patterns from a given file
+// ReadURLsFromFile attempts to read URL patterns from a given file
 // (io.Reader).
 //
 // The collection of input URLs is returned or an error if one occurs.
-func readURLsFromFile(r io.Reader) ([]string, error) {
+func ReadURLsFromFile(r io.Reader) ([]string, error) {
 	var inputURLs []string
 
 	// Loop over input "reader" and attempt to collect each item.
@@ -65,14 +65,14 @@ func readURLsFromFile(r io.Reader) ([]string, error) {
 	return inputURLs, nil
 }
 
-// processInputAsURL processes a given input string as a URL value. This
+// ProcessInputAsURL processes a given input string as a URL value. This
 // input string represents a single URL given via CLI flag.
 //
 // If an input string is not provided, this function will attempt to read
 // input URLs from stdin. Each input URL is unescaped and quoting removed.
 //
 // The collection of input URLs is returned or an error if one occurs.
-func processInputAsURL(inputURL string) ([]string, error) {
+func ProcessInputAsURL(inputURL string) ([]string, error) {
 	var inputURLs []string
 
 	// https://stackoverflow.com/questions/22744443/check-if-there-is-something-to-read-on-stdin-in-golang
@@ -91,7 +91,7 @@ func processInputAsURL(inputURL string) ([]string, error) {
 	// We received one or more URLs via standard input.
 	case (stat.Mode() & os.ModeCharDevice) == 0:
 		// fmt.Fprintln(os.Stderr, "Received URL via standard input")
-		return readURLsFromFile(os.Stdin)
+		return ReadURLsFromFile(os.Stdin)
 
 	// We received a URL via positional argument. We ignore all but the first
 	// one.
@@ -115,7 +115,7 @@ func processInputAsURL(inputURL string) ([]string, error) {
 	default:
 		// fmt.Fprintln(os.Stderr, "default switch case triggered")
 
-		input, err := readURLFromUser()
+		input, err := ReadURLFromUser()
 		if err != nil {
 			return nil, fmt.Errorf("error reading URL: %w", err)
 		}
@@ -157,15 +157,15 @@ func assertValidURLParameter(u *url.URL) error {
 	return nil
 }
 
-// processInputURLs processes a given collection of input URL strings and
+// ProcessInputURLs processes a given collection of input URL strings and
 // emits successful decoding results to the specified results output sink.
 // Errors are emitted to the specified error output sink if encountered but
 // bulk processing continues until all input URLs have been evaluated.
 //
-// If requested decoded URLs are emitted in verbose format.
+// If requested, decoded URLs are emitted in verbose format.
 //
 // A boolean value is returned indicating whether any errors occurred.
-func processInputURLs(inputURLs []string, okOut io.Writer, errOut io.Writer, verbose bool) bool {
+func ProcessInputURLs(inputURLs []string, okOut io.Writer, errOut io.Writer, verbose bool) bool {
 	var errEncountered bool
 
 	for _, inputURL := range inputURLs {
