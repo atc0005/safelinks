@@ -26,6 +26,90 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.3.4] - 2024-02-16
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-175) canary: bump golang from 1.20.13 to 1.20.14 in /dependabot/docker/go
+- (GH-162) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.14.3 to go-ci-oldstable-build-v0.14.4 in /dependabot/docker/builds
+- (GH-168) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.14.4 to go-ci-oldstable-build-v0.14.5 in /dependabot/docker/builds
+- (GH-169) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.14.5 to go-ci-oldstable-build-v0.14.6 in /dependabot/docker/builds
+- (GH-177) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.14.6 to go-ci-oldstable-build-v0.14.9 in /dependabot/docker/builds
+- (GH-181) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.14.9 to go-ci-oldstable-build-v0.15.0 in /dependabot/docker/builds
+
+## [v0.3.3] - 2024-01-19
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-153) canary: bump golang from 1.20.11 to 1.20.12 in /dependabot/docker/go
+- (GH-158) canary: bump golang from 1.20.12 to 1.20.13 in /dependabot/docker/go
+- (GH-155) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.14.1 to go-ci-oldstable-build-v0.14.2 in /dependabot/docker/builds
+- (GH-161) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.14.2 to go-ci-oldstable-build-v0.14.3 in /dependabot/docker/builds
+- (GH-156) ghaw: bump github/codeql-action from 2 to 3
+
+### Fixed
+
+- (GH-164) Update flag help text
+
+## [v0.3.2] - 2023-11-16
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-143) canary: bump golang from 1.20.10 to 1.20.11 in /dependabot/docker/go
+- (GH-135) canary: bump golang from 1.20.8 to 1.20.10 in /dependabot/docker/go
+- (GH-140) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.13.10 to go-ci-oldstable-build-v0.13.12 in /dependabot/docker/builds
+- (GH-146) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.13.12 to go-ci-oldstable-build-v0.14.1 in /dependabot/docker/builds
+
+### Fixed
+
+- (GH-148) Fix goconst linting errors
+
+## [v0.3.1] - 2023-10-10
+
+### Changed
+
+## Dependency Updates
+
+- (GH-116) canary: bump golang from 1.20.7 to 1.20.8 in /dependabot/docker/go
+- (GH-118) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.13.7 to go-ci-oldstable-build-v0.13.8 in /dependabot/docker/builds
+- (GH-125) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.13.8 to go-ci-oldstable-build-v0.13.9 in /dependabot/docker/builds
+- (GH-128) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.13.9 to go-ci-oldstable-build-v0.13.10 in /dependabot/docker/builds
+- (GH-115) ghaw: bump actions/checkout from 3 to 4
+
+## [v0.3.0] - 2023-08-25
+
+### Added
+
+- (GH-78) Add support for processing multiple input lines
+
+### Changed
+
+- Dependencies
+  - `atc0005/go-ci`
+    - `go-ci-oldstable-build-v0.13.5` to `go-ci-oldstable-build-v0.13.7`
+
+## [v0.2.4] - 2023-08-22
+
+### Changed
+
+- Dependencies
+  - `Go`
+    - `1.19.12` to `1.20.7`
+  - `atc0005/go-ci`
+    - `go-ci-oldstable-build-v0.13.2` to `go-ci-oldstable-build-v0.13.5`
+- (GH-91) Update project to Go 1.20 series
+
+### Fixed
+
+- (GH-85) README: Fix verbose flag description
+- (GH-86) README: Add missing coverage for url flag
+
 ## [v0.2.3] - 2023-08-09
 
 ### Added
@@ -178,7 +262,13 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.2.3...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.3.4...HEAD
+[v0.3.4]: https://github.com/atc0005/safelinks/releases/tag/v0.3.4
+[v0.3.3]: https://github.com/atc0005/safelinks/releases/tag/v0.3.3
+[v0.3.2]: https://github.com/atc0005/safelinks/releases/tag/v0.3.2
+[v0.3.1]: https://github.com/atc0005/safelinks/releases/tag/v0.3.1
+[v0.3.0]: https://github.com/atc0005/safelinks/releases/tag/v0.3.0
+[v0.2.4]: https://github.com/atc0005/safelinks/releases/tag/v0.2.4
 [v0.2.3]: https://github.com/atc0005/safelinks/releases/tag/v0.2.3
 [v0.2.2]: https://github.com/atc0005/safelinks/releases/tag/v0.2.2
 [v0.2.1]: https://github.com/atc0005/safelinks/releases/tag/v0.2.1
