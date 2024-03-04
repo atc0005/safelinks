@@ -29,6 +29,7 @@ import (
 	"bufio"
 	"context"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"os/signal"
@@ -37,8 +38,8 @@ import (
 
 func main() {
 	userFeedbackOut := os.Stderr
-	debugLoggingOut := os.Stderr // switch to os.Stderr for debugging
-	// debugLoggingOut := io.Discard // use io.Discard for normal operation
+	// debugLoggingOut := os.Stderr // switch to os.Stderr for debugging
+	debugLoggingOut := io.Discard // use io.Discard for normal operation
 	log.SetOutput(debugLoggingOut)
 
 	// We wrap the os.Exit() behavior so that we can safely use deferred
