@@ -11,6 +11,10 @@
 # Monitor Go module dependency updates
 ######################################################################
 
+######################################################################
+# Monitor Go module dependency updates
+######################################################################
+
 version: 2
 updates:
   - package-ecosystem: "gomod"
@@ -28,7 +32,7 @@ updates:
     allow:
       - dependency-type: "all"
     commit-message:
-      prefix: "go.mod"
+      prefix: "Go Dependency"
 
   - package-ecosystem: "gomod"
     directory: "/"
@@ -45,7 +49,11 @@ updates:
     allow:
       - dependency-type: "all"
     commit-message:
-      prefix: "go.mod"
+      prefix: "Go Dependency"
+
+  ######################################################################
+  # Monitor GitHub Actions dependency updates
+  ######################################################################
 
   ######################################################################
   # Monitor GitHub Actions dependency updates
@@ -67,7 +75,7 @@ updates:
     allow:
       - dependency-type: "all"
     commit-message:
-      prefix: "ghaw"
+      prefix: "CI Dependency"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -85,7 +93,7 @@ updates:
     allow:
       - dependency-type: "all"
     commit-message:
-      prefix: "ghaw"
+      prefix: "CI Dependency"
 
   ######################################################################
   # Monitor Go updates to service as a reminder to generate new releases
@@ -107,7 +115,7 @@ updates:
     allow:
       - dependency-type: "all"
     commit-message:
-      prefix: "canary"
+      prefix: "Go Runtime"
     ignore:
       - dependency-name: "golang"
         versions:
@@ -130,7 +138,7 @@ updates:
     allow:
       - dependency-type: "all"
     commit-message:
-      prefix: "canary"
+      prefix: "Go Runtime"
 
   ######################################################################
   # Monitor images used to build project releases
@@ -152,7 +160,7 @@ updates:
     allow:
       - dependency-type: "all"
     commit-message:
-      prefix: "docker"
+      prefix: "Build image"
 
   - package-ecosystem: docker
     directory: "/dependabot/docker/builds"
@@ -170,4 +178,4 @@ updates:
     allow:
       - dependency-type: "all"
     commit-message:
-      prefix: "docker"
+      prefix: "Build image"
