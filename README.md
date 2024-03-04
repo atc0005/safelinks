@@ -181,7 +181,7 @@ binaries.
 | `version`        | No       | `false` | No     | `version`            | Whether to display application version and then immediately exit application. |
 | `v`, `verbose`   | No       | `false` | No     | `v`, `verbose`       | Display additional information about a given Safe Links URL.                  |
 | `u`, `url`       | *maybe*  |         | No     | `u`, `url`           | Safe Links URL to decode                                                      |
-| `f`, `inputfile` | *maybe*  |         | No     | *valid path to file* | Path to file containing Safe Links URL to decode                              |
+| `f`, `inputfile` | *maybe*  |         | No     | *valid path to file* | Path to file containing Safe Links URLs to decode                             |
 
 NOTE: If an input `url` is not specified (e.g., via flag, positional argument
 or standard input) a prompt is provided to enter a Safe Links URL.
