@@ -26,6 +26,25 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.3.5] - 2024-03-07
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-188) Update Dependabot PR prefixes
+- (GH-187) docker: bump atc0005/go-ci from go-ci-oldstable-build-v0.15.0 to go-ci-oldstable-build-v0.15.2 in /dependabot/docker/builds
+- (GH-189) Update Dependabot PR prefixes (redux)
+- (GH-191) Build image: Bump atc0005/go-ci from go-ci-oldstable-build-v0.15.2 to go-ci-oldstable-build-v0.15.3 in /dependabot/docker/builds
+- (GH-204) Update project to Go 1.21 series
+- (GH-203) Add todo/release label to "Go Runtime" PRs
+- (GH-205) Go Runtime: Bump golang from 1.21.6 to 1.21.8 in /dependabot/docker/go
+- (GH-202) Build image: Bump atc0005/go-ci from go-ci-oldstable-build-v0.15.3 to go-ci-oldstable-build-v0.15.4 in /dependabot/docker/builds
+
+#### Other Changes
+
+- (GH-192) Move shared functionality to internal/safelinks
+
 ## [v0.3.4] - 2024-02-16
 
 ### Changed
@@ -263,6 +282,7 @@ This release provides an early release version of one new tool:
 See the project README for additional details.
 
 [Unreleased]: https://github.com/atc0005/safelinks/compare/v0.3.4...HEAD
+[v0.3.5]: https://github.com/atc0005/safelinks/releases/tag/v0.3.5
 [v0.3.4]: https://github.com/atc0005/safelinks/releases/tag/v0.3.4
 [v0.3.3]: https://github.com/atc0005/safelinks/releases/tag/v0.3.3
 [v0.3.2]: https://github.com/atc0005/safelinks/releases/tag/v0.3.2
