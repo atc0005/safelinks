@@ -155,41 +155,7 @@ func pollInputSource(
 			continue
 		}
 
-		log.Println("Calling safelinks.SafeLinkURLs(txt)")
-		safeLinks, err := safelinks.SafeLinkURLs(txt)
-
-		// Failing to find a URL in the input is considered OK. Other errors
-		// result in aborting the decode attempt.
-		//
-		// TODO: This behavior needs further testing.
-		//
-		// It's likely that we will wish to continue processing further lines
-		// and not abort early.
-		//
-		switch {
-		case errors.Is(err, safelinks.ErrNoURLsFound):
-			resultsChan <- txt
-		case errors.Is(err, safelinks.ErrNoSafeLinkURLsFound):
-			resultsChan <- txt
-		case err != nil:
-			errChan <- err
-
-			return
-		default:
-			// TESTING
-			// fmt.Printf("%d Safe Links:\n", len(safeLinks))
-			// for _, sl := range safeLinks {
-			// 	fmt.Printf("\tOriginal: %s\n\tDecoded: %s\n\n", sl.EncodedURL, sl.DecodedURL)
-			// }
-
-			modifiedInput := txt
-
-			for _, sl := range safeLinks {
-				modifiedInput = strings.Replace(modifiedInput, sl.EncodedURL, sl.DecodedURL, 1)
-			}
-
-			resultsChan <- modifiedInput
-		}
+		processInput(txt, resultsChan, errChan)
 
 	}
 
@@ -205,5 +171,43 @@ func pollInputSource(
 
 	default:
 		done <- true
+	}
+}
+
+func processInput(txt string, resultsChan chan<- string, errChan chan<- error) {
+	log.Println("Calling safelinks.SafeLinkURLs(txt)")
+	safeLinks, err := safelinks.SafeLinkURLs(txt)
+
+	// Failing to find a URL in the input is considered OK. Other errors
+	// result in aborting the decode attempt.
+	//
+	// TODO: This behavior needs further testing.
+	//
+	// It's likely that we will wish to continue processing further lines
+	// and not abort early.
+	//
+	switch {
+	case errors.Is(err, safelinks.ErrNoURLsFound):
+		resultsChan <- txt
+	case errors.Is(err, safelinks.ErrNoSafeLinkURLsFound):
+		resultsChan <- txt
+	case err != nil:
+		errChan <- err
+
+		return
+	default:
+		// TESTING
+		// fmt.Printf("%d Safe Links:\n", len(safeLinks))
+		// for _, sl := range safeLinks {
+		// 	fmt.Printf("\tOriginal: %s\n\tDecoded: %s\n\n", sl.EncodedURL, sl.DecodedURL)
+		// }
+
+		modifiedInput := txt
+
+		for _, sl := range safeLinks {
+			modifiedInput = strings.Replace(modifiedInput, sl.EncodedURL, sl.DecodedURL, 1)
+		}
+
+		resultsChan <- modifiedInput
 	}
 }

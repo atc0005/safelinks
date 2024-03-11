@@ -65,15 +65,6 @@ func GetURLPatternsUsingRegex(input string) ([]FoundURLPattern, error) {
 		return nil, ErrNoURLsFound
 	}
 
-	// NOTE: This is broken.
-	//
-	// r := regexp.MustCompile(`https://.*\s`)
-	// r := regexp.MustCompile(`(https://.*)(?:\s|\n)?`)
-	// r := regexp.MustCompile(`https://(?:[^/.\s]+)*(?:/[^/\s]+)*/?`)
-
-	// urlRegex := `^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/|\/|\/\/)?[A-z0-9_-]*?[:]?[A-z0-9_-]*?[@]?[A-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$`
-	// urlRegex := `(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/|\/|\/\/)?[A-z0-9_-]*?[:]?[A-z0-9_-]*?[@]?[A-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?`
-
 	// This works but would match regular http:// prefixes:
 	//
 	// https://www.honeybadger.io/blog/a-definitive-guide-to-regular-expressions-in-go/
@@ -135,14 +126,16 @@ func GetURLPatternsUsingIndex(input string) ([]FoundURLPattern, error) {
 		}
 
 		// Assume we found ending point until proven otherwise.
-		urlEnd := next
+		// urlEnd := next
 
-		for _, char := range remaining[next:] {
-			if unicode.IsSpace(char) {
-				break // we found end of URL pattern
-			}
-			urlEnd++
-		}
+		// for _, char := range remaining[next:] {
+		// 	if unicode.IsSpace(char) {
+		// 		break // we found end of URL pattern
+		// 	}
+		// 	urlEnd++
+		// }
+
+		urlEnd := getURLIndexEndPosition(remaining[next:], next)
 
 		urlPatterns = append(
 			urlPatterns,
@@ -221,7 +214,6 @@ func URLs(input string) ([]*url.URL, error) {
 	//
 	// urlPatterns, err := GetURLPatternsUsingIndex(input)
 	// urlPatterns, err := GetURLPatternsUsingPrefixMatchingOnFields(input)
-
 	urlPatterns, err := GetURLPatternsUsingRegex(input)
 	if err != nil {
 		return nil, err
@@ -291,6 +283,18 @@ func FromURLs(urls []*url.URL) ([]SafeLinkURL, error) {
 	return SafeLinkURLsFromURLs(urls)
 }
 
-// func ReadInputFromUser() (string, error) {
-//
-// }
+// getURLIndexEndPosition accepts an input string and a starting position and
+// iterates until it finds the first space character. This is assumed to be
+// the separator used to indicate the end of a URL pattern.
+func getURLIndexEndPosition(input string, startPos int) int {
+	endPos := startPos
+
+	for _, char := range input[startPos:] {
+		if unicode.IsSpace(char) {
+			break // we found end of URL pattern
+		}
+		endPos++
+	}
+
+	return endPos
+}
