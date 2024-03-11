@@ -389,7 +389,7 @@ tacos are great https://go.dev/dl/ but so are cookies http://example.com
 
 ```console
 $ echo 'SafeLinksURLHere' | dsl
-tacos are great https://go.dev/dl/ but so are cookies http://example.com
+https://go.dev/dl/
 ```
 
 ```console
