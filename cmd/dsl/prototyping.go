@@ -16,6 +16,72 @@ import (
 	"github.com/atc0005/safelinks/internal/safelinks"
 )
 
+// getAppTimeout is a small helper function that provides the application
+// timeout value. This is mostly a placeholder for future logic to return the
+// default timeout value if the user does not specify one of their own.
+func getAppTimeout() time.Duration {
+	// OK duration for active input, but too short if switching to another
+	// window to copy input text for pasting into this app.
+	//
+	// timerDuration := 5 * time.Second
+
+	// A better duration but still might be a little too short.
+	//
+	// timerDuration := 10 * time.Second
+
+	// Potentially too long if entering lines one by one, but a better fit if
+	// processing bulk lines by copy/paste operations.
+	timerDuration := 15 * time.Second
+
+	return timerDuration
+}
+
+// showAppUsageInfo provides usage information to the user if input is not
+// received via a pipe. The given timer duration is listed so that the user is
+// aware of the timeout behavior.
+func showAppUsageInfo(appInput *os.File, timerDuration time.Duration, appOutput io.Writer) {
+	stat, _ := appInput.Stat()
+	switch {
+	case (stat.Mode() & os.ModeCharDevice) == 0:
+		// Input was from a pipe, so do not provide usage information.
+
+	default:
+		// Ctrl-D (UNIX) or Ctrl-Z (Windows) also trigger shutdown behavior
+		// but we do not advertise those keystrokes for simplicity.
+		//
+		// For example, unintentionally using the Ctrl-Z keystroke on a Linux
+		// distro will put the process into the background in what seems like
+		// a "hung" state. Running "fg" will return the process to an
+		// interactive state.
+		//
+		// To keep things simple, it is best to only advertise Ctrl-C or
+		// waiting for the configured timeout to stop input processing.
+		fmt.Fprintf(
+			appOutput,
+			"Enter single or multi-line input. Press Ctrl-C to stop "+
+				"(or wait %v for timeout).\n\n",
+			timerDuration,
+		)
+
+		fmt.Fprintf(
+			appOutput,
+			"  - Feedback from this app is sent to stderr.\n"+
+				"  - Decoding results are sent to stdout.\n"+
+				"  - Tip: Redirect stdout to a file for multiple input lines.\n\n",
+		)
+	}
+}
+
+// shutdownListener listens to the given input sources for an indication that
+// it is time to shutdown the application:
+//
+//   - listen to the given quit channel for a known termination signal from
+//     the user or the OS
+//   - watch the given timer for inactivity expiration
+//
+// When a timeout is reached or a signal is received the given
+// context.CancelFunc is called and a done signal is returned to commence
+// application termination.
 func shutdownListener(
 	cancel context.CancelFunc,
 	w io.Writer,
@@ -32,6 +98,8 @@ func shutdownListener(
 	select {
 	case <-timer.C:
 		fmt.Fprintln(w, "Timeout reached. Exiting application.")
+
+		log.Println("Calling cancel func")
 		cancel()
 
 		return
@@ -67,6 +135,8 @@ func shutdownListener(
 
 }
 
+// setupShutdownHandling uses the given timeout duration to initialize the
+// timer and channels used to control application shutdown behavior.
 func setupShutdownHandling(timeout time.Duration) (chan os.Signal, chan bool, *time.Timer) {
 	// Override default Go handling of specified signals in order to customize
 	// the shutdown process.
@@ -114,25 +184,31 @@ func setupShutdownHandling(timeout time.Duration) (chan os.Signal, chan bool, *t
 	return signalChan, done, timer
 }
 
+// pollInputSource reads from the given io.Reader until the input is exhausted
+// or the given inactivity timer expires.
 func pollInputSource(
 	ctx context.Context,
-	scanner *bufio.Scanner,
-	timer *time.Timer,
+	r io.Reader,
+	inactivityTimer *time.Timer,
 	timerDuration time.Duration,
 	resultsChan chan<- string,
 	errChan chan<- error,
 	done chan<- bool,
 ) {
 
+	scanner := bufio.NewScanner(r)
+	scanner.Split(bufio.ScanLines)
+
 	// Ctrl-D (UNIX) or Ctrl-Z (Windows) will send EOF which will abort the
 	// scanner.
 	// https://stackoverflow.com/questions/34481065/break-out-of-input-scan
 	for scanner.Scan() {
-		// Reset timer on activity.
-		if !timer.Stop() {
-			<-timer.C
+		if !inactivityTimer.Stop() {
+			<-inactivityTimer.C
 		}
-		timer.Reset(timerDuration)
+
+		// Reset inactivity timer on input read.
+		inactivityTimer.Reset(timerDuration)
 
 		log.Println("New scanner loop")
 
@@ -140,7 +216,7 @@ func pollInputSource(
 		case <-ctx.Done():
 			log.Println("Context expired. Aborting.")
 			return
-		case <-timer.C:
+		case <-inactivityTimer.C:
 			log.Println("Timer expired. Aborting.")
 			return
 		default:
@@ -174,18 +250,14 @@ func pollInputSource(
 	}
 }
 
+// processInput processes given input replacing any Safe Links encoded URL
+// with the original value. Other input is returned unmodified.
 func processInput(txt string, resultsChan chan<- string, errChan chan<- error) {
 	log.Println("Calling safelinks.SafeLinkURLs(txt)")
 	safeLinks, err := safelinks.SafeLinkURLs(txt)
 
 	// Failing to find a URL in the input is considered OK. Other errors
 	// result in aborting the decode attempt.
-	//
-	// TODO: This behavior needs further testing.
-	//
-	// It's likely that we will wish to continue processing further lines
-	// and not abort early.
-	//
 	switch {
 	case errors.Is(err, safelinks.ErrNoURLsFound):
 		resultsChan <- txt
@@ -196,12 +268,6 @@ func processInput(txt string, resultsChan chan<- string, errChan chan<- error) {
 
 		return
 	default:
-		// TESTING
-		// fmt.Printf("%d Safe Links:\n", len(safeLinks))
-		// for _, sl := range safeLinks {
-		// 	fmt.Printf("\tOriginal: %s\n\tDecoded: %s\n\n", sl.EncodedURL, sl.DecodedURL)
-		// }
-
 		modifiedInput := txt
 
 		for _, sl := range safeLinks {

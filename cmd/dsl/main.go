@@ -26,14 +26,12 @@ package main
 */
 
 import (
-	"bufio"
 	"context"
 	"fmt"
 	"io"
 	"log"
 	"os"
 	"os/signal"
-	"time"
 )
 
 func main() {
@@ -55,18 +53,7 @@ func main() {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
-	// OK duration for active input, but too short if switching to another
-	// window to copy input text for pasting into this app.
-	//
-	// timerDuration := 5 * time.Second
-
-	// A better duration but still might be a little too short.
-	//
-	// timerDuration := 10 * time.Second
-
-	// Potentially too long if entering lines one by one, but a better fit if
-	// processing bulk lines by copy/paste operations.
-	timerDuration := 15 * time.Second
+	timerDuration := getAppTimeout()
 
 	// TODO: Consider using signal.NotifyContext in place of current shutdown
 	// handling logic as this could simplify the implementation.
@@ -77,55 +64,24 @@ func main() {
 	defer func() {
 		log.Println("Cleaning up signal catch behavior")
 		signal.Stop(signalChan)
+
+		log.Println("Cancelling base context")
 		cancel()
 	}()
 
 	go shutdownListener(cancel, userFeedbackOut, timer, signalChan, done)
 
-	stat, _ := os.Stdin.Stat()
-	switch {
-	case (stat.Mode() & os.ModeCharDevice) == 0:
-		// Input was from a pipe, so do not provide usage information.
-
-	default:
-		// Ctrl-D (UNIX) or Ctrl-Z (Windows) also trigger shutdown behavior
-		// but we do not advertise those keystrokes for simplicity.
-		//
-		// For example, unintentionally using the Ctrl-Z keystroke on a Linux
-		// distro will put the process into the background in what seems like
-		// a "hung" state. Running "fg" will return the process to an
-		// interactive state.
-		//
-		// To keep things simple, it is best to only advertise Ctrl-C or
-		// waiting for the configured timeout to stop input processing.
-		fmt.Fprintf(
-			userFeedbackOut,
-			"Enter single or multi-line input. Press Ctrl-C to stop "+
-				"(or wait %v for timeout).\n\n",
-			timerDuration,
-		)
-
-		fmt.Fprintf(
-			userFeedbackOut,
-			"  - Feedback from this app is sent to stderr.\n"+
-				"  - Decoding results are sent to stdout.\n"+
-				"  - Tip: Redirect stdout to a file for multiple input lines.\n\n",
-		)
-	}
-
 	resultsChan := make(chan string)
 	errChan := make(chan error, 1)
 
-	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Split(bufio.ScanLines)
+	go pollInputSource(ctx, os.Stdin, timer, timerDuration, resultsChan, errChan, done)
 
-	go pollInputSource(ctx, scanner, timer, timerDuration, resultsChan, errChan, done)
+	showAppUsageInfo(os.Stdin, timerDuration, userFeedbackOut)
 
 	for {
 		select {
 		case <-ctx.Done():
 			log.Println("Context expired.")
-			log.Println("TODO: Raise error condition?")
 
 			return
 
