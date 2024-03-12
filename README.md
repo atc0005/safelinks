@@ -210,7 +210,8 @@ binaries.
   already defined, but may be overridden if desired.
 
 > [!NOTE]
-> 🛠️ The `dsl` tool does not yet support CLI arguments.
+> 🛠️ The `dsl` tool does not support CLI arguments but may do so in the
+> future.
 
 #### `usl`
 
@@ -257,12 +258,12 @@ the URL pattern (quoted or otherwise).
 ##### Flags
 
 > [!NOTE]
-> 🛠️ This is a planned feature but is not yet available.
+> 🛠️ This feature is not implemented but may be added in the future.
 
 ##### Positional Argument
 
 > [!NOTE]
-> 🛠️ This is a planned feature but is not yet available.
+> 🛠️ This feature is not implemented but may be added in the future.
 
 ##### Standard input (e.g., "piping")
 
@@ -354,12 +355,12 @@ Expanded values from the given link:
 #### Using url positional argument
 
 > [!NOTE]
-> 🛠️ This is a planned feature but is not yet available.
+> 🛠️ This feature is not implemented but may be added in the future.
 
 #### Using url flag
 
 > [!NOTE]
-> 🛠️ This is a planned feature but is not yet available.
+> 🛠️ This feature is not implemented but may be added in the future.
 
 #### Using input prompt
 
@@ -400,7 +401,7 @@ tacos are great https://go.dev/dl/ but so are cookies http://example.com
 #### Using filename flag
 
 > [!NOTE]
-> 🛠️ This is a planned feature but is not yet available.
+> 🛠️ This feature is not implemented but may be added in the future.
 
 ## License
 
