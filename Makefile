@@ -24,7 +24,7 @@
 SHELL := /bin/bash
 
 # Space-separated list of cmd/BINARY_NAME directories to build
-WHAT 					:= usl
+WHAT 					:= usl dsl
 
 PROJECT_NAME			:= safelinks
 
