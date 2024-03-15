@@ -26,6 +26,12 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.4.0] - 2024-03-15
+
+### Added
+
+- (GH-216) Add initial support for decoding text streams
+
 ## [v0.3.5] - 2024-03-07
 
 ### Changed
@@ -281,7 +287,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.3.4...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.4.0...HEAD
+[v0.4.0]: https://github.com/atc0005/safelinks/releases/tag/v0.4.0
 [v0.3.5]: https://github.com/atc0005/safelinks/releases/tag/v0.3.5
 [v0.3.4]: https://github.com/atc0005/safelinks/releases/tag/v0.3.4
 [v0.3.3]: https://github.com/atc0005/safelinks/releases/tag/v0.3.3
