@@ -22,15 +22,13 @@
 // MDN Web Docs by Mozilla Contributors (https://developer.mozilla.org/en-US/docs/Web/API),
 // licensed under CC-BY-SA 2.5 (https://creativecommons.org/licenses/by-sa/2.5/).
 //
-//
-// Getting started
+// # Getting started
 //
 // The usual entry point of using the dom package is by using the
 // GetWindow() function which will return a Window, from which you can
 // get things such as the current Document.
 //
-//
-// Interfaces
+// # Interfaces
 //
 // The DOM has a big amount of different element and event types, but
 // they all follow three interfaces. All functions that work on or
@@ -42,12 +40,12 @@
 // type assertions can be used.
 //
 // Example:
-//     el := dom.GetWindow().Document().QuerySelector(".some-element")
-//     htmlEl := el.(dom.HTMLElement)
-//     pEl := el.(*dom.HTMLParagraphElement)
 //
+//	el := dom.GetWindow().Document().QuerySelector(".some-element")
+//	htmlEl := el.(dom.HTMLElement)
+//	pEl := el.(*dom.HTMLParagraphElement)
 //
-// Live collections
+// # Live collections
 //
 // Several functions in the JavaScript DOM return "live"
 // collections of elements, that is collections that will be
@@ -67,17 +65,16 @@
 // pointers to make the semantics clear. Consider the following
 // example:
 //
-//     d := dom.GetWindow().Document()
-//     e1 := d.GetElementByID("my-element")
-//     e2 := d.GetElementByID("my-element")
+//	d := dom.GetWindow().Document()
+//	e1 := d.GetElementByID("my-element")
+//	e2 := d.GetElementByID("my-element")
 //
-//     e1.Class().SetString("some-class")
-//     println(e1.Class().String() == e2.Class().String())
+//	e1.Class().SetString("some-class")
+//	println(e1.Class().String() == e2.Class().String())
 //
 // The above example will print `true`.
 //
-//
-// DOMTokenList
+// # DOMTokenList
 //
 // Some objects in the JS API have two versions of attributes, one
 // that returns a string and one that returns a DOMTokenList to ease
@@ -90,8 +87,7 @@
 // which will be able to accomplish the same. Additionally, our
 // TokenList will provide methods to convert it to strings and slices.
 //
-//
-// Backwards compatibility
+// # Backwards compatibility
 //
 // This package has a relatively stable API. However, there will be
 // backwards incompatible changes from time to time. This is because
@@ -107,9 +103,6 @@
 // semi-regular basis, as new methods are added to them. This happens
 // because the bindings aren't complete and can never really be, as
 // new features are added to the DOM.
-//
-// If you depend on none of the APIs changing unexpectedly, you're
-// advised to vendor this package.
 package dom // import "honnef.co/go/js/dom"
 
 import (
@@ -290,6 +283,8 @@ func wrapHTMLElement(o *js.Object) HTMLElement {
 		return &HTMLDataElement{BasicHTMLElement: el}
 	case js.Global.Get("HTMLDataListElement"):
 		return &HTMLDataListElement{BasicHTMLElement: el}
+	case js.Global.Get("HTMLDetailsElement"):
+		return &HTMLDetailsElement{BasicHTMLElement: el}
 	case js.Global.Get("HTMLDirectoryElement"):
 		return &HTMLDirectoryElement{BasicHTMLElement: el}
 	case js.Global.Get("HTMLDivElement"):
@@ -1235,6 +1230,24 @@ type Screen struct {
 	Width       int `js:"width"`
 }
 
+func (s *Screen) Orientation() *ScreenOrientation { return &ScreenOrientation{s.Get("orientation")} }
+
+type ScreenOrientation struct{ *js.Object }
+
+func (so *ScreenOrientation) AddEventListener(typ string, useCapture bool, listener func(Event)) func(o *js.Object) {
+	wrapper := func(o *js.Object) { listener(wrapEvent(o)) }
+	so.Call("addEventListener", typ, wrapper, useCapture)
+	return wrapper
+}
+
+func (so *ScreenOrientation) RemoveEventListener(typ string, useCapture bool, listener func(*js.Object)) {
+	so.Call("removeEventListener", typ, listener, useCapture)
+}
+
+func (so *ScreenOrientation) DispatchEvent(event Event) bool {
+	return so.Call("dispatchEvent", event).Bool()
+}
+
 type Navigator interface {
 	NavigatorID
 	NavigatorLanguage
@@ -1533,6 +1546,7 @@ type Element interface {
 	Matches(string) bool
 	QuerySelector(string) Element
 	QuerySelectorAll(string) []Element
+	Remove()
 	RemoveAttribute(string)
 	RemoveAttributeNS(ns string, name string)
 	SetAttribute(name string, value string)
@@ -1777,6 +1791,10 @@ func (e *BasicElement) QuerySelector(s string) Element {
 
 func (e *BasicElement) QuerySelectorAll(s string) []Element {
 	return nodeListToElements(e.Call("querySelectorAll", s))
+}
+
+func (e *BasicElement) Remove() {
+	e.Call("remove")
 }
 
 func (e *BasicElement) RemoveAttribute(s string) {
@@ -2304,6 +2322,11 @@ type HTMLDataListElement struct{ *BasicHTMLElement }
 
 func (e *HTMLDataListElement) Options() []*HTMLOptionElement {
 	return getOptions(e.Object, "options")
+}
+
+type HTMLDetailsElement struct {
+	*BasicHTMLElement
+	Open bool `js:"open"`
 }
 
 type HTMLDirectoryElement struct{ *BasicHTMLElement }
@@ -3097,4 +3120,12 @@ func (css *CSSStyleDeclaration) Length() int {
 
 type Text struct {
 	*BasicNode
+}
+
+// DataTransfer holds the data that is being
+// dragged during a drag and drop operation.
+type DataTransfer struct{ *js.Object }
+
+func (dt *DataTransfer) GetData(format string) string {
+	return dt.Call("getData", format).String()
 }
