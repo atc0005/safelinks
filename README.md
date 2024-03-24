@@ -169,6 +169,9 @@ match the Debian 11 base image used by current Go Docker images. Ubuntu 20.04
 has glibc 2.31 and meets this requirement. Older distro versions may not meet
 this requirement and will require building from source.
 
+> [!IMPORTANT]
+> When the upstream Go Docker image swaps out the minimum Debian base image OS (currently Debian 11) this may also mean dropping support for some Linux distros.
+
 ## Installation
 
 ### From source
