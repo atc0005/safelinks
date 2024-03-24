@@ -89,18 +89,14 @@ func newResetButton(w fyne.Window, inputField *widget.Entry, copyButton *widget.
 func newAboutButton(_ fyne.Window, inputField *widget.Entry, copyButton *widget.Button, errOutField *widget.Entry, outputField *widget.Entry) *widget.Button {
 	aboutButton := widget.NewButton("About", func() {
 		log.Println("Displaying About text")
-		// inputField.Text = fmt.Sprintf(
-		// 	"Description:\n\n%s\n\nLearn more about Safe Links:\n\n%s",
-		// 	myAppDescription,
-		// 	safeLinksAboutURL,
-		// )
-		inputField.Text = fmt.Sprintf("Description:\n\n%s", myAppDescription)
-		inputField.Refresh()
-
-		errOutField.Text = fmt.Sprintf(
-			"Safe Links overview:\n\n%s",
+		inputField.Text = fmt.Sprintf(
+			"Description:\n\n%s\n\nSafe Links overview:\n\n%s",
+			myAppDescription,
 			safeLinksAboutURL,
 		)
+		inputField.Refresh()
+
+		errOutField.Text = ""
 		errOutField.Refresh()
 
 		outputField.Text = "Current version:\n\n" + Version()
