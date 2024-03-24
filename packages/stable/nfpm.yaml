@@ -35,6 +35,10 @@ contents:
     dst: /usr/bin/dsl
     file_info:
       mode: 0755
+  - src: ../../release_assets/dslg/dslg-linux-amd64
+    dst: /usr/bin/dslg
+    file_info:
+      mode: 0755
 
 overrides:
   rpm:

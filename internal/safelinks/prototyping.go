@@ -213,8 +213,14 @@ func URLs(input string) ([]*url.URL, error) {
 	// NOTE: Confirmed working:
 	//
 	// urlPatterns, err := GetURLPatternsUsingIndex(input)
-	// urlPatterns, err := GetURLPatternsUsingPrefixMatchingOnFields(input)
-	urlPatterns, err := GetURLPatternsUsingRegex(input)
+	urlPatterns, err := GetURLPatternsUsingPrefixMatchingOnFields(input)
+
+	// NOTE: This currently matches URL patterns within text without leading
+	// whitespace. This *works* but potentially matches more than intended?
+	//
+	// Said another way, this might work *better* than originally intended?
+	//
+	// urlPatterns, err := GetURLPatternsUsingRegex(input)
 	if err != nil {
 		return nil, err
 	}
