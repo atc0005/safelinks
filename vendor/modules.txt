@@ -146,8 +146,8 @@ golang.org/x/image/vector
 # golang.org/x/mobile v0.0.0-20230531173138-3c911d8e3eda
 ## explicit; go 1.17
 golang.org/x/mobile/exp/f32
-# golang.org/x/net v0.17.0
-## explicit; go 1.17
+# golang.org/x/net v0.22.0
+## explicit; go 1.18
 golang.org/x/net/html
 golang.org/x/net/html/atom
 golang.org/x/net/html/charset
