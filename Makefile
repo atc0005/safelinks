@@ -1048,3 +1048,126 @@ podman-packages: helper-builder-setup
 		make packages
 
 	@echo "Completed package generation using $(CONTAINER_COMMAND)"
+
+.PHONY: podman-quick-build-linux
+## podman-quick-build-linux: generates quick build assets for testing purposes
+podman-quick-build-linux: CONTAINER_COMMAND := podman
+podman-quick-build-linux:
+
+	@echo "Beginning quick build of Linux x64 assets using $(CONTAINER_COMMAND)"
+
+	@echo "Beginning regeneration of builder images using $(CONTAINER_COMMAND)"
+	@echo "Removing any previous build images"
+	$(CONTAINER_COMMAND) image prune --all --force --filter "label=atc0005_projects_builder_image"
+
+	@echo "Gathering $(CONTAINER_COMMAND) build environment details"
+	@$(CONTAINER_COMMAND) version
+
+	@echo
+	@echo "Generating x64 builder image"
+
+	$(CONTAINER_COMMAND) image build \
+		--pull \
+		--no-cache \
+		--force-rm \
+		. \
+		-f dependabot/docker/builds/x64/Dockerfile \
+		-t builder_image_x64 \
+		--label="atc0005_projects_builder_image"
+
+	@echo
+	@echo "Using x64 builder image to generate project release assets"
+	$(CONTAINER_COMMAND) container run \
+		--platform linux/amd64 \
+		--rm \
+		-i \
+		-v $$PWD/$(OUTPUTDIR):/builds/$(OUTPUTDIR):rw \
+		-v $$HOME/.cache/go-build:/root/.cache/go-build \
+		-v $$HOME/go/pkg/mod:/go/pkg/mod \
+		-w /builds \
+		builder_image_x64 \
+		make linux-x64-build
+
+	@echo "Completed quick build using $(CONTAINER_COMMAND)"
+
+.PHONY: podman-quick-build-windows
+## podman-quick-build-windows: generates quick build assets for testing purposes
+podman-quick-build-windows: CONTAINER_COMMAND := podman
+podman-quick-build-windows:
+
+	@echo "Beginning quick build of Windows x64 assets using $(CONTAINER_COMMAND)"
+
+	@echo "Beginning regeneration of builder images using $(CONTAINER_COMMAND)"
+	@echo "Removing any previous build images"
+	$(CONTAINER_COMMAND) image prune --all --force --filter "label=atc0005_projects_builder_image"
+
+	@echo "Gathering $(CONTAINER_COMMAND) build environment details"
+	@$(CONTAINER_COMMAND) version
+
+	@echo
+	@echo "Generating x64 builder image"
+
+	$(CONTAINER_COMMAND) image build \
+		--pull \
+		--no-cache \
+		--force-rm \
+		. \
+		-f dependabot/docker/builds/x64/Dockerfile \
+		-t builder_image_x64 \
+		--label="atc0005_projects_builder_image"
+
+	@echo
+	@echo "Using x64 builder image to generate project release assets"
+	$(CONTAINER_COMMAND) container run \
+		--platform linux/amd64 \
+		--rm \
+		-i \
+		-v $$PWD/$(OUTPUTDIR):/builds/$(OUTPUTDIR):rw \
+		-v $$HOME/.cache/go-build:/root/.cache/go-build \
+		-v $$HOME/go/pkg/mod:/go/pkg/mod \
+		-w /builds \
+		builder_image_x64 \
+		make windows-x64-build
+
+	@echo "Completed quick build using $(CONTAINER_COMMAND)"
+
+.PHONY: podman-quick-build
+## podman-quick-build: generates quick build assets for testing purposes
+podman-quick-build: CONTAINER_COMMAND := podman
+podman-quick-build: clean podman-quick-build-linux podman-quick-build-windows
+
+	@echo "Beginning quick build using $(CONTAINER_COMMAND)"
+
+	@echo "Beginning regeneration of builder images using $(CONTAINER_COMMAND)"
+	@echo "Removing any previous build images"
+	$(CONTAINER_COMMAND) image prune --all --force --filter "label=atc0005_projects_builder_image"
+
+	@echo "Gathering $(CONTAINER_COMMAND) build environment details"
+	@$(CONTAINER_COMMAND) version
+
+	@echo
+	@echo "Generating x64 builder image"
+
+	$(CONTAINER_COMMAND) image build \
+		--pull \
+		--no-cache \
+		--force-rm \
+		. \
+		-f dependabot/docker/builds/x64/Dockerfile \
+		-t builder_image_x64 \
+		--label="atc0005_projects_builder_image"
+
+	@echo
+	@echo "Using x64 builder image to generate project release assets"
+	$(CONTAINER_COMMAND) container run \
+		--platform linux/amd64 \
+		--rm \
+		-i \
+		-v $$PWD/$(OUTPUTDIR):/builds/$(OUTPUTDIR):rw \
+        -v $$HOME/.cache/go-build:/root/.cache/go-build \
+        -v $$HOME/go/pkg/mod:/go/pkg/mod \
+		-w /builds \
+		builder_image_x64 \
+		make linux-x64-build windows-x64-build
+
+	@echo "Completed quick build using $(CONTAINER_COMMAND)"
