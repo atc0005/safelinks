@@ -52,8 +52,8 @@ github.com/davecgh/go-spew/spew
 # github.com/fredbi/uri v1.0.0
 ## explicit; go 1.11
 github.com/fredbi/uri
-# github.com/fsnotify/fsnotify v1.6.0
-## explicit; go 1.16
+# github.com/fsnotify/fsnotify v1.7.0
+## explicit; go 1.17
 github.com/fsnotify/fsnotify
 # github.com/fyne-io/gl-js v0.0.0-20220119005834-d2da28d9ccfe
 ## explicit; go 1.14
