@@ -207,7 +207,12 @@ type AudioProcessingEvent struct{ *BasicEvent }
 type BeforeInputEvent struct{ *BasicEvent }
 type BeforeUnloadEvent struct{ *BasicEvent }
 type BlobEvent struct{ *BasicEvent }
+
 type ClipboardEvent struct{ *BasicEvent }
+
+func (ev *ClipboardEvent) ClipboardData() *DataTransfer {
+	return &DataTransfer{Object: ev.Get("clipboardData")}
+}
 
 type CloseEvent struct {
 	*BasicEvent
@@ -249,6 +254,7 @@ type KeyboardEvent struct {
 	*BasicEvent
 	AltKey        bool   `js:"altKey"`
 	CharCode      int    `js:"charCode"`
+	Code          string `js:"code"`
 	CtrlKey       bool   `js:"ctrlKey"`
 	Key           string `js:"key"`
 	KeyIdentifier string `js:"keyIdentifier"`
@@ -274,17 +280,20 @@ type MessageEvent struct {
 
 type MouseEvent struct {
 	*UIEvent
-	AltKey    bool `js:"altKey"`
-	Button    int  `js:"button"`
-	ClientX   int  `js:"clientX"`
-	ClientY   int  `js:"clientY"`
-	CtrlKey   bool `js:"ctrlKey"`
-	MetaKey   bool `js:"metaKey"`
-	MovementX int  `js:"movementX"`
-	MovementY int  `js:"movementY"`
-	ScreenX   int  `js:"screenX"`
-	ScreenY   int  `js:"screenY"`
-	ShiftKey  bool `js:"shiftKey"`
+	AltKey    bool    `js:"altKey"`
+	Button    int     `js:"button"`
+	Buttons   int     `js:"buttons"`
+	ClientX   int     `js:"clientX"`
+	ClientY   int     `js:"clientY"`
+	CtrlKey   bool    `js:"ctrlKey"`
+	MetaKey   bool    `js:"metaKey"`
+	MovementX int     `js:"movementX"`
+	MovementY int     `js:"movementY"`
+	OffsetX   float64 `js:"offsetX"`
+	OffsetY   float64 `js:"offsetY"`
+	ScreenX   int     `js:"screenX"`
+	ScreenY   int     `js:"screenY"`
+	ShiftKey  bool    `js:"shiftKey"`
 }
 
 func (ev *MouseEvent) RelatedTarget() Element {
