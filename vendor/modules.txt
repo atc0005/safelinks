@@ -124,8 +124,8 @@ github.com/stretchr/testify/require
 # github.com/tevino/abool v1.2.0
 ## explicit; go 1.14
 github.com/tevino/abool
-# github.com/yuin/goldmark v1.5.5
-## explicit; go 1.18
+# github.com/yuin/goldmark v1.7.0
+## explicit; go 1.19
 github.com/yuin/goldmark
 github.com/yuin/goldmark/ast
 github.com/yuin/goldmark/parser
