@@ -144,7 +144,7 @@ been tested.
   - see <https://docs.fyne.io/started/> for OS-specific packages
 
 > [!TIP]
-> Use `make docker-release-build` or `podman-release-build` Makefile recipes to use generate/use build containers compatible with this project.
+> Use `make docker-release-build` or `podman-release-build` Makefile recipes to generate/use build containers compatible with this project.
 
 ### Running
 
