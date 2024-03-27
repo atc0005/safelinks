@@ -54,28 +54,29 @@ func ValidSafeLinkURL(input *url.URL) bool {
 // NOTE: Validation is not performed to ensure that matched patterns are valid
 // URLs.
 //
-// Internal logic uses a regular expression to match URL patterns beginning
-// with 'https://' and ending with a whitespace character.
+// Internal logic uses a regular expression to match URL patterns optionally
+// beginning with a left angle bracket, then 'https://' and ending with a
+// whitespace character or a right angle bracket. Any angle brackets present
+// are trimmed from returned matches.
 func GetURLPatternsUsingRegex(input string) ([]FoundURLPattern, error) {
-	// urls := make([]url.URL, 0, 5)
-
 	urlPatterns := make([]FoundURLPattern, 0, 5)
 
 	if !strings.Contains(input, SafeLinksURLRequiredPrefix) {
 		return nil, ErrNoURLsFound
 	}
 
-	// This works but would match regular http:// prefixes:
-	//
-	// https://www.honeybadger.io/blog/a-definitive-guide-to-regular-expressions-in-go/
-	// urlRegex := `https?://\S+|www\.\S+`
-
-	urlRegex := SafeLinksURLRequiredPrefix + `\S+|www\.\S+`
+	urlRegex := `<?` + SafeLinksURLRequiredPrefix + `\S+>?`
 
 	r := regexp.MustCompile(urlRegex)
 
 	matches := r.FindAllString(input, -1)
-	log.Println("Matches:", matches)
+	log.Printf("Matches (%d): %q\n", len(matches), matches)
+
+	log.Println("Cleaning URLs of enclosing angle brackets")
+	for i := range matches {
+		matches[i] = strings.Trim(matches[i], "<>")
+	}
+	log.Printf("Matches (%d) trimmed: %q\n", len(matches), matches)
 
 	for _, match := range matches {
 		urlPatterns = append(
@@ -100,7 +101,9 @@ func GetURLPatternsUsingRegex(input string) ([]FoundURLPattern, error) {
 // valid URLs.
 //
 // Internal logic uses slice indexing/iteration to match URL patterns
-// beginning with 'https://' and ending with a whitespace character.
+// beginning with 'https://' and ending with a whitespace character or a right
+// angle bracket. Any angle brackets present are trimmed from returned
+// matches.
 func GetURLPatternsUsingIndex(input string) ([]FoundURLPattern, error) {
 	// urls := make([]url.URL, 0, 5)
 	urlPatterns := make([]FoundURLPattern, 0, 5)
@@ -185,11 +188,20 @@ func GetURLPatternsUsingPrefixMatchingOnFields(input string) ([]FoundURLPattern,
 
 	fields := strings.Fields(input)
 	for _, field := range fields {
-		if strings.HasPrefix(field, SafeLinksURLRequiredPrefix) {
+		switch {
+		case strings.HasPrefix(field, SafeLinksURLRequiredPrefix):
 			urlPatterns = append(
 				urlPatterns,
 				FoundURLPattern{
 					URLPattern: field,
+				},
+			)
+
+		case strings.HasPrefix(field, "<"+SafeLinksURLRequiredPrefix):
+			urlPatterns = append(
+				urlPatterns,
+				FoundURLPattern{
+					URLPattern: strings.Trim(field, "<>"),
 				},
 			)
 		}
@@ -290,13 +302,14 @@ func FromURLs(urls []*url.URL) ([]SafeLinkURL, error) {
 }
 
 // getURLIndexEndPosition accepts an input string and a starting position and
-// iterates until it finds the first space character. This is assumed to be
-// the separator used to indicate the end of a URL pattern.
+// iterates until it finds the first space character or the first right angle
+// bracket. Either is assumed to be the separator used to indicate the end of
+// a URL pattern.
 func getURLIndexEndPosition(input string, startPos int) int {
 	endPos := startPos
 
 	for _, char := range input[startPos:] {
-		if unicode.IsSpace(char) {
+		if unicode.IsSpace(char) || char == '>' {
 			break // we found end of URL pattern
 		}
 		endPos++

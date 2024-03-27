@@ -136,6 +136,9 @@ func cleanURL(s string) string {
 	s = strings.ReplaceAll(s, `'`, "")
 	s = strings.ReplaceAll(s, `"`, "")
 
+	// Strip of potential enclosing angle brackets.
+	s = strings.Trim(s, `<>`)
+
 	// Replace escaped ampersands with literal ampersands.
 	// inputURL = strings.ReplaceAll(flag.Args()[1], "&amp;", "&")
 
