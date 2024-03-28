@@ -21,7 +21,7 @@ var version = "x.y.z"
 // Application metadata for easy reference.
 const (
 	myAppName string = "usl"
-	myAppURL  string = "https://github.com/atc0005/" + myAppName
+	myAppURL  string = "https://github.com/atc0005/safelinks"
 )
 
 // shorthandFlagSuffix is appended to short flag help text to emphasize that
