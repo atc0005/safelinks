@@ -14,9 +14,9 @@ import (
 	"github.com/atc0005/safelinks/internal/safelinks"
 )
 
-// processInput processes given input replacing any Safe Links encoded URL
-// with the original value. Other input is returned unmodified.
-func processInput(txt string) (string, error) {
+// decodeInput processes given input replacing any Safe Links encoded URL
+// with the original decoded value. Other input is returned unmodified.
+func decodeInput(txt string) (string, error) {
 	log.Println("Calling safelinks.SafeLinkURLs(txt)")
 
 	safeLinks, err := safelinks.SafeLinkURLs(txt)
