@@ -18,8 +18,11 @@ import (
 )
 
 func main() {
-	debugLoggingOut := os.Stderr // switch to os.Stderr for debugging
-	// debugLoggingOut := io.Discard // use io.Discard for normal operation
+	// use io.Discard for normal operation
+	// switch to os.Stderr for debugging
+	debugLoggingOut := os.Stderr
+
+	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
 	log.SetOutput(debugLoggingOut)
 
 	a := app.New()
