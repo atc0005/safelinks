@@ -18,8 +18,8 @@ var version = "x.y.z"
 
 // Application metadata for easy reference.
 const (
-	myAppName        string = "usl"
-	myAppURL         string = "https://github.com/atc0005/" + myAppName
+	myAppName        string = "dslg"
+	myAppURL         string = "https://github.com/atc0005/safelinks"
 	myAppDescription string = "Go-based tooling to manipulate (e.g., normalize/decode) Microsoft Office 365 \"Safe Links\" URLs."
 )
 
