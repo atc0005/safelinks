@@ -10,12 +10,13 @@ package main
 import (
 	"fmt"
 	"log"
+	"runtime"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/widget"
 )
 
-func newCopyButton(w fyne.Window, outputField *widget.Entry) *widget.Button {
+func newCopyButton(w fyne.Window, outputField *widget.Label) *widget.Button {
 	copyButton := widget.NewButton("Copy to Clipboard", func() {
 		log.Println("Copying decoded text to clipboard")
 		w.Clipboard().SetContent(outputField.Text)
@@ -27,13 +28,13 @@ func newCopyButton(w fyne.Window, outputField *widget.Entry) *widget.Button {
 	return copyButton
 }
 
-func newDecodeButton(inputField *widget.Entry, copyButton *widget.Button, errOutField *widget.Entry, outputField *widget.Entry) *widget.Button {
+func newDecodeButton(inputField *widget.Entry, copyButton *widget.Button, errOutField *widget.Entry, outputField *widget.Label) *widget.Button {
 	decodeButton := widget.NewButton("Decode", func() {
 		if inputField.Text == "" {
 			log.Println("Decoding requested but no input text provided")
 
 			copyButton.Disable()
-			errOutField.SetText("Please insert text to decode and try again.")
+			errOutField.Text = errOutTryAgain
 			errOutField.Refresh()
 
 			return
@@ -41,7 +42,7 @@ func newDecodeButton(inputField *widget.Entry, copyButton *widget.Button, errOut
 
 		log.Println("Decoding provided input text")
 
-		result, err := processInput(inputField.Text)
+		result, err := decodeInput(inputField.Text)
 		switch {
 		case err != nil:
 			errOutField.Append(err.Error() + "\n")
@@ -50,7 +51,8 @@ func newDecodeButton(inputField *widget.Entry, copyButton *widget.Button, errOut
 			return
 
 		default:
-			errOutField.SetText("OK: No errors encountered.")
+			errOutField.PlaceHolder = "OK: No errors encountered."
+			errOutField.Text = ""
 			errOutField.Refresh()
 
 			outputField.Text = result
@@ -65,35 +67,41 @@ func newDecodeButton(inputField *widget.Entry, copyButton *widget.Button, errOut
 	return decodeButton
 }
 
-func newResetButton(w fyne.Window, inputField *widget.Entry, copyButton *widget.Button, errOutField *widget.Entry, outputField *widget.Entry) *widget.Button {
+func newResetButton(w fyne.Window, inputField *widget.Entry, copyButton *widget.Button, errOutField *widget.Entry, outputField *widget.Label) *widget.Button {
 	resetButton := widget.NewButton("Reset", func() {
 		log.Println("Resetting application")
 		w.Resize(fyne.NewSize(windowSizeHeight, windowSizeWidth))
 
+		inputField.PlaceHolder = inputFieldPlaceholder
 		inputField.Text = ""
 		inputField.Refresh()
 
+		errOutField.PlaceHolder = errOutPlaceholder
 		errOutField.Text = ""
 		errOutField.Refresh()
 
-		outputField.Text = ""
+		outputField.Text = decodedOutputPlaceholder
 		outputField.Refresh()
 
 		copyButton.Disable()
+
+		// Force garbage collection to free previously cached text.
+		runtime.GC()
 	})
 	resetButton.Importance = widget.WarningImportance
 
 	return resetButton
 }
 
-func newAboutButton(_ fyne.Window, inputField *widget.Entry, copyButton *widget.Button, errOutField *widget.Entry, outputField *widget.Entry) *widget.Button {
+func newAboutButton(_ fyne.Window, inputField *widget.Entry, copyButton *widget.Button, errOutField *widget.Entry, outputField *widget.Label) *widget.Button {
 	aboutButton := widget.NewButton("About", func() {
 		log.Println("Displaying About text")
-		inputField.Text = fmt.Sprintf(
+		inputField.PlaceHolder = fmt.Sprintf(
 			"Description:\n\n%s\n\nSafe Links overview:\n\n%s",
 			myAppDescription,
 			safeLinksAboutURL,
 		)
+		inputField.Text = ""
 		inputField.Refresh()
 
 		errOutField.Text = ""

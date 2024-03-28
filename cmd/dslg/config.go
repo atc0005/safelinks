@@ -33,6 +33,14 @@ const (
 	safeLinksAboutURL string = "https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/safe-links-about"
 )
 
+// Constants used for field and button text.
+const (
+	inputFieldPlaceholder    string = "Paste text with encoded URLs here and press Decode."
+	errOutPlaceholder        string = "Decoding errors (if any) will be logged here. Text pasted here is ignored."
+	errOutTryAgain           string = "Please insert text to decode and try again."
+	decodedOutputPlaceholder string = "Decoded text will be placed here.\n\nChanges are overwritten upon button press."
+)
+
 // Version emits application name, version and repo location.
 func Version() string {
 	return fmt.Sprintf("%s %s (%s)", myAppName, version, myAppURL)

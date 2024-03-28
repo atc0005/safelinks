@@ -32,13 +32,25 @@ func NewButtonRowContainer(buttons ...fyne.CanvasObject) *fyne.Container {
 	)
 }
 
-func newOutputContainer(objects ...fyne.CanvasObject) *fyne.Container {
-	return container.New(
-		layout.NewVBoxLayout(),
-		objects...,
-	)
+// NewOutputContainer creates a container holding error output at the top and
+// decoded output at the bottom with a spacer between them to prevent the
+// decoded output from expanding vertically beyond the current application
+// window size.
+//
+// The resulting "output" container is intended for display in the center of
+// another container.
+func NewOutputContainer(errorOutput fyne.CanvasObject, decodedOutput fyne.CanvasObject) *fyne.Container {
+	outputLabelContainer := container.NewVScroll(decodedOutput)
+	outputContainer := container.NewBorder(errorOutput, layout.NewSpacer(), nil, nil, outputLabelContainer)
+
+	return outputContainer
 }
 
-func newMainAppContainer(inputField *widget.Entry, buttonContainer *fyne.Container, outputContainer *fyne.Container) *fyne.Container {
+// NewMainAppContainer creates an container that places an input field at the
+// top, a button row container across the bottom and an "output" container in
+// the center holding error output and decoded output. This container is
+// intended to flex giving precedence to decoded output but without allowing
+// it to expand beyond the current window size.
+func NewMainAppContainer(inputField *widget.Entry, buttonContainer *fyne.Container, outputContainer *fyne.Container) *fyne.Container {
 	return container.NewBorder(inputField, buttonContainer, nil, nil, outputContainer)
 }

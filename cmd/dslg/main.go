@@ -28,9 +28,9 @@ func main() {
 	a := app.New()
 	w := a.NewWindow("Decode Microsoft Defender Safe Links")
 
-	input := newInputTextField()
-	errorOutput := newErrorOutputTextField()
-	output := newOutputTextField()
+	input := NewInputTextField()
+	errorOutput := NewErrorOutputTextField()
+	output := NewOutputTextLabel()
 
 	copyButton := newCopyButton(w, output)
 	decodeButton := newDecodeButton(input, copyButton, errorOutput, output)
@@ -47,20 +47,13 @@ func main() {
 		exitButton,
 	)
 
-	outputContainer := newOutputContainer(errorOutput, output)
-
-	mainAppContainer := newMainAppContainer(input, buttonRowContainer, outputContainer)
+	outputContainer := NewOutputContainer(errorOutput, output)
+	mainAppContainer := NewMainAppContainer(input, buttonRowContainer, outputContainer)
 
 	w.SetContent(mainAppContainer)
 	w.Resize(fyne.NewSize(windowSizeHeight, windowSizeWidth))
 	w.CenterOnScreen()
-
-	// This prevents the UI from being accidentally collapsed to the point
-	// that the buttons and text fields are no longer visible. Initial testing
-	// showed that enabling this setting did not appear to prevent the user
-	// from putting the application into fullscreen mode (on Linux distros at
-	// least).
-	w.SetFixedSize(true)
+	w.SetFixedSize(false)
 
 	w.ShowAndRun()
 }
