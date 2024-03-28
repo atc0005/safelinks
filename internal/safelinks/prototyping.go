@@ -128,17 +128,7 @@ func GetURLPatternsUsingIndex(input string) ([]FoundURLPattern, error) {
 			break
 		}
 
-		// Assume we found ending point until proven otherwise.
-		// urlEnd := next
-
-		// for _, char := range remaining[next:] {
-		// 	if unicode.IsSpace(char) {
-		// 		break // we found end of URL pattern
-		// 	}
-		// 	urlEnd++
-		// }
-
-		urlEnd := getURLIndexEndPosition(remaining[next:], next)
+		urlEnd := getURLIndexEndPosition(remaining, next)
 
 		urlPatterns = append(
 			urlPatterns,
