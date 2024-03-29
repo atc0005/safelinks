@@ -1,0 +1,17 @@
+https%3A%2F%2Fwilliamlam.com%2F2022%2F12%2Fhigh-end-dell-precision-7770-7670-laptops-with-128gb-memory-for-esxi.html
+https://bitfieldconsulting.com/golang/test-names
+https%3A%2F%2Fpkg.go.dev%2Fnet%2Furl%23QueryEscape
+https%3A%2F%2Fdocs.fyne.io%2Fstarted%2Fcross-compiling
+https://groups.google.com/g/golang-nuts/c/ZemVV8x-AVM
+https://utcc.utoronto.ca/~cks/space/blog/programming/GoAvoidingAnyAsAType
+https://100go.co/book/
+https://www.manning.com/books/learn-rust-in-a-month-of-lunches
+https%3A%2F%2Falexedwards.gumroad.com%2Fl%2Flets-go
+https%3A%2F%2Falexedwards.gumroad.com%2Fl%2Flets-go-further
+https://leanpub.com/ansible-for-devops
+https://leanpub.com/thekubernetesbook
+https%3A%2F%2Fleanpub.com%2Fdockerdeepdive
+https%3A%2F%2Fwww.informit.com%2Fstore%2Funix-and-linux-system-administration-handbook-9780132629454
+https%3A%2F%2Fwww.informit.com%2Fstore%2Funix-and-linux-system-administration-handbook-9780134278315
+http://www.example.com/linkchecker.php?url=https%3A%2F%2Fwww.google.com%2F
+https://www.example.com/linkchecker.php?url=https%3A%2F%2Fwww.google.com%2F

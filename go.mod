@@ -2,7 +2,10 @@ module github.com/atc0005/safelinks
 
 go 1.20
 
-require fyne.io/fyne/v2 v2.4.4
+require (
+	fyne.io/fyne/v2 v2.4.4
+	github.com/google/go-cmp v0.6.0
+)
 
 require (
 	fyne.io/systray v1.10.1-0.20231115130155-104f5ef7839e // indirect
