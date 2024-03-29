@@ -1,0 +1,24 @@
+Subject: Blog migration status update
+
+Hello team,
+
+The redirect for http%3A%2F%2Fblog.example.com%2F is now live. Visitors to that URL
+will be redirected to (the now static archive) at
+http%3A%2F%2Fwww.example.com%2Fblog%2Farchive.
+
+As we discussed previously, the new blog is a static site maintained using
+Hugo and CI/CD workflows. While all merge requests to the "public" branch will
+continue to be vetted by marketing, all technical leads are encouraged to
+publish early drafts to the dev site for review.
+
+For those new to the team, the documentation at the following URLs covers the
+process in depth:
+
+https%3A%2F%2Fdocs.example.com%2Fguides%2Fblog%2Fbest-practices
+https%3A%2F%2Fdocs.example.com%2Fguides%2Fblog%2Fpublishing-drafts
+https%3A%2F%2Fdocs.example.com%2Fguides%2Fblog%2Fpromoting-to-public
+
+Sincerely,
+
+Bob Smith
+Head Server Daycare Coordinator
