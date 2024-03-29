@@ -847,7 +847,7 @@ release-build-x86: windows-x86 linux-x86 windows-x86-links linux-x86-links
 
 .PHONY: release-build-x64
 ## release-build-x64: generates stable x64 build assets for public release
-release-build-x64: windows-x64 packages-dev clean-linux-x64-dev linux-x64-build packages-stable linux-x64-compress linux-x64-checksums linux-x64-links
+release-build-x64: windows-x64 windows-x64-links packages-dev clean-linux-x64-dev linux-x64-build packages-stable package-links linux-x64-compress linux-x64-checksums linux-x64-links
 	@echo "Completed all tasks for x64 stable release build"
 
 .PHONY: release-build
