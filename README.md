@@ -59,6 +59,8 @@ Go-based tooling to manipulate (e.g., normalize/decode) Microsoft Office 365
   - [`dslg` tool](#dslg-tool)
   - [`eslg` tool](#eslg-tool)
 - [License](#license)
+- [Observed safelinks.protection.outlook.com subdomains](#observed-safelinksprotectionoutlookcom-subdomains)
+- [Alternative decoders](#alternative-decoders)
 - [References](#references)
 
 ## Project home
@@ -501,12 +503,65 @@ tacos are great https://go.dev/dl/ but so are cookies http://example.com
 
 See the [LICENSE](LICENSE) file for details.
 
+## Observed safelinks.protection.outlook.com subdomains
+
+The following `*.safelinks.protection.outlook.com` subdomains have been found
+listed on various KB articles and forums:
+
+- `emea01`
+  - <https://answers.microsoft.com/en-us/outlook_com/forum/all/how-do-i-stop-emea01safelinksprotectionoutlook/32832d4f-e57f-4d3e-9e9e-cc967abdc15e>
+- `eur04`
+  - <https://techcommunity.microsoft.com/t5/security-compliance-and-identity/data-sdata-and-reserved-parameters-in-office-atp-safelinks/m-p/1637050>
+- `na01`
+  - <https://kb.uconn.edu/space/IKB/10730111028/Office+365+Safe+Links%3A+Advanced+Threat+Protection>
+- `nam01`
+  - <https://meta.discourse.org/t/stripping-outlook-safe-link-urls/258114>
+  - <https://answers.microsoft.com/en-us/msoffice/forum/all/safelink-url-decode-api/9e7d7ef9-261f-41c3-a352-198309f02641>
+- `nam02`
+  - <https://answers.microsoft.com/en-us/outlook_com/forum/all/safelinks-one-answer/8eb833c1-53dc-4c98-9c89-ff2f9c8dc812>
+  - <https://security.stackexchange.com/questions/230309/is-a-safelinks-protection-outlook-com-link-phishing>
+- `nam04`
+  - <https://answers.microsoft.com/en-us/outlook_com/forum/all/safelinks-redirect-to-https-rather-than-http/9bcd5342-11cc-4eca-9675-336f0c45c488>
+- `nam10`
+  - <https://kb.uconn.edu/space/IKB/10803643182/Test+a+Link+%2F+Decoding+SafeLinks+URLs>
+- `nam11`
+  - <https://it.arizona.edu/news/new-security-feature-urls-outlook-email>
+- `nam12`
+  - <https://it.cornell.edu/news/microsoft-safe-links-will-soon-provide-more-protection-against-malicious-links/20230913>
+
+## Alternative decoders
+
+The following alternative tools were encountered while researching valid Safe
+Links subdomains. These tools are listed here for informational purposes; no
+endorsement is implied.
+
+> [!IMPORTANT]
+> No guarantees are made regarding the functionality or privacy policies of the following online or local tools. YMMV.
+
+Online decoders:
+
+- <https://safelinks.apps.buffalo.edu/>
+- <https://digital.va.gov/employee-resource-center/safe-link-decoder/>
+- <https://wmich.edu/oit/converter/>
+- <https://it.cornell.edu/decode>
+- <https://www.ohio.edu/oit/security/safe-computing/identifying-malicious-email/safelinks-decoder>
+- <https://www.umsystem.edu/forms/safe-link-decoder>
+- <https://stockton.edu/omni-cms-support/safelinks-decoder.html>
+- <https://infosecurity.utdallas.edu/safelink/>
+
+Local decoders:
+
+- <https://github.com/franta/atp-safelinks>
+- <https://github.com/infosecB/normalize-atp-safelink>
+- <https://gist.github.com/milnak/5100fd003fa3f9281e8f417a1cd46fde>
+
 ## References
 
 - <https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/safe-links-about>
 - <https://learn.microsoft.com/en-us/training/modules/manage-safe-links/>
   - <https://learn.microsoft.com/en-us/training/modules/manage-safe-links/6-examine-end-user-experience-with>
 - <https://security.stackexchange.com/questions/230309/is-a-safelinks-protection-outlook-com-link-phishing>
+  - <https://security.stackexchange.com/a/230371>
 - <https://techcommunity.microsoft.com/t5/security-compliance-and-identity/data-sdata-and-reserved-parameters-in-office-atp-safelinks/td-p/1637050>
 
 <!-- Footnotes here  -->
