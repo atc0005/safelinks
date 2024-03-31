@@ -20,17 +20,13 @@ var version = "x.y.z"
 const (
 	myAppName        string = "eslg"
 	myAppURL         string = "https://github.com/atc0005/safelinks"
-	myAppDescription string = "Go-based tooling to manipulate (e.g., normalize/decode) Microsoft Office 365 \"Safe Links\" URLs."
+	myAppDescription string = "GUI tool for encoding normal URLs within input text for testing purposes."
 )
 
 // GUI app constants.
 const (
 	windowSizeHeight float32 = 800
 	windowSizeWidth  float32 = 650
-)
-
-const (
-	safeLinksAboutURL string = "https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/safe-links-about"
 )
 
 // Constants used for field and button text.

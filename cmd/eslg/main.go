@@ -26,7 +26,9 @@ func main() {
 	log.SetOutput(debugLoggingOut)
 
 	// Help this tool stand out from the dslg app.
-	os.Setenv("FYNE_THEME", "light")
+	if err := os.Setenv("FYNE_THEME", "light"); err != nil {
+		log.Println("Failed to set fyne toolkit theme")
+	}
 
 	// NOTE: This is deprecated and set to be removed in v3.0.
 	// fyne.CurrentApp().Settings().SetTheme(theme.LightTheme())

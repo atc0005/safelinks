@@ -9,12 +9,14 @@ package safelinks
 
 import (
 	"bufio"
+	crand "crypto/rand"
 	"flag"
 	"fmt"
 	"html"
 	"io"
 	"log"
-	"math/rand"
+	"math/big"
+	mrand "math/rand"
 	"net/url"
 	"os"
 	"regexp"
@@ -548,7 +550,22 @@ func GetRandomSafeLinksFQDN() string {
 		"nam12",
 	}
 
-	subdomain := subdomains[rand.Intn(len(subdomains))]
+	var subdomain string
+	crandMax := big.NewInt(int64(len(subdomains)))
+	mrandMax := len(subdomains)
+
+	// Attempt crypto/rand based PRNG sourced value first before falling back
+	// to math/rand sourced value. This should probably just be ignored
+	// (without bothering to apply fallback behavior) as the use case does not
+	// require a cryptographically strong pseudo-random number generator.
+	n, err := crand.Int(crand.Reader, crandMax)
+	switch {
+	case err != nil:
+		//nolint:gosec,nolintlint // G404: Use of weak random number generator
+		subdomain = subdomains[mrand.Intn(mrandMax)]
+	default:
+		subdomain = subdomains[n.Int64()]
+	}
 
 	return strings.Join([]string{subdomain, SafeLinksBaseDomain}, ".")
 }
