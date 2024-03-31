@@ -19,6 +19,7 @@ Go-based tooling to manipulate (e.g., normalize/decode) Microsoft Office 365
   - [`usl` CLI tool](#usl-cli-tool)
   - [`dsl` CLI tool](#dsl-cli-tool)
   - [`dslg` GUI tool](#dslg-gui-tool)
+  - [`eslg` GUI tool](#eslg-gui-tool)
 - [Changelog](#changelog)
 - [Requirements](#requirements)
   - [Building source code](#building-source-code)
@@ -40,6 +41,7 @@ Go-based tooling to manipulate (e.g., normalize/decode) Microsoft Office 365
       - [Standard input (e.g., "piping")](#standard-input-eg-piping-1)
       - [Without arguments or flags](#without-arguments-or-flags-1)
     - [`dslg`](#dslg)
+    - [`eslg`](#eslg)
 - [Examples](#examples)
   - [`usl` tool](#usl-tool)
     - [Using url positional argument](#using-url-positional-argument)
@@ -55,6 +57,7 @@ Go-based tooling to manipulate (e.g., normalize/decode) Microsoft Office 365
     - [Using standard input (e.g., "piping")](#using-standard-input-eg-piping-1)
     - [Using filename flag](#using-filename-flag-1)
   - [`dslg` tool](#dslg-tool)
+  - [`eslg` tool](#eslg-tool)
 - [License](#license)
 - [References](#references)
 
@@ -68,11 +71,12 @@ submit improvements for review and potential inclusion into the project.
 This repo is intended to provide various tools used to manipulate (e.g.,
 normalize/decode) Microsoft Office 365 "Safe Links" URLs.
 
-| Tool Name | Overall Status | Description                                                    |
-| --------- | -------------- | -------------------------------------------------------------- |
-| `usl`     | 🆗Beta          | Small CLI tool for decoding a given Safe Links URL.            |
-| `dsl`     | 💥Alpha         | Small CLI tool for decoding Safe Links URLs within input text. |
-| `dslg`    | 💥Alpha         | GUI tool for decoding Safe Links URLs within input text.       |
+| Tool Name | Overall Status | Description                                                               |
+| --------- | -------------- | ------------------------------------------------------------------------- |
+| `usl`     | 🆗Beta          | Small CLI tool for decoding a given Safe Links URL.                       |
+| `dsl`     | 💥Alpha         | Small CLI tool for decoding Safe Links URLs within input text.            |
+| `dslg`    | 💥Alpha         | GUI tool for decoding Safe Links URLs within input text.                  |
+| `eslg`    | 💥Alpha         | GUI tool for encoding normal URLs within input text for testing purposes. |
 
 ## Features
 
@@ -110,6 +114,10 @@ GUI tool for decoding Safe Links URLs within given input text.
 
 - Specify single Safe Links URL
 - Specify multiple Safe Links URLs (with surrounding text untouched)
+
+### `eslg` GUI tool
+
+GUI tool for generating test data.
 
 ## Changelog
 
@@ -198,6 +206,7 @@ this requirement and will require building from source.
      - `go build -mod=vendor ./cmd/usl/`
      - `go build -mod=vendor ./cmd/dsl/`
      - `go build -mod=vendor ./cmd/dslg/`
+     - `go build -mod=vendor ./cmd/eslg/`
    - manually, explicitly specifying target OS and architecture
      - `GOOS=linux GOARCH=amd64 go build -mod=vendor ./cmd/usl/`
        - substitute `GOARCH=amd64` with the appropriate architecture if using
@@ -206,6 +215,7 @@ this requirement and will require building from source.
          platform (e.g., `GOOS=windows`)
      - `GOOS=linux GOARCH=amd64 go build -mod=vendor ./cmd/dsl/`
      - `GOOS=linux GOARCH=amd64 go build -mod=vendor ./cmd/dslg/`
+     - `GOOS=linux GOARCH=amd64 go build -mod=vendor ./cmd/eslg/`
    - using Makefile `all` recipe
      - `make all`
        - generates x86 and x64 binaries
@@ -218,6 +228,7 @@ this requirement and will require building from source.
      - look in `/tmp/safelinks/release_assets/usl/`
      - look in `/tmp/safelinks/release_assets/dsl/`
      - look in `/tmp/safelinks/release_assets/dslg/`
+     - look in `/tmp/safelinks/release_assets/eslg/`
    - if using `go build`
      - look in `/tmp/safelinks/`
 1. Copy the applicable binaries to whatever systems needs to run them so that
@@ -246,9 +257,10 @@ binaries.
 1. Place `usl` in a location where it can be easily accessed
 1. Place `dsl` in a location where it can be easily accessed
 1. Place `dslg` in a location where it can be easily accessed
+1. Place `eslg` in a location where it can be easily accessed
 
 > [!NOTE]
-> The `libgl1` package was needed on target Ubuntu systems for the `dslg` app.
+> The `libgl1` package was needed on target Ubuntu systems for the `dslg` and `eslg` apps.
 
 ## Configuration
 
@@ -332,6 +344,10 @@ If no input is provided for a the listed amount of time the `dsl` tool will
 timeout and exit.
 
 #### `dslg`
+
+No command-line arguments are currently supported.
+
+#### `eslg`
 
 No command-line arguments are currently supported.
 
@@ -465,6 +481,18 @@ tacos are great https://go.dev/dl/ but so are cookies http://example.com
 1. Press `Decode` button
 1. Manually copy decoded text or press `Copy to Clipboard` button
 1. Paste decoded text where needed (e.g., a ticket)
+
+> [!WARNING]
+> The `Copy to Clipboard` action does *not* preserve any existing clipboard content; there is no undo for using this button
+
+### `eslg` tool
+
+1. Launch application
+1. Copy single unencoded URL or mix of unencoded URLs and text (e.g., copying
+   an email) into the input field
+1. Press `Encode` button
+1. Manually copy decoded text or press `Copy to Clipboard` button
+1. Paste encoded text where needed (e.g., a new `testdata` file)
 
 > [!WARNING]
 > The `Copy to Clipboard` action does *not* preserve any existing clipboard content; there is no undo for using this button

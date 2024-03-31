@@ -14,6 +14,7 @@ import (
 	"html"
 	"io"
 	"log"
+	"math/rand"
 	"net/url"
 	"os"
 	"regexp"
@@ -21,8 +22,19 @@ import (
 	"unicode"
 )
 
-// SafeLinksURLRequiredPrefix is the required prefix for all Safe Links URLs.
-const SafeLinksURLRequiredPrefix = "https://"
+const (
+	// SafeLinksURLRequiredPrefix is the required prefix for all Safe Links
+	// URLs.
+	SafeLinksURLRequiredPrefix string = "https://"
+
+	// SafeLinksBaseDomain is the common component of a fully qualified domain
+	// name used in Safe Links encoded URLs.
+	SafeLinksBaseDomain string = "safelinks.protection.outlook.com"
+
+	// SafeLinksURLTemplate is a template for observed SafeLinks URLs.
+	// https://SUBDOMAIN.safelinks.protection.outlook.com/?url=ENCODED_URL&data=data_placeholder&sdata=sdata_placeholder&reserved=0
+	SafeLinksURLTemplate string = "%s%s/?url=%s&data=%s&sdata=%s&reserved=%s"
+)
 
 // FoundURLPattern is an unvalidated URL pattern match found in given input.
 type FoundURLPattern struct {
@@ -518,4 +530,85 @@ func getURLIndexEndPosition(input string, startPos int) int {
 	}
 
 	return endPos
+}
+
+// GetRandomSafeLinksFQDN returns a pseudorandom FQDN from a list observed to
+// be associated with Safe Links URLs. Entries in the list have a naming
+// pattern of *.safelinks.protection.outlook.com.
+func GetRandomSafeLinksFQDN() string {
+	subdomains := []string{
+		"emea01",
+		"eur04",
+		"na01",
+		"nam01",
+		"nam02",
+		"nam04",
+		"nam10",
+		"nam11",
+		"nam12",
+	}
+
+	subdomain := subdomains[rand.Intn(len(subdomains))]
+
+	return strings.Join([]string{subdomain, SafeLinksBaseDomain}, ".")
+}
+
+// EncodeURLAsFauxSafeLinksURL encodes the provided url.URL in a format that
+// mimics real Safe Links encoded URLs observed in the wild. This output is
+// intended for use with testing encoding/decoding behavior.
+func EncodeURLAsFauxSafeLinksURL(u *url.URL) string {
+	return fmt.Sprintf(
+		SafeLinksURLTemplate,
+		SafeLinksURLRequiredPrefix,
+		GetRandomSafeLinksFQDN(),
+		url.QueryEscape(u.String()),
+		"data_placeholder",
+		"sdata_placeholder",
+		"0", // 0 is the only value observed in the wild thus far.
+	)
+}
+
+// FilterURLs filters the given collection of URLs, returning the remaining
+// URLs or an error if none remain after filtering.
+//
+// If specified, Safe Link URLs are excluded from the collection returning
+// only URLs that have not been encoded as Safe Links URLs. Otherwise, only
+// URLs that have been encoded as Safe Links URLs are returned.
+//
+// An empty collection is returned if no URLs remain after filtering.
+func FilterURLs(urls []*url.URL, excludeSafeLinkURLs bool) []*url.URL {
+	remaining := make([]*url.URL, 0, len(urls))
+
+	keepSafeLinksURLs := !excludeSafeLinkURLs
+	keepNonSafeLinksURLs := excludeSafeLinkURLs
+
+	for _, u := range urls {
+		if ValidSafeLinkURL(u) {
+			log.Printf("URL identified as Safe Links encoded: %q", u.String())
+
+			switch {
+			case keepSafeLinksURLs:
+				log.Printf("Retaining Safe Links encoded URL %q as requested", u.String())
+				remaining = append(remaining, u)
+			default:
+				log.Printf("Skipping Safe Links encoded URL %q as requested", u.String())
+			}
+
+			continue
+		}
+
+		log.Printf("URL not identified as Safe Links encoded: %q", u.String())
+
+		switch {
+		case keepNonSafeLinksURLs:
+			log.Printf("Retaining unencoded URL %q as requested", u.String())
+			remaining = append(remaining, u)
+
+			continue
+		default:
+			log.Printf("Skipping unencoded URL %q as requested", u.String())
+		}
+	}
+
+	return remaining
 }

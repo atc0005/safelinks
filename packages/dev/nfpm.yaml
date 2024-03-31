@@ -39,6 +39,10 @@ contents:
     dst: /usr/bin/dslg_dev
     file_info:
       mode: 0755
+  - src: ../../release_assets/eslg/eslg-linux-amd64-dev
+    dst: /usr/bin/eslg_dev
+    file_info:
+      mode: 0755
 
 overrides:
   rpm:

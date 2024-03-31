@@ -34,7 +34,7 @@
 SHELL 					:= /bin/bash
 
 # Space-separated list of cmd/BINARY_NAME directories to build
-WHAT 					:= usl dsl dslg
+WHAT 					:= usl dsl dslg eslg
 
 PROJECT_NAME			:= safelinks
 
@@ -149,7 +149,7 @@ export SEMVER  := $(REPO_VERSION)
 #   https://github.com/fyne-io/fyne/issues/110
 #
 #   Fyne loads from a command prompt by default which means if you launch the
-#   dslg Windows executable directly a command window will be shown.
+#   dslg or eslg Windows executables directly a command window will be shown.
 #   Specifying this option disables this behavior.
 #
 #   NOTE:
@@ -318,7 +318,7 @@ quick:
 	@set -e; for target in $(WHAT); do \
 		mkdir -p $(ASSETS_PATH)/$${target} && \
 		echo "  building $${target} binary" && \
-		if [ "$$target" == "dslg" ]; then \
+		if [ "$$target" == "dslg" ] || [ "$$target" == "eslg" ]; then \
 			echo "    NOTE: explicitly enabling CGO for $$target" && \
 			CGO_ENABLED=1 $(QUICK_BUILDCMD) -o $(ASSETS_PATH)/$${target}/$${target} $(PROJECT_DIR)/cmd/$${target}; \
 		else \
@@ -345,7 +345,7 @@ windows-x86-build:
 		env GOOS=windows GOARCH=386 go generate && \
 		cd $(PROJECT_DIR) && \
 		echo "  building $$target 386 binary" && \
-		if [ "$$target" == "dslg" ]; then \
+		if [ "$$target" == "dslg" ] || [ "$$target" == "eslg" ]; then \
 			echo "    NOTE: using fyne toolkit specific build settings for $$target" && \
 			env GOOS=windows GOARCH=386 $(WINCOMPILERX86) $(BUILDCMD_FYNE_WINDOWS) -o $(ASSETS_PATH)/$$target/$$target-windows-386.exe $(PROJECT_DIR)/cmd/$$target; \
 		else \
@@ -408,7 +408,7 @@ windows-x64-build:
 		env GOOS=windows GOARCH=amd64 go generate && \
 		cd $(PROJECT_DIR) && \
 		echo "  building $$target amd64 binary" && \
-		if [ "$$target" == "dslg" ]; then \
+		if [ "$$target" == "dslg" ] || [ "$$target" == "eslg" ]; then \
 			echo "    NOTE: using fyne toolkit specific build settings for $$target" && \
 			env GOOS=windows GOARCH=amd64 $(WINCOMPILERX64) $(BUILDCMD_FYNE_WINDOWS) -o $(ASSETS_PATH)/$$target/$$target-windows-amd64.exe $(PROJECT_DIR)/cmd/$$target; \
 		else \
@@ -482,7 +482,7 @@ linux-x86-build:
 	@set -e; for target in $(WHAT); do \
 		mkdir -p $(ASSETS_PATH)/$$target && \
 		echo "  building $$target 386 binary" && \
-		if [ "$$target" == "dslg" ]; then \
+		if [ "$$target" == "dslg" ] || [ "$$target" == "eslg" ]; then \
 			echo "    NOTE: using fyne toolkit specific build settings for $$target" && \
 			env GOOS=linux GOARCH=386 $(BUILDCMD_FYNE_LINUX) -o $(ASSETS_PATH)/$$target/$$target-linux-386 $(PROJECT_DIR)/cmd/$$target; \
 		else \
@@ -541,7 +541,7 @@ linux-x64-build:
 	@set -e; for target in $(WHAT); do \
 		mkdir -p $(ASSETS_PATH)/$$target && \
 		echo "  building $$target amd64 binary" && \
-		if [ "$$target" == "dslg" ]; then \
+		if [ "$$target" == "dslg" ] || [ "$$target" == "eslg" ]; then \
 			echo "    NOTE: using fyne toolkit specific build settings for $$target" && \
 			env GOOS=linux GOARCH=amd64 $(BUILDCMD_FYNE_LINUX) -o $(ASSETS_PATH)/$$target/$$target-linux-amd64 $(PROJECT_DIR)/cmd/$$target; \
 		else \
@@ -598,7 +598,7 @@ linux-x64-dev-build:
 	@set -e; for target in $(WHAT); do \
 		mkdir -p $(ASSETS_PATH)/$$target && \
 		echo "  building $$target amd64 binary" && \
-		if [ "$$target" == "dslg" ]; then \
+		if [ "$$target" == "dslg" ] || [ "$$target" == "eslg" ]; then \
 			echo "    NOTE: using fyne toolkit specific build settings for $$target" && \
 			env GOOS=linux GOARCH=amd64 $(BUILDCMD_FYNE_LINUX) -o $(ASSETS_PATH)/$$target/$$target-linux-amd64-dev $(PROJECT_DIR)/cmd/$$target; \
 		else \
