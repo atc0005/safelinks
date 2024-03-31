@@ -20,3 +20,11 @@
 
 dependabot/docker/builds/Dockerfile merge=ours
 dependabot/docker/go/Dockerfile merge=ours
+
+# Preserve existing line endings in testdata files; explicitly disable any
+# potential automatic end of line conversion due to client-specific
+# `core.autocrlf` or `core.eol` values.
+#
+# https://git-scm.com/docs/gitattributes#_checking_out_and_checking_in
+# https://stackoverflow.com/a/2825829
+testdata/ -text
