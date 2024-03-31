@@ -28,4 +28,8 @@ var (
 	// ErrNoSafeLinkURLsFound indicates that no URLs were found to be encoded
 	// as Safe Links.
 	ErrNoSafeLinkURLsFound = errors.New("no Safe Link URLs found in input")
+
+	// ErrNoNonSafeLinkURLsFound indicates that no URLs were found to not
+	// already be encoded as Safe Links.
+	ErrNoNonSafeLinkURLsFound = errors.New("no non-Safe Link URLs found in input")
 )
