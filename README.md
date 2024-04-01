@@ -59,9 +59,10 @@ Go-based tooling to manipulate (e.g., normalize/decode) Microsoft Office 365
   - [`dslg` tool](#dslg-tool)
   - [`eslg` tool](#eslg-tool)
 - [License](#license)
-- [Observed safelinks.protection.outlook.com subdomains](#observed-safelinksprotectionoutlookcom-subdomains)
-- [Alternative decoders](#alternative-decoders)
 - [References](#references)
+  - [General](#general)
+  - [Observed safelinks.protection.outlook.com subdomains](#observed-safelinksprotectionoutlookcom-subdomains)
+  - [Alternative decoders](#alternative-decoders)
 
 ## Project home
 
@@ -503,7 +504,18 @@ tacos are great https://go.dev/dl/ but so are cookies http://example.com
 
 See the [LICENSE](LICENSE) file for details.
 
-## Observed safelinks.protection.outlook.com subdomains
+## References
+
+### General
+
+- <https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/safe-links-about>
+- <https://learn.microsoft.com/en-us/training/modules/manage-safe-links/>
+  - <https://learn.microsoft.com/en-us/training/modules/manage-safe-links/6-examine-end-user-experience-with>
+- <https://security.stackexchange.com/questions/230309/is-a-safelinks-protection-outlook-com-link-phishing>
+  - <https://security.stackexchange.com/a/230371>
+- <https://techcommunity.microsoft.com/t5/security-compliance-and-identity/data-sdata-and-reserved-parameters-in-office-atp-safelinks/td-p/1637050>
+
+### Observed safelinks.protection.outlook.com subdomains
 
 The following `*.safelinks.protection.outlook.com` subdomains have been found
 listed on various KB articles and forums:
@@ -529,7 +541,7 @@ listed on various KB articles and forums:
 - `nam12`
   - <https://it.cornell.edu/news/microsoft-safe-links-will-soon-provide-more-protection-against-malicious-links/20230913>
 
-## Alternative decoders
+### Alternative decoders
 
 The following alternative tools were encountered while researching valid Safe
 Links subdomains. These tools are listed here for informational purposes; no
@@ -554,15 +566,6 @@ Local decoders:
 - <https://github.com/franta/atp-safelinks>
 - <https://github.com/infosecB/normalize-atp-safelink>
 - <https://gist.github.com/milnak/5100fd003fa3f9281e8f417a1cd46fde>
-
-## References
-
-- <https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/safe-links-about>
-- <https://learn.microsoft.com/en-us/training/modules/manage-safe-links/>
-  - <https://learn.microsoft.com/en-us/training/modules/manage-safe-links/6-examine-end-user-experience-with>
-- <https://security.stackexchange.com/questions/230309/is-a-safelinks-protection-outlook-com-link-phishing>
-  - <https://security.stackexchange.com/a/230371>
-- <https://techcommunity.microsoft.com/t5/security-compliance-and-identity/data-sdata-and-reserved-parameters-in-office-atp-safelinks/td-p/1637050>
 
 <!-- Footnotes here  -->
 
