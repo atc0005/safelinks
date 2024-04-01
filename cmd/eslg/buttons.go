@@ -95,7 +95,7 @@ func newResetButton(w fyne.Window, inputField *widget.Entry, copyButton *widget.
 func newAboutButton(_ fyne.Window, inputField *widget.Entry, copyButton *widget.Button, errOutField *widget.Entry, outputField *widget.Label) *widget.Button {
 	aboutButton := widget.NewButton("About", func() {
 		log.Println("Displaying About text")
-		inputField.PlaceHolder = "Description:\n\n%s\n\n" +
+		inputField.PlaceHolder = "Description:\n\n" +
 			"GUI tool used to create faux Safe Links encoded URLs for testing purposes"
 
 		inputField.Text = ""
