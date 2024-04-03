@@ -63,8 +63,14 @@ func ValidURL(input string) bool {
 
 // ValidSafeLinkURL validates whether a given url.URL is a valid Safe Links
 // URL.
-func ValidSafeLinkURL(input *url.URL) bool {
-	if err := assertValidURLParameter(input); err != nil {
+func ValidSafeLinkURL(u *url.URL) bool {
+	if !strings.Contains(u.Host, SafeLinksBaseDomain) {
+		log.Printf("FAIL: URL %q fails base domain check", u.String())
+		return false
+	}
+
+	if err := assertValidURLParameter(u); err != nil {
+		log.Printf("FAIL: URL %q fails %q parameter check", u.String(), "url")
 		return false
 	}
 
