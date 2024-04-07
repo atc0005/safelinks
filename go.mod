@@ -28,7 +28,7 @@ require (
 	golang.org/x/image v0.15.0 // indirect
 	golang.org/x/mobile v0.0.0-20240329164231-365c35338770 // indirect
 	golang.org/x/net v0.22.0 // indirect
-	golang.org/x/sys v0.18.0 // indirect
+	golang.org/x/sys v0.19.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	honnef.co/go/js/dom v0.0.0-20231112215516-51f43a291193 // indirect
