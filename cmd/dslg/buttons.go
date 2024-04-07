@@ -14,6 +14,7 @@ import (
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/widget"
+	"github.com/atc0005/safelinks/internal/safelinks"
 )
 
 func newCopyButton(w fyne.Window, outputField *widget.Label) *widget.Button {
@@ -34,7 +35,7 @@ func newDecodeButton(inputField *widget.Entry, copyButton *widget.Button, errOut
 			log.Println("Decoding requested but no input text provided")
 
 			copyButton.Disable()
-			errOutField.Text = errOutTryAgain
+			errOutField.Text = errOutTryAgain + "\n"
 			errOutField.Refresh()
 
 			return
@@ -42,7 +43,7 @@ func newDecodeButton(inputField *widget.Entry, copyButton *widget.Button, errOut
 
 		log.Println("Decoding provided input text")
 
-		result, err := decodeInput(inputField.Text)
+		result, err := safelinks.DecodeInput(inputField.Text)
 		switch {
 		case err != nil:
 			errOutField.Append(err.Error() + "\n")
@@ -104,7 +105,7 @@ func newAboutButton(_ fyne.Window, inputField *widget.Entry, copyButton *widget.
 		inputField.Text = ""
 		inputField.Refresh()
 
-		errOutField.Text = ""
+		errOutField.Text = "..."
 		errOutField.Refresh()
 
 		outputField.Text = "Current version:\n\n" + Version()

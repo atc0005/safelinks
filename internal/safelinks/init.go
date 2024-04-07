@@ -13,6 +13,6 @@ import (
 )
 
 func init() {
-	// Disable logging out by default.
+	// Disable logging output by default.
 	log.SetOutput(io.Discard)
 }
