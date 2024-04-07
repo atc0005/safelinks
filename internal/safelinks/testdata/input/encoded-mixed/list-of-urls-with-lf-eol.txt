@@ -13,3 +13,5 @@ https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fleanpub.com%2
 https://eur04.safelinks.protection.outlook.com/?url=https%3A%2F%2Fleanpub.com%2Fdockerdeepdive&data=data_placeholder&sdata=sdata_placeholder&reserved=0
 https://nam10.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.informit.com%2Fstore%2Funix-and-linux-system-administration-handbook-9780132629454&data=data_placeholder&sdata=sdata_placeholder&reserved=0
 https://www.informit.com/store/unix-and-linux-system-administration-handbook-9780134278315
+http://www.example.com/linkchecker.php?url=https%3A%2F%2Fwww.google.com%2F
+https://www.example.com/linkchecker.php?url=https%3A%2F%2Fwww.google.com%2F

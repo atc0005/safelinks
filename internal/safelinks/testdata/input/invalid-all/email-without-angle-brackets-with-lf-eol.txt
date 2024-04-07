@@ -18,6 +18,15 @@ https%3A%2F%2Fdocs.example.com%2Fguides%2Fblog%2Fbest-practices
 https%3A%2F%2Fdocs.example.com%2Fguides%2Fblog%2Fpublishing-drafts
 https%3A%2F%2Fdocs.example.com%2Fguides%2Fblog%2Fpromoting-to-public
 
+P.S.
+
+If you haven't yet, please give the latest release of our linkchecker web app
+a try and let us know what you think! Per request, we offer it in http and
+https variations.
+
+http%3A%2F%2Fwww.example.com%2Flinkchecker.php%3Furl%3Dhttps%253A%252F%252Fwww.google.com%252F
+https%3A%2F%2Fwww.example.com%2Flinkchecker.php%3Furl%3Dhttps%253A%252F%252Fwww.google.com%252F
+
 Sincerely,
 
 Bob Smith
