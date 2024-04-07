@@ -12,7 +12,10 @@ import (
 	"runtime"
 
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
+
+	"github.com/atc0005/safelinks/internal/safelinks"
 )
 
 func newCopyButton(w fyne.Window, outputField *widget.Label) *widget.Button {
@@ -27,21 +30,52 @@ func newCopyButton(w fyne.Window, outputField *widget.Label) *widget.Button {
 	return copyButton
 }
 
-func newEncodeButton(inputField *widget.Entry, copyButton *widget.Button, errOutField *widget.Entry, outputField *widget.Label) *widget.Button {
-	encodeButton := widget.NewButton("Encode", func() {
+func newEncodeButton(randomEncode bool, inputField *widget.Entry, copyButton *widget.Button, errOutField *widget.Entry, outputField *widget.Label) *widget.Button {
+	buttonLabelText := func() string {
+		if randomEncode {
+			return "Encode Randomly"
+		}
+		return "Encode All"
+	}()
+
+	encodeButton := newProcessInputButton(
+		randomEncode,
+		buttonLabelText,
+		safelinks.EncodeInput,
+		inputField,
+		copyButton,
+		errOutField,
+		outputField,
+	)
+
+	return encodeButton
+}
+
+func newProcessInputButton(
+	// TODO: Refactor this to reduce parameters.
+	randomEscape bool,
+	buttonLabelText string,
+	processFunc func(string, bool) (string, error),
+	inputField *widget.Entry,
+	copyButton *widget.Button,
+	errOutField *widget.Entry,
+	outputField *widget.Label,
+) *widget.Button {
+
+	button := widget.NewButton(buttonLabelText, func() {
 		if inputField.Text == "" {
-			log.Println("Encoding requested but no input text provided")
+			log.Printf("%s used but no input text provided", buttonLabelText)
 
 			copyButton.Disable()
-			errOutField.Text = errOutTryAgain
+			errOutField.Text = errOutTryAgain + "\n"
 			errOutField.Refresh()
 
 			return
 		}
 
-		log.Println("Encoding provided input text")
+		log.Printf("%s input text", buttonLabelText)
 
-		result, err := encodeInput(inputField.Text)
+		result, err := processFunc(inputField.Text, randomEscape)
 		switch {
 		case err != nil:
 			errOutField.Append(err.Error() + "\n")
@@ -61,9 +95,35 @@ func newEncodeButton(inputField *widget.Entry, copyButton *widget.Button, errOut
 		}
 	})
 
-	encodeButton.Importance = widget.HighImportance
+	if randomEscape {
+		button.Importance = widget.MediumImportance
+		button.Icon = theme.QuestionIcon()
+	} else {
+		button.Importance = widget.HighImportance
+	}
 
-	return encodeButton
+	return button
+}
+
+func newQueryEscapeButton(randomEscape bool, inputField *widget.Entry, copyButton *widget.Button, errOutField *widget.Entry, outputField *widget.Label) *widget.Button {
+	buttonLabelText := func() string {
+		if randomEscape {
+			return "QueryEscape Randomly"
+		}
+		return "QueryEscape All"
+	}()
+
+	queryEscapeButton := newProcessInputButton(
+		randomEscape,
+		buttonLabelText,
+		safelinks.QueryEscapeInput,
+		inputField,
+		copyButton,
+		errOutField,
+		outputField,
+	)
+
+	return queryEscapeButton
 }
 
 func newResetButton(w fyne.Window, inputField *widget.Entry, copyButton *widget.Button, errOutField *widget.Entry, outputField *widget.Label) *widget.Button {
@@ -101,7 +161,7 @@ func newAboutButton(_ fyne.Window, inputField *widget.Entry, copyButton *widget.
 		inputField.Text = ""
 		inputField.Refresh()
 
-		errOutField.Text = ""
+		errOutField.Text = "..."
 		errOutField.Refresh()
 
 		outputField.Text = "Current version:\n\n" + Version()

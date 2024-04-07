@@ -35,7 +35,7 @@ func main() {
 			os.Exit(1)
 		}
 
-		input, err := safelinks.ReadURLsFromFile(f)
+		input, err := safelinks.ReadFromFile(f)
 		if err != nil {
 			fmt.Printf("Failed to read URLs from %q: %v\n", cfg.Filename, err)
 			os.Exit(1)
@@ -44,7 +44,7 @@ func main() {
 		inputURLs = input
 
 	default:
-		input, err := safelinks.ProcessInputAsURL(cfg.URL)
+		input, err := ReadURLsFromInput(cfg.URL)
 		if err != nil {
 			fmt.Printf("Failed to parse input as URL: %v\n", err)
 			os.Exit(1)
@@ -53,7 +53,7 @@ func main() {
 		inputURLs = input
 	}
 
-	hasErr := safelinks.ProcessInputURLs(inputURLs, os.Stdout, os.Stderr, cfg.Verbose)
+	hasErr := ProcessInputURLs(inputURLs, os.Stdout, os.Stderr, cfg.Verbose)
 
 	// Ensure unsuccessful error code if one encountered.
 	if hasErr {

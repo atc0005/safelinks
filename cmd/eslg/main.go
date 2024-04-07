@@ -25,10 +25,13 @@ func main() {
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
 	log.SetOutput(debugLoggingOut)
 
-	// Help this tool stand out from the dslg app.
-	if err := os.Setenv("FYNE_THEME", "light"); err != nil {
-		log.Println("Failed to set fyne toolkit theme")
-	}
+	// Help this tool stand out from the dslg app unless explicitly requested
+	// otherwise.
+	// if os.Getenv("FYNE_THEME") == "" {
+	// 	if err := os.Setenv("FYNE_THEME", "light"); err != nil {
+	// 		log.Println("Failed to set fyne toolkit theme")
+	// 	}
+	// }
 
 	// NOTE: This is deprecated and set to be removed in v3.0.
 	// fyne.CurrentApp().Settings().SetTheme(theme.LightTheme())
@@ -41,14 +44,20 @@ func main() {
 	output := NewOutputTextLabel()
 
 	copyButton := newCopyButton(w, output)
-	encodeButton := newEncodeButton(input, copyButton, errorOutput, output)
+	encodeAllButton := newEncodeButton(false, input, copyButton, errorOutput, output)
+	encodeRandomButton := newEncodeButton(true, input, copyButton, errorOutput, output)
+	queryEscapeAllButton := newQueryEscapeButton(false, input, copyButton, errorOutput, output)
+	queryEscapeRandomButton := newQueryEscapeButton(true, input, copyButton, errorOutput, output)
 	resetButton := newResetButton(w, input, copyButton, errorOutput, output)
 	aboutButton := newAboutButton(w, input, copyButton, errorOutput, output)
 
 	exitButton := newExitButton(a)
 
 	buttonRowContainer := NewButtonRowContainer(
-		encodeButton,
+		encodeAllButton,
+		encodeRandomButton,
+		queryEscapeAllButton,
+		queryEscapeRandomButton,
 		copyButton,
 		resetButton,
 		aboutButton,
