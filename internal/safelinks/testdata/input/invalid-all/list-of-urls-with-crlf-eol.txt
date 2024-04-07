@@ -13,3 +13,5 @@ https%3A%2F%2Fleanpub.com%2Fthekubernetesbook
 https%3A%2F%2Fleanpub.com%2Fdockerdeepdive
 https%3A%2F%2Fwww.informit.com%2Fstore%2Funix-and-linux-system-administration-handbook-9780132629454
 https%3A%2F%2Fwww.informit.com%2Fstore%2Funix-and-linux-system-administration-handbook-9780134278315
+http%3A%2F%2Fwww.example.com%2Flinkchecker.php%3Furl%3Dhttps%253A%252F%252Fwww.google.com%252F
+https%3A%2F%2Fwww.example.com%2Flinkchecker.php%3Furl%3Dhttps%253A%252F%252Fwww.google.com%252F

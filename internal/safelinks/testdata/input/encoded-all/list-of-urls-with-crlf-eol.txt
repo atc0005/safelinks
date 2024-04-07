@@ -13,3 +13,5 @@ https://nam01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fleanpub.com%2F
 https://nam02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fleanpub.com%2Fdockerdeepdive&data=data_placeholder&sdata=sdata_placeholder&reserved=0
 https://na01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.informit.com%2Fstore%2Funix-and-linux-system-administration-handbook-9780132629454&data=data_placeholder&sdata=sdata_placeholder&reserved=0
 https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.informit.com%2Fstore%2Funix-and-linux-system-administration-handbook-9780134278315&data=data_placeholder&sdata=sdata_placeholder&reserved=0
+https://eur04.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.example.com%2Flinkchecker.php%3Furl%3Dhttps%253A%252F%252Fwww.google.com%252F&data=data_placeholder&sdata=sdata_placeholder&reserved=0
+https://nam04.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.example.com%2Flinkchecker.php%3Furl%3Dhttps%253A%252F%252Fwww.google.com%252F&data=data_placeholder&sdata=sdata_placeholder&reserved=0

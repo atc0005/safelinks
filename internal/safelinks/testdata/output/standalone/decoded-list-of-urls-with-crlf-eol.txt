@@ -13,3 +13,5 @@ https://leanpub.com/thekubernetesbook
 https://leanpub.com/dockerdeepdive
 https://www.informit.com/store/unix-and-linux-system-administration-handbook-9780132629454
 https://www.informit.com/store/unix-and-linux-system-administration-handbook-9780134278315
+http://www.example.com/linkchecker.php?url=https%3A%2F%2Fwww.google.com%2F
+https://www.example.com/linkchecker.php?url=https%3A%2F%2Fwww.google.com%2F

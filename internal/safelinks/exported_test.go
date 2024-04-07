@@ -230,11 +230,11 @@ func TestURLsFindsAllValidURLs(t *testing.T) {
 	}{
 		"Encoded list of URLs with LF EOL": {
 			input:          inputEncodedAllListOfURLsWithLFEol,
-			foundURLsCount: 15,
+			foundURLsCount: 17,
 		},
 		"Encoded list of URLs with CRLF EOL": {
 			input:          inputEncodedAllListOfURLsWithCRLFEol,
-			foundURLsCount: 15,
+			foundURLsCount: 17,
 		},
 		"Encoded single URL with LF EOL": {
 			input:          inputEncodedSingleSafelinksURLWithLFEol,
@@ -246,53 +246,53 @@ func TestURLsFindsAllValidURLs(t *testing.T) {
 		},
 		"Encoded email with angle brackets with CRLF EOL": {
 			input:          inputEncodedAllEmailWithAngleBracketsWithCRLFEol,
-			foundURLsCount: 5,
+			foundURLsCount: 7,
 		},
 		"Encoded email with angle brackets with LF EOL": {
 			input:          inputEncodedAllEmailWithAngleBracketsWithLFEol,
-			foundURLsCount: 5,
+			foundURLsCount: 7,
 		},
 		"Encoded email without angle brackets with CRLF EOL": {
 			input:          inputEncodedAllEmailWithoutAngleBracketsWithCRLFEol,
-			foundURLsCount: 5,
+			foundURLsCount: 7,
 		},
 		"Encoded email without angle brackets with LF EOL": {
 			input:          inputEncodedAllEmailWithoutAngleBracketsWithLFEol,
-			foundURLsCount: 5,
+			foundURLsCount: 7,
 		},
 
 		"Mixed encoded email with angle brackets with CRLF EOL": {
 			input:          inputEncodedMixedEmailWithAngleBracketsWithCRLFEol,
-			foundURLsCount: 5,
+			foundURLsCount: 7,
 		},
 		"Mixed encoded email with angle brackets with LF EOL": {
 			input:          inputEncodedMixedEmailWithAngleBracketsWithLFEol,
-			foundURLsCount: 5,
+			foundURLsCount: 7,
 		},
 		"Mixed encoded email without angle brackets with CRLF EOL": {
 			input:          inputEncodedMixedEmailWithoutAngleBracketsWithCRLFEol,
-			foundURLsCount: 5,
+			foundURLsCount: 7,
 		},
 		"Mixed encoded email without angle brackets with LF EOL": {
 			input:          inputEncodedMixedEmailWithoutAngleBracketsWithLFEol,
-			foundURLsCount: 5,
+			foundURLsCount: 7,
 		},
 		"Mixed encoded list of URLs with CRLF EOL": {
 			input:          inputEncodedMixedListOfURLsWithCRLFEol,
-			foundURLsCount: 15,
+			foundURLsCount: 17,
 		},
 		"Mixed encoded list of URLs with LF EOL": {
 			input:          inputEncodedMixedListOfURLsWithLFEol,
-			foundURLsCount: 15,
+			foundURLsCount: 17,
 		},
 
 		"Mixed invalid list of URLs with LF EOL": {
 			input:          inputInvalidMixedListOfURLsWithLFEol,
-			foundURLsCount: 7,
+			foundURLsCount: 9,
 		},
 		"Mixed invalid list of URLs with CRLF EOL": {
 			input:          inputInvalidMixedListOfURLsWithCRLFEol,
-			foundURLsCount: 7,
+			foundURLsCount: 9,
 		},
 		"Mixed invalid URLs email with angle brackets with CRLF EOL": {
 			input:          inputInvalidMixedEmailWithAngleBracketsWithCRLFEol,
@@ -411,62 +411,62 @@ func TestFilterURLsCorrectlyFiltersByType(t *testing.T) {
 		"Mixed encoded email with angle brackets with CRLF EOL": {
 			input:                      inputEncodedMixedEmailWithAngleBracketsWithCRLFEol,
 			foundEncodedLinksURLsCount: 2,
-			foundUnencodedURLsCount:    3,
+			foundUnencodedURLsCount:    5,
 		},
 		"Mixed encoded email with angle brackets with LF EOL": {
 			input:                      inputEncodedMixedEmailWithAngleBracketsWithLFEol,
 			foundEncodedLinksURLsCount: 2,
-			foundUnencodedURLsCount:    3,
+			foundUnencodedURLsCount:    5,
 		},
 		"Mixed encoded email without angle brackets with CRLF EOL": {
 			input:                      inputEncodedMixedEmailWithoutAngleBracketsWithCRLFEol,
 			foundEncodedLinksURLsCount: 2,
-			foundUnencodedURLsCount:    3,
+			foundUnencodedURLsCount:    5,
 		},
 		"Mixed encoded email without angle brackets with LF EOL": {
 			input:                      inputEncodedMixedEmailWithoutAngleBracketsWithLFEol,
 			foundEncodedLinksURLsCount: 2,
-			foundUnencodedURLsCount:    3,
+			foundUnencodedURLsCount:    5,
 		},
 		"Mixed encoded list of URLs with CRLF EOL": {
 			input:                      inputEncodedMixedListOfURLsWithCRLFEol,
 			foundEncodedLinksURLsCount: 8,
-			foundUnencodedURLsCount:    7,
+			foundUnencodedURLsCount:    9,
 		},
 		"Mixed encoded list of URLs with LF EOL": {
 			input:                      inputEncodedMixedListOfURLsWithLFEol,
 			foundEncodedLinksURLsCount: 8,
-			foundUnencodedURLsCount:    7,
+			foundUnencodedURLsCount:    9,
 		},
 
 		"Encoded email with angle brackets with CRLF EOL": {
 			input:                      inputEncodedAllEmailWithAngleBracketsWithCRLFEol,
-			foundEncodedLinksURLsCount: 5,
+			foundEncodedLinksURLsCount: 7,
 			foundUnencodedURLsCount:    0,
 		},
 		"Encoded email with angle brackets with LF EOL": {
 			input:                      inputEncodedAllEmailWithAngleBracketsWithLFEol,
-			foundEncodedLinksURLsCount: 5,
+			foundEncodedLinksURLsCount: 7,
 			foundUnencodedURLsCount:    0,
 		},
 		"Encoded email without angle brackets with CRLF EOL": {
 			input:                      inputEncodedAllEmailWithoutAngleBracketsWithCRLFEol,
-			foundEncodedLinksURLsCount: 5,
+			foundEncodedLinksURLsCount: 7,
 			foundUnencodedURLsCount:    0,
 		},
 		"Encoded email without angle brackets with LF EOL": {
 			input:                      inputEncodedAllEmailWithoutAngleBracketsWithLFEol,
-			foundEncodedLinksURLsCount: 5,
+			foundEncodedLinksURLsCount: 7,
 			foundUnencodedURLsCount:    0,
 		},
 		"Encoded list of URLs with CRLF EOL": {
 			input:                      inputEncodedAllListOfURLsWithCRLFEol,
-			foundEncodedLinksURLsCount: 15,
+			foundEncodedLinksURLsCount: 17,
 			foundUnencodedURLsCount:    0,
 		},
 		"Encoded list of URLs with LF EOL": {
 			input:                      inputEncodedAllListOfURLsWithLFEol,
-			foundEncodedLinksURLsCount: 15,
+			foundEncodedLinksURLsCount: 17,
 			foundUnencodedURLsCount:    0,
 		},
 		"Encoded single URL with CRLF EOL": {
@@ -483,12 +483,12 @@ func TestFilterURLsCorrectlyFiltersByType(t *testing.T) {
 		"Unencoded list of URLs with LF EOL": {
 			input:                      outputDecodedListOfURLsWithLFEol,
 			foundEncodedLinksURLsCount: 0,
-			foundUnencodedURLsCount:    15,
+			foundUnencodedURLsCount:    17,
 		},
 		"Unencoded list of URLs with CRLF EOL": {
 			input:                      outputDecodedListOfURLsWithCRLFEol,
 			foundEncodedLinksURLsCount: 0,
-			foundUnencodedURLsCount:    15,
+			foundUnencodedURLsCount:    17,
 		},
 		"Unencoded single URL with LF EOL": {
 			input:                      outputDecodedSingleURLWithLFEol,
@@ -503,22 +503,22 @@ func TestFilterURLsCorrectlyFiltersByType(t *testing.T) {
 		"Unencoded email with angle brackets with LF EOL": {
 			input:                      outputDecodedEmailWithAngleBracketsWithLFEol,
 			foundEncodedLinksURLsCount: 0,
-			foundUnencodedURLsCount:    5,
+			foundUnencodedURLsCount:    7,
 		},
 		"Unencoded email with angle brackets with CRLF EOL": {
 			input:                      outputDecodedEmailWithAngleBracketsWithCRLFEol,
 			foundEncodedLinksURLsCount: 0,
-			foundUnencodedURLsCount:    5,
+			foundUnencodedURLsCount:    7,
 		},
 		"Unencoded email without angle brackets with LF EOL": {
 			input:                      outputDecodedEmailWithoutAngleBracketsWithLFEol,
 			foundEncodedLinksURLsCount: 0,
-			foundUnencodedURLsCount:    5,
+			foundUnencodedURLsCount:    7,
 		},
 		"Unencoded email without angle brackets with CRLF EOL": {
 			input:                      outputDecodedEmailWithoutAngleBracketsWithCRLFEol,
 			foundEncodedLinksURLsCount: 0,
-			foundUnencodedURLsCount:    5,
+			foundUnencodedURLsCount:    7,
 		},
 	}
 
@@ -596,27 +596,27 @@ func TestSafeLinkURLsFindsAllValidSafeLinks(t *testing.T) {
 
 		"Encoded email with angle brackets with CRLF EOL": {
 			input:                 inputEncodedAllEmailWithAngleBracketsWithCRLFEol,
-			foundEncodedURLsCount: 5,
+			foundEncodedURLsCount: 7,
 		},
 		"Encoded email with angle brackets with LF EOL": {
 			input:                 inputEncodedAllEmailWithAngleBracketsWithLFEol,
-			foundEncodedURLsCount: 5,
+			foundEncodedURLsCount: 7,
 		},
 		"Encoded email without angle brackets with CRLF EOL": {
 			input:                 inputEncodedAllEmailWithoutAngleBracketsWithCRLFEol,
-			foundEncodedURLsCount: 5,
+			foundEncodedURLsCount: 7,
 		},
 		"Encoded email without angle brackets with LF EOL": {
 			input:                 inputEncodedAllEmailWithoutAngleBracketsWithLFEol,
-			foundEncodedURLsCount: 5,
+			foundEncodedURLsCount: 7,
 		},
 		"Encoded list of URLs with CRLF EOL": {
 			input:                 inputEncodedAllListOfURLsWithCRLFEol,
-			foundEncodedURLsCount: 15,
+			foundEncodedURLsCount: 17,
 		},
 		"Encoded list of URLs with LF EOL": {
 			input:                 inputEncodedAllListOfURLsWithLFEol,
-			foundEncodedURLsCount: 15,
+			foundEncodedURLsCount: 17,
 		},
 		"Encoded single URL with CRLF EOL": {
 			input:                 inputEncodedSingleSafelinksURLWithCRLFEol,
