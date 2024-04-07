@@ -8,7 +8,7 @@
 // Package safelinks_test provides test coverage for exported package
 // functionality.
 //
-//nolint:dupl // ignore "lines are duplicate of"
+//nolint:dupl,gocognit // ignore "lines are duplicate of" and function complexity
 package safelinks_test
 
 import (
@@ -539,19 +539,22 @@ func TestFilterURLsCorrectlyFiltersByType(t *testing.T) {
 			wantEncodedURLsCount := tt.foundEncodedLinksURLsCount
 			gotEncodedURLsCount := len(encodedURLs)
 
+			if wantEncodedURLsCount != gotEncodedURLsCount {
+				t.Errorf("\nwant %d Safe Links URLs\ngot %d Safe Links URLs", wantEncodedURLsCount, gotEncodedURLsCount)
+			} else {
+				t.Logf("OK: Found expected number (%d) of Safe Links URLs within given input.", wantEncodedURLsCount)
+			}
+
 			unencodedURLs := safelinks.FilterParsedURLs(allURLs, true)
 			wantUnencodedURLsCount := tt.foundUnencodedURLsCount
 			gotUnencodedURLsCount := len(unencodedURLs)
 
-			switch {
-			case wantEncodedURLsCount != gotEncodedURLsCount:
-				t.Errorf("\nwant %d Safe Links URLs\ngot %d Safe Links URLs", wantEncodedURLsCount, gotEncodedURLsCount)
-			case wantUnencodedURLsCount != gotUnencodedURLsCount:
+			if wantUnencodedURLsCount != gotUnencodedURLsCount {
 				t.Errorf("\nwant %d unencoded URLs\ngot %d unencoded URLs", wantUnencodedURLsCount, gotUnencodedURLsCount)
-			default:
-				t.Logf("OK: Found expected number (%d) of Safe Links URLs within given input.", wantEncodedURLsCount)
+			} else {
 				t.Logf("OK: Found expected number (%d) of unencoded URLs within given input.", wantUnencodedURLsCount)
 			}
+
 		})
 	}
 
