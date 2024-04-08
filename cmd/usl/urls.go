@@ -55,13 +55,13 @@ func ReadURLsFromInput(inputURL string) ([]string, error) {
 			return nil, safelinks.ErrInvalidURL
 		}
 
-		inputURLs = append(inputURLs, safelinks.CleanURL(flag.Args()[0]))
+		inputURLs = append(inputURLs, flag.Args()[0])
 
 	// We received a URL via flag.
 	case inputURL != "":
 		// fmt.Fprintln(os.Stderr, "Received URL via flag")
 
-		inputURLs = append(inputURLs, safelinks.CleanURL(inputURL))
+		inputURLs = append(inputURLs, inputURL)
 
 	// Input URL not given via positional argument, not given via flag either.
 	// We prompt the user for a single input value.
@@ -77,7 +77,7 @@ func ReadURLsFromInput(inputURL string) ([]string, error) {
 			return nil, safelinks.ErrInvalidURL
 		}
 
-		inputURLs = append(inputURLs, safelinks.CleanURL(input))
+		inputURLs = append(inputURLs, input)
 	}
 
 	return inputURLs, nil
@@ -95,7 +95,8 @@ func ProcessInputURLs(inputURLs []string, okOut io.Writer, errOut io.Writer, ver
 	var errEncountered bool
 
 	for _, inputURL := range inputURLs {
-		safelink, err := url.Parse(inputURL)
+		cleanedURL := safelinks.CleanURL(inputURL)
+		safelink, err := url.Parse(cleanedURL)
 		if err != nil {
 			fmt.Printf("Failed to parse URL: %v\n", err)
 
@@ -103,7 +104,7 @@ func ProcessInputURLs(inputURLs []string, okOut io.Writer, errOut io.Writer, ver
 			continue
 		}
 
-		if safelinks.ValidSafeLinkURL(safelink) {
+		if !safelinks.ValidSafeLinkURL(safelink) {
 			fmt.Fprintf(errOut, "Invalid Safelinks URL %q\n", safelink)
 
 			errEncountered = true
