@@ -19,6 +19,8 @@ import (
 )
 
 func main() {
+	userFeedbackOut := os.Stderr
+
 	// use io.Discard for normal operation
 	// switch to os.Stderr for debugging
 	debugLoggingOut := io.Discard
@@ -39,13 +41,13 @@ func main() {
 	case cfg.Filename != "":
 		f, err := os.Open(cfg.Filename)
 		if err != nil {
-			fmt.Printf("Failed to open %q: %v\n", cfg.Filename, err)
+			fmt.Fprintf(userFeedbackOut, "Failed to open %q: %v\n", cfg.Filename, err)
 			os.Exit(1)
 		}
 
 		input, err := safelinks.ReadURLsFromFile(f)
 		if err != nil {
-			fmt.Printf("Failed to read URLs from %q: %v\n", cfg.Filename, err)
+			fmt.Fprintf(userFeedbackOut, "Failed to read URLs from %q: %v\n", cfg.Filename, err)
 			os.Exit(1)
 		}
 
@@ -54,14 +56,14 @@ func main() {
 	default:
 		input, err := safelinks.ProcessInputAsURL(cfg.URL)
 		if err != nil {
-			fmt.Printf("Failed to parse input as URL: %v\n", err)
+			fmt.Fprintf(userFeedbackOut, "Failed to parse input as URL: %v\n", err)
 			os.Exit(1)
 		}
 
 		inputURLs = input
 	}
 
-	hasErr := safelinks.ProcessInputURLs(inputURLs, os.Stdout, os.Stderr, cfg.Verbose)
+	hasErr := safelinks.ProcessInputURLs(inputURLs, os.Stdout, userFeedbackOut, cfg.Verbose)
 
 	// Ensure unsuccessful error code if one encountered.
 	if hasErr {

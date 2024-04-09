@@ -171,7 +171,7 @@ func ProcessInputURLs(inputURLs []string, okOut io.Writer, errOut io.Writer, ver
 	for _, inputURL := range inputURLs {
 		safelink, err := url.Parse(inputURL)
 		if err != nil {
-			fmt.Printf("Failed to parse URL: %v\n", err)
+			fmt.Fprintf(errOut, "Failed to parse URL: %v\n", err)
 
 			errEncountered = true
 			continue
