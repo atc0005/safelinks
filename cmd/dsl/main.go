@@ -36,8 +36,12 @@ import (
 
 func main() {
 	userFeedbackOut := os.Stderr
-	// debugLoggingOut := os.Stderr // switch to os.Stderr for debugging
-	debugLoggingOut := io.Discard // use io.Discard for normal operation
+
+	// use io.Discard for normal operation
+	// switch to os.Stderr for debugging
+	debugLoggingOut := io.Discard
+
+	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
 	log.SetOutput(debugLoggingOut)
 
 	// We wrap the os.Exit() behavior so that we can safely use deferred
