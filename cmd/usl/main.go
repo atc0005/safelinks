@@ -11,12 +11,20 @@ package main
 
 import (
 	"fmt"
+	"io"
+	"log"
 	"os"
 
 	"github.com/atc0005/safelinks/internal/safelinks"
 )
 
 func main() {
+	// use io.Discard for normal operation
+	// switch to os.Stderr for debugging
+	debugLoggingOut := io.Discard
+
+	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
+	log.SetOutput(debugLoggingOut)
 
 	cfg := NewConfig()
 
