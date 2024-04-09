@@ -482,7 +482,7 @@ tacos are great https://go.dev/dl/ but so are cookies http://example.com
 1. Copy single URL or mix of URLs and text (e.g., copying an email) into the
    input field
 1. Press `Decode` button
-1. Manually copy decoded text or press `Copy to Clipboard` button
+1. Press `Copy to Clipboard` button
 1. Paste decoded text where needed (e.g., a ticket)
 
 > [!WARNING]
@@ -493,9 +493,13 @@ tacos are great https://go.dev/dl/ but so are cookies http://example.com
 1. Launch application
 1. Copy single unencoded URL or mix of unencoded URLs and text (e.g., copying
    an email) into the input field
-1. Press `Encode` button
-1. Manually copy decoded text or press `Copy to Clipboard` button
-1. Paste encoded text where needed (e.g., a new `testdata` file)
+1. Press one of the desired "action" buttons
+   - `Encode All`
+   - `Encode Randomly`
+   - `QueryEscape All`
+   - `QueryEscape Randomly`
+1. Press `Copy to Clipboard` button
+1. Paste transformed text where needed (e.g., a new `testdata` file)
 
 > [!WARNING]
 > The `Copy to Clipboard` action does *not* preserve any existing clipboard content; there is no undo for using this button
