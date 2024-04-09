@@ -18,4 +18,6 @@ jobs:
       contents: write
       discussions: write
 
+    with:
+      os-dependencies: "make bsdmainutils gcc gcc-multilib gcc-mingw-w64 xz-utils libgl1-mesa-dev xorg-dev"
     uses: atc0005/shared-project-resources/.github/workflows/release-build.yml@master
