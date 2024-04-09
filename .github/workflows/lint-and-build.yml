@@ -17,8 +17,12 @@ on:
 jobs:
   lint_and_build_using_ci_matrix:
     name: CI matrix
+    with:
+      os-dependencies: "make bsdmainutils gcc gcc-multilib gcc-mingw-w64 xz-utils libgl1-mesa-dev xorg-dev"
     uses: atc0005/shared-project-resources/.github/workflows/lint-and-build-using-ci-matrix.yml@master
 
   lint_and_build_using_makefile:
     name: Makefile
+    with:
+      os-dependencies: "make bsdmainutils gcc gcc-multilib gcc-mingw-w64 xz-utils libgl1-mesa-dev xorg-dev"
     uses: atc0005/shared-project-resources/.github/workflows/lint-and-build-using-make.yml@master
