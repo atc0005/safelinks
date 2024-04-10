@@ -19,19 +19,29 @@
 # https://gist.github.com/subfuzion/0bd969d08fe0d8b5cc4b23c795854a13
 # https://stackoverflow.com/questions/10858261/abort-makefile-if-variable-not-set
 # https://stackoverflow.com/questions/38801796/makefile-set-if-variable-is-empty
+# https://www.gnu.org/software/make/manual/make.html#Flavors
+# https://stackoverflow.com/questions/6283320/vs-in-make-macros
 # https://stackoverflow.com/questions/1909188/define-make-variable-at-rule-execution-time
 
-SHELL := /bin/bash
+
+#############################################################################
+# "Variables defined with := in GNU make are expanded when they are defined
+# rather than when they are used."
+#
+# https://stackoverflow.com/a/6283363/903870
+#############################################################################
+
+SHELL 					:= /bin/bash
 
 # Space-separated list of cmd/BINARY_NAME directories to build
-WHAT 					:= usl dsl
+WHAT 					:= usl dsl dslg eslg
 
 PROJECT_NAME			:= safelinks
 
 # What package holds the "version" variable used in branding/version output?
-# VERSION_VAR_PKG			= $(shell go list -m)
+# VERSION_VAR_PKG			:= $(shell go list -m)
 # VERSION_VAR_PKG			:= $(shell go list -m)/internal/config
-VERSION_VAR_PKG			= main
+VERSION_VAR_PKG			:= main
 
 OUTPUTDIR 				:= release_assets
 
@@ -127,22 +137,52 @@ export SEMVER  := $(REPO_VERSION)
 #   NOTE: Using external linker requires installation of `gcc-multilib`
 #   package when building 32-bit binaries on a Debian/Ubuntu system. It also
 #   seems to result in an unstable build that crashes on startup. This *might*
-#   be specific to the WSL environment used for builds, but since this is a
-#   new issue and and I do not yet know much about this option, I am leaving
-#   it out.
+#   be specific to the WSL environment used for builds. Further testing is
+#   needed to confirm.
 #
-# CGO_ENABLED=0
-#	https://golang.org/cmd/cgo/
-#	explicitly disable use of cgo
-#	removes potential need for linkage against local c library (e.g., glibc)
-BUILDCMD				:=	CGO_ENABLED=0 go build -mod=vendor -trimpath -a -ldflags "-s -w -X $(VERSION_VAR_PKG).version=$(REPO_VERSION)"
+# CGO_ENABLED=1
+#   CGO is disabled by default for cross-compilation. You need to enable it
+#   explicitly to use CGO for multiple architectures.
+#
+# -ldflags -H=windowsgui
+#   https://github.com/fyne-io/fyne/commit/fd1dbcfa215a2a5423daa42ff8b1786332baa8ec
+#   https://github.com/fyne-io/fyne/issues/110
+#
+#   Fyne loads from a command prompt by default which means if you launch the
+#   dslg or eslg Windows executables directly a command window will be shown.
+#   Specifying this option disables this behavior.
+#
+#   NOTE:
+#
+#   Specifying this option for a non-Windows build results in a SIGSEGV panic
+#   during the build. Because of this, we apply this specifically for binaries
+#   that require it and omit it for others.
+
+#
+BUILD_LDFLAGS_COMMON	:= -s -w -X $(VERSION_VAR_PKG).version=$(REPO_VERSION)
+BUILDCMD_COMMON			:= go build -mod=vendor -a -trimpath
+BUILDCMD_DEFAULT		:= CGO_ENABLED=0 $(BUILDCMD_COMMON) -tags 'osusergo,netgo,sqlite_omit_load_extension' -ldflags "$(BUILD_LDFLAGS_COMMON)"
+
+# The fyne toolkit requires CGO.
+#
+# Even so, we try to limit dynamic dependencies as much as possible by using
+# build tags known to limit external dependencies.
+BUILDCMD_FYNE_LINUX			:= CGO_ENABLED=1 $(BUILDCMD_COMMON) -tags 'osusergo,netgo,sqlite_omit_load_extension' -ldflags "$(BUILD_LDFLAGS_COMMON)"
+BUILDCMD_FYNE_WINDOWS		:= CGO_ENABLED=1 $(BUILDCMD_COMMON) -tags 'osusergo,netgo,sqlite_omit_load_extension' -ldflags "$(BUILD_LDFLAGS_COMMON) -H=windowsgui"
+
+# Use mingw as C compiler to build Windows cgo-enabled binaries.
+#
+# NOTE: These compiler binary names work for both Ubuntu and Alpine images.
+WINCOMPILERX86 			:= 	CC=i686-w64-mingw32-gcc
+WINCOMPILERX64 			:= 	CC=x86_64-w64-mingw32-gcc
+
 QUICK_BUILDCMD			:=	go build -mod=vendor
 GOCLEANCMD				:=	go clean -mod=vendor ./...
 GITCLEANCMD				:= 	git clean -xfd
 CHECKSUMCMD				:=	sha256sum -b
 COMPRESSCMD				:= xz --compress --threads=0 --stdout
 
-.DEFAULT_GOAL := help
+.DEFAULT_GOAL 			:= help
 
   ##########################################################################
   # Targets will not work properly if a file with the same name is ever
@@ -266,7 +306,7 @@ depsinstall:
 
 .PHONY: all
 # https://stackoverflow.com/questions/3267145/makefile-execute-another-target
-## all: generates assets for Linux distros and Windows
+## all: generates linked assets for Linux and Windows systems
 all: clean windows linux
 	@echo "Completed all cross-platform builds ..."
 
@@ -278,10 +318,20 @@ quick:
 	@set -e; for target in $(WHAT); do \
 		mkdir -p $(ASSETS_PATH)/$${target} && \
 		echo "  building $${target} binary" && \
-		$(QUICK_BUILDCMD) -o $(ASSETS_PATH)/$${target}/$${target} $(PROJECT_DIR)/cmd/$${target}; \
+		if [ "$$target" == "dslg" ] || [ "$$target" == "eslg" ]; then \
+			echo "    NOTE: explicitly enabling CGO for $$target" && \
+			CGO_ENABLED=1 $(QUICK_BUILDCMD) -o $(ASSETS_PATH)/$${target}/$${target} $(PROJECT_DIR)/cmd/$${target}; \
+		else \
+			$(QUICK_BUILDCMD) -o $(ASSETS_PATH)/$${target}/$${target} $(PROJECT_DIR)/cmd/$${target}; \
+		fi; \
 	done
 
 	@echo "Completed tasks for quick build"
+
+.PHONY: windows
+## windows: generates x86 and x64 Windows assets
+windows: windows-x86 windows-x64
+	@echo "Completed build tasks for windows"
 
 .PHONY: windows-x86-build
 ## windows-x86-build: builds assets for Windows x86 systems
@@ -295,7 +345,12 @@ windows-x86-build:
 		env GOOS=windows GOARCH=386 go generate && \
 		cd $(PROJECT_DIR) && \
 		echo "  building $$target 386 binary" && \
-		env GOOS=windows GOARCH=386 $(BUILDCMD) -o $(ASSETS_PATH)/$$target/$$target-windows-386.exe $(PROJECT_DIR)/cmd/$$target; \
+		if [ "$$target" == "dslg" ] || [ "$$target" == "eslg" ]; then \
+			echo "    NOTE: using fyne toolkit specific build settings for $$target" && \
+			env GOOS=windows GOARCH=386 $(WINCOMPILERX86) $(BUILDCMD_FYNE_WINDOWS) -o $(ASSETS_PATH)/$$target/$$target-windows-386.exe $(PROJECT_DIR)/cmd/$$target; \
+		else \
+			env GOOS=windows GOARCH=386 $(WINCOMPILERX86) $(BUILDCMD_DEFAULT) -o $(ASSETS_PATH)/$$target/$$target-windows-386.exe $(PROJECT_DIR)/cmd/$$target; \
+		fi; \
 	done
 
 	@echo "Completed build tasks for windows x86"
@@ -353,7 +408,12 @@ windows-x64-build:
 		env GOOS=windows GOARCH=amd64 go generate && \
 		cd $(PROJECT_DIR) && \
 		echo "  building $$target amd64 binary" && \
-		env GOOS=windows GOARCH=amd64 $(BUILDCMD) -o $(ASSETS_PATH)/$$target/$$target-windows-amd64.exe $(PROJECT_DIR)/cmd/$$target; \
+		if [ "$$target" == "dslg" ] || [ "$$target" == "eslg" ]; then \
+			echo "    NOTE: using fyne toolkit specific build settings for $$target" && \
+			env GOOS=windows GOARCH=amd64 $(WINCOMPILERX64) $(BUILDCMD_FYNE_WINDOWS) -o $(ASSETS_PATH)/$$target/$$target-windows-amd64.exe $(PROJECT_DIR)/cmd/$$target; \
+		else \
+			env GOOS=windows GOARCH=amd64 $(WINCOMPILERX64) $(BUILDCMD_DEFAULT) -o $(ASSETS_PATH)/$$target/$$target-windows-amd64.exe $(PROJECT_DIR)/cmd/$$target; \
+		fi; \
 	done
 
 	@echo "Completed build tasks for windows x64"
@@ -400,19 +460,14 @@ windows-x64-links:
 	@echo "Completed generating download links for windows x64 assets"
 
 .PHONY: windows-x86
-## windows-x86: generates assets for Windows x86
+## windows-x86: generates dynamic assets for Windows x86
 windows-x86: windows-x86-build windows-x86-compress windows-x86-checksums
 	@echo "Completed all tasks for windows x86"
 
 .PHONY: windows-x64
-## windows-x64: generates assets for Windows x64
+## windows-x64: generates dynamic assets for Windows x64
 windows-x64: windows-x64-build windows-x64-compress windows-x64-checksums
 	@echo "Completed all tasks for windows x64"
-
-.PHONY: windows
-## windows: generates assets for Windows x86 and x64 systems
-windows: windows-x86 windows-x64
-	@echo "Completed all tasks for windows"
 
 .PHONY: windows-links
 ## windows-links: generates download URLs for Windows x86 and x64 assets
@@ -427,7 +482,12 @@ linux-x86-build:
 	@set -e; for target in $(WHAT); do \
 		mkdir -p $(ASSETS_PATH)/$$target && \
 		echo "  building $$target 386 binary" && \
-		env GOOS=linux GOARCH=386 $(BUILDCMD) -o $(ASSETS_PATH)/$$target/$$target-linux-386 $(PROJECT_DIR)/cmd/$$target; \
+		if [ "$$target" == "dslg" ] || [ "$$target" == "eslg" ]; then \
+			echo "    NOTE: using fyne toolkit specific build settings for $$target" && \
+			env GOOS=linux GOARCH=386 $(BUILDCMD_FYNE_LINUX) -o $(ASSETS_PATH)/$$target/$$target-linux-386 $(PROJECT_DIR)/cmd/$$target; \
+		else \
+			env GOOS=linux GOARCH=386 $(BUILDCMD_DEFAULT) -o $(ASSETS_PATH)/$$target/$$target-linux-386 $(PROJECT_DIR)/cmd/$$target; \
+		fi; \
 	done
 
 	@echo "Completed build tasks for linux x86"
@@ -481,7 +541,12 @@ linux-x64-build:
 	@set -e; for target in $(WHAT); do \
 		mkdir -p $(ASSETS_PATH)/$$target && \
 		echo "  building $$target amd64 binary" && \
-		env GOOS=linux GOARCH=amd64 $(BUILDCMD) -o $(ASSETS_PATH)/$$target/$$target-linux-amd64 $(PROJECT_DIR)/cmd/$$target; \
+		if [ "$$target" == "dslg" ] || [ "$$target" == "eslg" ]; then \
+			echo "    NOTE: using fyne toolkit specific build settings for $$target" && \
+			env GOOS=linux GOARCH=amd64 $(BUILDCMD_FYNE_LINUX) -o $(ASSETS_PATH)/$$target/$$target-linux-amd64 $(PROJECT_DIR)/cmd/$$target; \
+		else \
+			env GOOS=linux GOARCH=amd64 $(BUILDCMD_DEFAULT) -o $(ASSETS_PATH)/$$target/$$target-linux-amd64 $(PROJECT_DIR)/cmd/$$target; \
+		fi; \
 	done
 
 	@echo "Completed build tasks for linux x64"
@@ -533,7 +598,12 @@ linux-x64-dev-build:
 	@set -e; for target in $(WHAT); do \
 		mkdir -p $(ASSETS_PATH)/$$target && \
 		echo "  building $$target amd64 binary" && \
-		env GOOS=linux GOARCH=amd64 $(BUILDCMD) -o $(ASSETS_PATH)/$$target/$$target-linux-amd64-dev $(PROJECT_DIR)/cmd/$$target; \
+		if [ "$$target" == "dslg" ] || [ "$$target" == "eslg" ]; then \
+			echo "    NOTE: using fyne toolkit specific build settings for $$target" && \
+			env GOOS=linux GOARCH=amd64 $(BUILDCMD_FYNE_LINUX) -o $(ASSETS_PATH)/$$target/$$target-linux-amd64-dev $(PROJECT_DIR)/cmd/$$target; \
+		else \
+			env GOOS=linux GOARCH=amd64 $(BUILDCMD_DEFAULT) -o $(ASSETS_PATH)/$$target/$$target-linux-amd64-dev $(PROJECT_DIR)/cmd/$$target; \
+		fi; \
 	done
 
 	@echo "Completed dev build tasks for linux x64"
@@ -599,7 +669,7 @@ linux-links: linux-x86-links linux-x64-links
 
 .PHONY: packages-stable
 ## packages-stable: generates "stable" release series DEB and RPM packages
-packages-stable: linux-x64-build
+packages-stable:
 
 	@echo
 	@echo Generating stable release series packages ...
@@ -622,15 +692,15 @@ packages-stable: linux-x64-build
 	@echo "  - stable DEB package checksum file"
 	@set -e ;\
 		cd $(ASSETS_PATH)/packages/stable && \
-		for file in $$(find . -name "*.deb" -printf '%P\n'); do \
-			$(CHECKSUMCMD) $${file} > $${file}.sha256 ; \
+		for file in $$(find . -name "*.deb" -print); do \
+			name=$$(basename $${file}) && $(CHECKSUMCMD) $${name} > $${name}.sha256 ; \
 		done
 
 	@echo "  - stable RPM package checksum file"
 	@set -e ;\
 		cd $(ASSETS_PATH)/packages/stable && \
-		for file in $$(find . -name "*.rpm" -printf '%P\n'); do \
-			$(CHECKSUMCMD) $${file} > $${file}.sha256 ; \
+		for file in $$(find . -name "*.rpm" -print); do \
+			name=$$(basename $${file}) && $(CHECKSUMCMD) $${name} > $${name}.sha256 ; \
 		done
 
 	@echo
@@ -661,15 +731,15 @@ packages-dev: linux-x64-dev-build
 	@echo "  - dev DEB package checksum file"
 	@set -e ;\
 		cd $(ASSETS_PATH)/packages/dev && \
-		for file in $$(find . -name "*.deb" -printf '%P\n'); do \
-			$(CHECKSUMCMD) $${file} > $${file}.sha256 ; \
+		for file in $$(find . -name "*.deb" -print); do \
+			name=$$(basename $${file}) && $(CHECKSUMCMD) $${name} > $${name}.sha256 ; \
 		done
 
 	@echo "  - dev RPM package checksum file"
 	@set -e ;\
 		cd $(ASSETS_PATH)/packages/dev && \
-		for file in $$(find . -name "*.rpm" -printf '%P\n'); do \
-			$(CHECKSUMCMD) $${file} > $${file}.sha256 ; \
+		for file in $$(find . -name "*.rpm" -print); do \
+			name=$$(basename $${file}) && $(CHECKSUMCMD) $${name} > $${name}.sha256 ; \
 		done
 
 	@echo
@@ -689,64 +759,72 @@ package-links:
 	@echo "  - DEB package download links"
 	@if [ -d $(ASSETS_PATH)/packages/dev ]; then \
 		cd $(ASSETS_PATH)/packages/dev && \
-		for file in $$(find . -name "*.deb" -printf '%P\n'); do \
-			echo "$(BASE_URL)/$(RELEASE_TAG)/$${file}" >> $(PKG_DOWNLOAD_LINKS_FILE) && \
-			echo "$(BASE_URL)/$(RELEASE_TAG)/$${file}" >> $(ALL_DOWNLOAD_LINKS_FILE); \
+		for file in $$(find . -name "*.deb" -print); do \
+			name=$$(basename $${file}) && \
+			echo "$(BASE_URL)/$(RELEASE_TAG)/$${name}" >> $(PKG_DOWNLOAD_LINKS_FILE) && \
+			echo "$(BASE_URL)/$(RELEASE_TAG)/$${name}" >> $(ALL_DOWNLOAD_LINKS_FILE); \
 		done; \
 	fi
 	@if [ -d $(ASSETS_PATH)/packages/dev ]; then \
 		cd $(ASSETS_PATH)/packages/dev && \
-		for file in $$(find . -name "*.deb.sha256" -printf '%P\n'); do \
-			echo "$(BASE_URL)/$(RELEASE_TAG)/$${file}" >> $(PKG_DOWNLOAD_LINKS_FILE) && \
-			echo "$(BASE_URL)/$(RELEASE_TAG)/$${file}" >> $(ALL_DOWNLOAD_LINKS_FILE); \
+		for file in $$(find . -name "*.deb.sha256" -print); do \
+			name=$$(basename $${file}) && \
+			echo "$(BASE_URL)/$(RELEASE_TAG)/$${name}" >> $(PKG_DOWNLOAD_LINKS_FILE) && \
+			echo "$(BASE_URL)/$(RELEASE_TAG)/$${name}" >> $(ALL_DOWNLOAD_LINKS_FILE); \
 		done; \
 	fi
 
 	@if [ -d $(ASSETS_PATH)/packages/stable ]; then \
 		cd $(ASSETS_PATH)/packages/stable && \
-		for file in $$(find . -name "*.deb" -printf '%P\n'); do \
-			echo "$(BASE_URL)/$(RELEASE_TAG)/$${file}" >> $(PKG_DOWNLOAD_LINKS_FILE) && \
-			echo "$(BASE_URL)/$(RELEASE_TAG)/$${file}" >> $(ALL_DOWNLOAD_LINKS_FILE); \
+		for file in $$(find . -name "*.deb" -print); do \
+			name=$$(basename $${file}) && \
+			echo "$(BASE_URL)/$(RELEASE_TAG)/$${name}" >> $(PKG_DOWNLOAD_LINKS_FILE) && \
+			echo "$(BASE_URL)/$(RELEASE_TAG)/$${name}" >> $(ALL_DOWNLOAD_LINKS_FILE); \
 		done; \
 	fi
 
 	@if [ -d $(ASSETS_PATH)/packages/stable ]; then \
 		cd $(ASSETS_PATH)/packages/stable && \
-		for file in $$(find . -name "*.deb.sha256" -printf '%P\n'); do \
-			echo "$(BASE_URL)/$(RELEASE_TAG)/$${file}" >> $(PKG_DOWNLOAD_LINKS_FILE) && \
-			echo "$(BASE_URL)/$(RELEASE_TAG)/$${file}" >> $(ALL_DOWNLOAD_LINKS_FILE); \
+		for file in $$(find . -name "*.deb.sha256" -print); do \
+			name=$$(basename $${file}) && \
+			echo "$(BASE_URL)/$(RELEASE_TAG)/$${name}" >> $(PKG_DOWNLOAD_LINKS_FILE) && \
+			echo "$(BASE_URL)/$(RELEASE_TAG)/$${name}" >> $(ALL_DOWNLOAD_LINKS_FILE); \
 		done; \
 	fi
 
 	@echo "  - RPM package download links"
 	@if [ -d $(ASSETS_PATH)/packages/dev ]; then \
 		cd $(ASSETS_PATH)/packages/dev && \
-		for file in $$(find . -name "*.rpm" -printf '%P\n'); do \
-			echo "$(BASE_URL)/$(RELEASE_TAG)/$${file}" >> $(PKG_DOWNLOAD_LINKS_FILE) && \
-			echo "$(BASE_URL)/$(RELEASE_TAG)/$${file}" >> $(ALL_DOWNLOAD_LINKS_FILE); \
+		for file in $$(find . -name "*.rpm" -print); do \
+			name=$$(basename $${file}) && \
+			echo "$(BASE_URL)/$(RELEASE_TAG)/$${name}" >> $(PKG_DOWNLOAD_LINKS_FILE) && \
+			echo "$(BASE_URL)/$(RELEASE_TAG)/$${name}" >> $(ALL_DOWNLOAD_LINKS_FILE); \
 		done; \
 	fi
 	@if [ -d $(ASSETS_PATH)/packages/dev ]; then \
 		cd $(ASSETS_PATH)/packages/dev && \
-		for file in $$(find . -name "*.rpm.sha256" -printf '%P\n'); do \
-			echo "$(BASE_URL)/$(RELEASE_TAG)/$${file}" >> $(PKG_DOWNLOAD_LINKS_FILE) && \
-			echo "$(BASE_URL)/$(RELEASE_TAG)/$${file}" >> $(ALL_DOWNLOAD_LINKS_FILE); \
+		for file in $$(find . -name "*.rpm.sha256" -print); do \
+			name=$$(basename $${file}) && \
+			echo "$(BASE_URL)/$(RELEASE_TAG)/$${name}" >> $(PKG_DOWNLOAD_LINKS_FILE) && \
+			echo "$(BASE_URL)/$(RELEASE_TAG)/$${name}" >> $(ALL_DOWNLOAD_LINKS_FILE); \
 		done; \
 	fi
 
 	@if [ -d $(ASSETS_PATH)/packages/stable ]; then \
 		cd $(ASSETS_PATH)/packages/stable && \
-		for file in $$(find . -name "*.rpm" -printf '%P\n'); do \
-			echo "$(BASE_URL)/$(RELEASE_TAG)/$${file}" >> $(PKG_DOWNLOAD_LINKS_FILE) && \
-			echo "$(BASE_URL)/$(RELEASE_TAG)/$${file}" >> $(ALL_DOWNLOAD_LINKS_FILE); \
+		for file in $$(find . -name "*.rpm" -print); do \
+			name=$$(basename $${file}) && \
+			echo "$(BASE_URL)/$(RELEASE_TAG)/$${name}" >> $(PKG_DOWNLOAD_LINKS_FILE) && \
+			echo "$(BASE_URL)/$(RELEASE_TAG)/$${name}" >> $(ALL_DOWNLOAD_LINKS_FILE); \
 		done; \
 	fi
 
 	@if [ -d $(ASSETS_PATH)/packages/stable ]; then \
 		cd $(ASSETS_PATH)/packages/stable && \
-		for file in $$(find . -name "*.rpm.sha256" -printf '%P\n'); do \
-			echo "$(BASE_URL)/$(RELEASE_TAG)/$${file}" >> $(PKG_DOWNLOAD_LINKS_FILE) && \
-			echo "$(BASE_URL)/$(RELEASE_TAG)/$${file}" >> $(ALL_DOWNLOAD_LINKS_FILE); \
+		for file in $$(find . -name "*.rpm.sha256" -print); do \
+			name=$$(basename $${file}) && \
+			echo "$(BASE_URL)/$(RELEASE_TAG)/$${name}" >> $(PKG_DOWNLOAD_LINKS_FILE) && \
+			echo "$(BASE_URL)/$(RELEASE_TAG)/$${name}" >> $(ALL_DOWNLOAD_LINKS_FILE); \
 		done; \
 	fi
 
@@ -758,45 +836,67 @@ links: windows-x86-links windows-x64-links linux-x86-links linux-x64-links packa
 	@echo "Completed generating download links for all release assets"
 
 .PHONY: dev-build
-## dev-build: generates dev build assets for public release
+## dev-build: generates dev build x64 assets for public release
 dev-build: clean linux-x64-dev-build packages-dev package-links linux-x64-dev-compress linux-x64-dev-checksums linux-x64-dev-links
-	@echo "Completed all tasks for dev release build"
+	@echo "Completed all tasks for x64 dev release build"
+
+.PHONY: release-build-x86
+## release-build-x86: generates stable x86 build assets for public release
+release-build-x86: windows-x86 linux-x86 windows-x86-links linux-x86-links
+	@echo "Completed all tasks for x86 stable release build"
+
+.PHONY: release-build-x64
+## release-build-x64: generates stable x64 build assets for public release
+release-build-x64: windows-x64 windows-x64-links packages-dev clean-linux-x64-dev linux-x64-build packages-stable package-links linux-x64-compress linux-x64-checksums linux-x64-links
+	@echo "Completed all tasks for x64 stable release build"
 
 .PHONY: release-build
 ## release-build: generates stable build assets for public release
-release-build: clean windows linux-x86 packages-dev clean-linux-x64-dev packages-stable linux-x64-compress linux-x64-checksums links
+release-build: clean release-build-x86 release-build-x64
 	@echo "Completed all tasks for stable release build"
 
 .PHONY: helper-builder-setup
 helper-builder-setup:
 
-	@echo "Beginning regeneration of builder image using $(CONTAINER_COMMAND)"
-	@echo "Removing any previous build image"
+	@echo "Beginning regeneration of builder images using $(CONTAINER_COMMAND)"
+	@echo "Removing any previous build images"
 	$(CONTAINER_COMMAND) image prune --all --force --filter "label=atc0005_projects_builder_image"
 
 	@echo "Gathering $(CONTAINER_COMMAND) build environment details"
 	@$(CONTAINER_COMMAND) version
 
 	@echo
-	@echo "Generating release builder image"
+	@echo "Generating release builder images"
 	$(CONTAINER_COMMAND) image build \
 		--pull \
 		--no-cache \
 		--force-rm \
 		. \
-		-f dependabot/docker/builds/Dockerfile \
-		-t builder_image \
+		-f dependabot/docker/builds/x64/Dockerfile \
+		-t builder_image_x64 \
 		--label="atc0005_projects_builder_image"
-	@echo "Completed generation of release builder image"
+
+	$(CONTAINER_COMMAND) image build \
+		--pull \
+		--no-cache \
+		--force-rm \
+		. \
+		-f dependabot/docker/builds/x86/Dockerfile \
+		-t builder_image_x86 \
+		--label="atc0005_projects_builder_image"
+	@echo "Completed generation of release builder images"
 
 	@echo "Listing current container images managed by $(CONTAINER_COMMAND)"
 	$(CONTAINER_COMMAND) image ls
 
 	@echo
-	@echo "Inspecting release builder image environment using $(CONTAINER_COMMAND)"
-	@$(CONTAINER_COMMAND) inspect --format "{{range .Config.Env}}{{println .}}{{end}}" builder_image
+	@echo "Inspecting x64 release builder image environment using $(CONTAINER_COMMAND)"
+	@$(CONTAINER_COMMAND) inspect --format "{{range .Config.Env}}{{println .}}{{end}}" builder_image_x64
 
-	@echo "Completed regeneration of builder image using $(CONTAINER_COMMAND)"
+	@echo "Inspecting x86 release builder image environment using $(CONTAINER_COMMAND)"
+	@$(CONTAINER_COMMAND) inspect --format "{{range .Config.Env}}{{println .}}{{end}}" builder_image_x86
+
+	@echo "Completed regeneration of builder images using $(CONTAINER_COMMAND)"
 
 	@echo "Prepare output path for generated assets"
 	@mkdir -p $(ASSETS_PATH)
@@ -809,15 +909,27 @@ docker-release-build: clean helper-builder-setup
 	@echo "Beginning release build using $(CONTAINER_COMMAND)"
 
 	@echo
-	@echo "Using release builder image to generate project release assets"
+	@echo "Using x64 release builder image to generate project release assets"
 	$(CONTAINER_COMMAND) container run \
+		--platform linux/amd64 \
 		--user builduser:builduser \
 		--rm \
 		-i \
 		-v $$PWD/$(OUTPUTDIR):/builds/$(OUTPUTDIR):rw \
 		-w /builds \
-		builder_image \
-		make release-build
+		builder_image_x64 \
+		make release-build-x64
+
+	@echo "Using x86 release builder image to generate project release assets"
+	$(CONTAINER_COMMAND) container run \
+		--platform linux/i386 \
+		--user builduser:builduser \
+		--rm \
+		-i \
+		-v $$PWD/$(OUTPUTDIR):/builds/$(OUTPUTDIR):rw \
+		-w /builds \
+		builder_image_x86 \
+		make release-build-x86
 
 	@echo "Completed release build using $(CONTAINER_COMMAND)"
 
@@ -829,14 +941,25 @@ podman-release-build: clean helper-builder-setup
 	@echo "Beginning release build using $(CONTAINER_COMMAND)"
 
 	@echo
-	@echo "Using release builder image to generate project release assets"
+	@echo "Using x64 release builder image to generate project release assets"
 	$(CONTAINER_COMMAND) container run \
+		--platform linux/amd64 \
 		--rm \
 		-i \
 		-v $$PWD/$(OUTPUTDIR):/builds/$(OUTPUTDIR):rw \
 		-w /builds \
-		builder_image \
-		make release-build
+		builder_image_x64 \
+		make release-build-x64
+
+	@echo "Using x86 release builder image to generate project release assets"
+	$(CONTAINER_COMMAND) container run \
+		--platform linux/i386 \
+		--rm \
+		-i \
+		-v $$PWD/$(OUTPUTDIR):/builds/$(OUTPUTDIR):rw \
+		-w /builds \
+		builder_image_x86 \
+		make release-build-x86
 
 	@echo "Completed release build using $(CONTAINER_COMMAND)"
 
@@ -848,14 +971,15 @@ docker-dev-build: clean helper-builder-setup
 	@echo "Beginning dev build using $(CONTAINER_COMMAND)"
 
 	@echo
-	@echo "Using release builder image to generate project release assets"
+	@echo "Using x64 release builder image to generate project release assets"
 	$(CONTAINER_COMMAND) container run \
+		--platform linux/amd64 \
 		--user builduser:builduser \
 		--rm \
 		-i \
 		-v $$PWD/$(OUTPUTDIR):/builds/$(OUTPUTDIR):rw \
 		-w /builds \
-		builder_image \
+		builder_image_x64 \
 		make dev-build
 
 	@echo "Completed dev build using $(CONTAINER_COMMAND)"
@@ -870,17 +994,18 @@ podman-dev-build: clean helper-builder-setup
 	@echo
 	@echo "Using release builder image to generate project release assets"
 	$(CONTAINER_COMMAND) container run \
+		--platform linux/amd64 \
 		--rm \
 		-i \
 		-v $$PWD/$(OUTPUTDIR):/builds/$(OUTPUTDIR):rw \
 		-w /builds \
-		builder_image \
+		builder_image_x64 \
 		make dev-build
 
 	@echo "Completed dev build using $(CONTAINER_COMMAND)"
 
 .PHONY: docker-packages
-## docker-packages: generates dev and stable packages using builder image
+## docker-packages: generates dev and stable packages using docker container
 docker-packages: CONTAINER_COMMAND := docker
 docker-packages: helper-builder-setup
 
@@ -891,12 +1016,13 @@ docker-packages: helper-builder-setup
 
 	@echo "Building with $(CONTAINER_COMMAND)"
 	$(CONTAINER_COMMAND) container run \
-		--rm \
+		--platform linux/amd64 \
 		--user builduser:builduser \
+		--rm \
 		-i \
 		-v $$PWD/$(OUTPUTDIR):/builds/$(OUTPUTDIR):rw \
 		-w /builds \
-		builder_image \
+		builder_image_x64 \
 		make packages
 
 	@echo "Completed package generation using $(CONTAINER_COMMAND)"
@@ -913,11 +1039,135 @@ podman-packages: helper-builder-setup
 
 	@echo "Building with $(CONTAINER_COMMAND)"
 	$(CONTAINER_COMMAND) container run \
+		--platform linux/amd64 \
 		--rm \
 		-i \
 		-v $$PWD/$(OUTPUTDIR):/builds/$(OUTPUTDIR):rw \
 		-w /builds \
-		builder_image \
+		builder_image_x64 \
 		make packages
 
 	@echo "Completed package generation using $(CONTAINER_COMMAND)"
+
+.PHONY: podman-quick-build-linux
+## podman-quick-build-linux: generates quick build assets for testing purposes
+podman-quick-build-linux: CONTAINER_COMMAND := podman
+podman-quick-build-linux:
+
+	@echo "Beginning quick build of Linux x64 assets using $(CONTAINER_COMMAND)"
+
+	@echo "Beginning regeneration of builder images using $(CONTAINER_COMMAND)"
+	@echo "Removing any previous build images"
+	$(CONTAINER_COMMAND) image prune --all --force --filter "label=atc0005_projects_builder_image"
+
+	@echo "Gathering $(CONTAINER_COMMAND) build environment details"
+	@$(CONTAINER_COMMAND) version
+
+	@echo
+	@echo "Generating x64 builder image"
+
+	$(CONTAINER_COMMAND) image build \
+		--pull \
+		--no-cache \
+		--force-rm \
+		. \
+		-f dependabot/docker/builds/x64/Dockerfile \
+		-t builder_image_x64 \
+		--label="atc0005_projects_builder_image"
+
+	@echo
+	@echo "Using x64 builder image to generate project release assets"
+	$(CONTAINER_COMMAND) container run \
+		--platform linux/amd64 \
+		--rm \
+		-i \
+		-v $$PWD/$(OUTPUTDIR):/builds/$(OUTPUTDIR):rw \
+		-v $$HOME/.cache/go-build:/root/.cache/go-build \
+		-v $$HOME/go/pkg/mod:/go/pkg/mod \
+		-w /builds \
+		builder_image_x64 \
+		make linux-x64-build
+
+	@echo "Completed quick build using $(CONTAINER_COMMAND)"
+
+.PHONY: podman-quick-build-windows
+## podman-quick-build-windows: generates quick build assets for testing purposes
+podman-quick-build-windows: CONTAINER_COMMAND := podman
+podman-quick-build-windows:
+
+	@echo "Beginning quick build of Windows x64 assets using $(CONTAINER_COMMAND)"
+
+	@echo "Beginning regeneration of builder images using $(CONTAINER_COMMAND)"
+	@echo "Removing any previous build images"
+	$(CONTAINER_COMMAND) image prune --all --force --filter "label=atc0005_projects_builder_image"
+
+	@echo "Gathering $(CONTAINER_COMMAND) build environment details"
+	@$(CONTAINER_COMMAND) version
+
+	@echo
+	@echo "Generating x64 builder image"
+
+	$(CONTAINER_COMMAND) image build \
+		--pull \
+		--no-cache \
+		--force-rm \
+		. \
+		-f dependabot/docker/builds/x64/Dockerfile \
+		-t builder_image_x64 \
+		--label="atc0005_projects_builder_image"
+
+	@echo
+	@echo "Using x64 builder image to generate project release assets"
+	$(CONTAINER_COMMAND) container run \
+		--platform linux/amd64 \
+		--rm \
+		-i \
+		-v $$PWD/$(OUTPUTDIR):/builds/$(OUTPUTDIR):rw \
+		-v $$HOME/.cache/go-build:/root/.cache/go-build \
+		-v $$HOME/go/pkg/mod:/go/pkg/mod \
+		-w /builds \
+		builder_image_x64 \
+		make windows-x64-build
+
+	@echo "Completed quick build using $(CONTAINER_COMMAND)"
+
+.PHONY: podman-quick-build
+## podman-quick-build: generates quick build assets for testing purposes
+podman-quick-build: CONTAINER_COMMAND := podman
+podman-quick-build: clean podman-quick-build-linux podman-quick-build-windows
+
+	@echo "Beginning quick build using $(CONTAINER_COMMAND)"
+
+	@echo "Beginning regeneration of builder images using $(CONTAINER_COMMAND)"
+	@echo "Removing any previous build images"
+	$(CONTAINER_COMMAND) image prune --all --force --filter "label=atc0005_projects_builder_image"
+
+	@echo "Gathering $(CONTAINER_COMMAND) build environment details"
+	@$(CONTAINER_COMMAND) version
+
+	@echo
+	@echo "Generating x64 builder image"
+
+	$(CONTAINER_COMMAND) image build \
+		--pull \
+		--no-cache \
+		--force-rm \
+		. \
+		-f dependabot/docker/builds/x64/Dockerfile \
+		-t builder_image_x64 \
+		--label="atc0005_projects_builder_image"
+
+	@echo
+	@echo "Using x64 builder image to generate project release assets"
+	$(CONTAINER_COMMAND) container run \
+		--platform linux/amd64 \
+		--rm \
+		-i \
+		-v $$PWD/$(OUTPUTDIR):/builds/$(OUTPUTDIR):rw \
+        -v $$HOME/.cache/go-build:/root/.cache/go-build \
+        -v $$HOME/go/pkg/mod:/go/pkg/mod \
+		-w /builds \
+		builder_image_x64 \
+		make linux-x64-build windows-x64-build
+
+	@echo "Completed quick build using $(CONTAINER_COMMAND)"

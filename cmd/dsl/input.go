@@ -89,8 +89,8 @@ func pollInputSource(
 // processInput processes given input replacing any Safe Links encoded URL
 // with the original value. Other input is returned unmodified.
 func processInput(txt string, resultsChan chan<- string, errChan chan<- error) {
-	log.Println("Calling safelinks.SafeLinkURLs(txt)")
-	safeLinks, err := safelinks.SafeLinkURLs(txt)
+	log.Println("Calling safelinks.DecodeInput")
+	modifiedInput, err := safelinks.DecodeInput(txt)
 
 	// Failing to find a URL in the input is considered OK. Other errors
 	// result in aborting the decode attempt.
@@ -104,12 +104,6 @@ func processInput(txt string, resultsChan chan<- string, errChan chan<- error) {
 
 		return
 	default:
-		modifiedInput := txt
-
-		for _, sl := range safeLinks {
-			modifiedInput = strings.Replace(modifiedInput, sl.EncodedURL, sl.DecodedURL, 1)
-		}
-
 		resultsChan <- modifiedInput
 	}
 }

@@ -18,6 +18,8 @@ Go-based tooling to manipulate (e.g., normalize/decode) Microsoft Office 365
 - [Features](#features)
   - [`usl` CLI tool](#usl-cli-tool)
   - [`dsl` CLI tool](#dsl-cli-tool)
+  - [`dslg` GUI tool](#dslg-gui-tool)
+  - [`eslg` GUI tool](#eslg-gui-tool)
 - [Changelog](#changelog)
 - [Requirements](#requirements)
   - [Building source code](#building-source-code)
@@ -38,6 +40,8 @@ Go-based tooling to manipulate (e.g., normalize/decode) Microsoft Office 365
       - [Positional Argument](#positional-argument-1)
       - [Standard input (e.g., "piping")](#standard-input-eg-piping-1)
       - [Without arguments or flags](#without-arguments-or-flags-1)
+    - [`dslg`](#dslg)
+    - [`eslg`](#eslg)
 - [Examples](#examples)
   - [`usl` tool](#usl-tool)
     - [Using url positional argument](#using-url-positional-argument)
@@ -52,8 +56,13 @@ Go-based tooling to manipulate (e.g., normalize/decode) Microsoft Office 365
     - [Using input prompt](#using-input-prompt-1)
     - [Using standard input (e.g., "piping")](#using-standard-input-eg-piping-1)
     - [Using filename flag](#using-filename-flag-1)
+  - [`dslg` tool](#dslg-tool)
+  - [`eslg` tool](#eslg-tool)
 - [License](#license)
 - [References](#references)
+  - [General](#general)
+  - [Observed safelinks.protection.outlook.com subdomains](#observed-safelinksprotectionoutlookcom-subdomains)
+  - [Alternative decoders](#alternative-decoders)
 
 ## Project home
 
@@ -65,10 +74,12 @@ submit improvements for review and potential inclusion into the project.
 This repo is intended to provide various tools used to manipulate (e.g.,
 normalize/decode) Microsoft Office 365 "Safe Links" URLs.
 
-| Tool Name | Overall Status | Description                                                    |
-| --------- | -------------- | -------------------------------------------------------------- |
-| `usl`     | 🆗Beta          | Small CLI tool for decoding a given Safe Links URL.            |
-| `dsl`     | 💥Alpha         | Small CLI tool for decoding Safe Links URLs within input text. |
+| Tool Name | Overall Status | Description                                                               |
+| --------- | -------------- | ------------------------------------------------------------------------- |
+| `usl`     | 🆗Beta          | Small CLI tool for decoding a given Safe Links URL.                       |
+| `dsl`     | 💥Alpha         | Small CLI tool for decoding Safe Links URLs within input text.            |
+| `dslg`    | 💥Alpha         | GUI tool for decoding Safe Links URLs within input text.                  |
+| `eslg`    | 💥Alpha         | GUI tool for encoding normal URLs within input text for testing purposes. |
 
 ## Features
 
@@ -100,6 +111,17 @@ Small CLI tool for decoding Safe Links URLs within surrounding input text.
   - [x] via standard input ("piping")
   - [ ] via file (using flag)
 
+### `dslg` GUI tool
+
+GUI tool for decoding Safe Links URLs within given input text.
+
+- Specify single Safe Links URL
+- Specify multiple Safe Links URLs (with surrounding text untouched)
+
+### `eslg` GUI tool
+
+GUI tool for generating test data.
+
 ## Changelog
 
 See the [`CHANGELOG.md`](CHANGELOG.md) file for the changes associated with
@@ -124,17 +146,49 @@ been tested.
     - the prior, but still supported release (aka, "oldstable")
 - GCC
   - if building with custom options (as the provided `Makefile` does)
+- mingw-w64
+  - if building GUI app(s) for Windows
+  - used to perform CGO-enabled builds of Fyne (GUI) applications
 - `make`
   - if using the provided `Makefile`
+- Fyle toolkit OS dependencies
+  - see <https://docs.fyne.io/started/> for OS-specific packages
+
+> [!TIP]
+> Use `make docker-release-build` or `podman-release-build` Makefile recipes to generate/use build containers compatible with this project.
 
 ### Running
+
+The CLI apps are broadly compatible but have been tested against:
 
 - Microsoft Windows 10
 - Ubuntu 20.04
 
+The GUI app(s) have been tested against:
+
+- Microsoft Windows 10
+- Microsoft Windows 11
+- Ubuntu 20.04
+  - `libgl1` package was needed
+
+> [!NOTE]
+> The build image used by this project has an inherited dependency on the official upstream Go Docker image
+ and shares that image's minimum glibc version requirement.
+
+As of this writing, a glibc release of version 2.31 or newer is required to
+match the Debian 11 base image used by current Go Docker images. Ubuntu 20.04
+has glibc 2.31 and meets this requirement. Older distro versions may not meet
+this requirement and will require building from source.
+
+> [!IMPORTANT]
+> When the upstream Go Docker image swaps out the minimum Debian base image OS (currently Debian 11) this may also mean dropping support for some Linux distros.
+
 ## Installation
 
 ### From source
+
+> [!TIP]
+> Use `make docker-release-build` or `podman-release-build` Makefile recipes to use generate/use build containers compatible with this project.
 
 1. [Download][go-docs-download] Go
 1. [Install][go-docs-install] Go
@@ -144,15 +198,18 @@ been tested.
    1. `cd safelinks`
 1. Install dependencies (optional)
    - for Ubuntu Linux
-     - `sudo apt-get install make gcc`
+     - `sudo apt-get install make gcc libgl1-mesa-dev xorg-dev`
    - for CentOS Linux
-     1. `sudo yum install make gcc`
+     1. `sudo yum install make gcc gcc libXcursor-devel libXrandr-devel
+        mesa-libGL-devel libXi-devel libXinerama-devel libXxf86vm-devel`
 1. Build
    - for the detected current operating system and architecture, explicitly
      using bundled dependencies in top-level `vendor` folder
      - most likely this is what you want (if building manually)
      - `go build -mod=vendor ./cmd/usl/`
      - `go build -mod=vendor ./cmd/dsl/`
+     - `go build -mod=vendor ./cmd/dslg/`
+     - `go build -mod=vendor ./cmd/eslg/`
    - manually, explicitly specifying target OS and architecture
      - `GOOS=linux GOARCH=amd64 go build -mod=vendor ./cmd/usl/`
        - substitute `GOARCH=amd64` with the appropriate architecture if using
@@ -160,6 +217,8 @@ been tested.
        - substitute `GOOS=linux` with the appropriate OS if using a different
          platform (e.g., `GOOS=windows`)
      - `GOOS=linux GOARCH=amd64 go build -mod=vendor ./cmd/dsl/`
+     - `GOOS=linux GOARCH=amd64 go build -mod=vendor ./cmd/dslg/`
+     - `GOOS=linux GOARCH=amd64 go build -mod=vendor ./cmd/eslg/`
    - using Makefile `all` recipe
      - `make all`
        - generates x86 and x64 binaries
@@ -171,14 +230,15 @@ been tested.
    - if using `Makefile`
      - look in `/tmp/safelinks/release_assets/usl/`
      - look in `/tmp/safelinks/release_assets/dsl/`
+     - look in `/tmp/safelinks/release_assets/dslg/`
+     - look in `/tmp/safelinks/release_assets/eslg/`
    - if using `go build`
      - look in `/tmp/safelinks/`
 1. Copy the applicable binaries to whatever systems needs to run them so that
    they can be deployed
 
-**NOTE**: Depending on which `Makefile` recipe you use the generated binary
-may be compressed and have an `xz` extension. If so, you should decompress the
-binary first before deploying it (e.g., `xz -d usl-linux-amd64.xz`).
+> [!NOTE]
+> Depending on which `Makefile` recipe you use the generated binary may be compressed and have an `xz` extension. If so, you should decompress the binary first before deploying it (e.g., `xz -d usl-linux-amd64.xz`).
 
 ### Using release binaries
 
@@ -199,6 +259,11 @@ binaries.
 
 1. Place `usl` in a location where it can be easily accessed
 1. Place `dsl` in a location where it can be easily accessed
+1. Place `dslg` in a location where it can be easily accessed
+1. Place `eslg` in a location where it can be easily accessed
+
+> [!NOTE]
+> The `libgl1` package was needed on target Ubuntu systems for the `dslg` and `eslg` apps.
 
 ## Configuration
 
@@ -280,6 +345,14 @@ prompt you to insert/paste content for decoding.
 
 If no input is provided for a the listed amount of time the `dsl` tool will
 timeout and exit.
+
+#### `dslg`
+
+No command-line arguments are currently supported.
+
+#### `eslg`
+
+No command-line arguments are currently supported.
 
 ## Examples
 
@@ -403,16 +476,100 @@ tacos are great https://go.dev/dl/ but so are cookies http://example.com
 > [!NOTE]
 > 🛠️ This feature is not implemented but may be added in the future.
 
+### `dslg` tool
+
+1. Launch application
+1. Copy single URL or mix of URLs and text (e.g., copying an email) into the
+   input field
+1. Press `Decode` button
+1. Press `Copy to Clipboard` button
+1. Paste decoded text where needed (e.g., a ticket)
+
+> [!WARNING]
+> The `Copy to Clipboard` action does *not* preserve any existing clipboard content; there is no undo for using this button
+
+### `eslg` tool
+
+1. Launch application
+1. Copy single unencoded URL or mix of unencoded URLs and text (e.g., copying
+   an email) into the input field
+1. Press one of the desired "action" buttons
+   - `Encode All`
+   - `Encode Randomly`
+   - `QueryEscape All`
+   - `QueryEscape Randomly`
+1. Press `Copy to Clipboard` button
+1. Paste transformed text where needed (e.g., a new `testdata` file)
+
+> [!WARNING]
+> The `Copy to Clipboard` action does *not* preserve any existing clipboard content; there is no undo for using this button
+
 ## License
 
 See the [LICENSE](LICENSE) file for details.
 
 ## References
 
+### General
+
 - <https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/safe-links-about>
 - <https://learn.microsoft.com/en-us/training/modules/manage-safe-links/>
+  - <https://learn.microsoft.com/en-us/training/modules/manage-safe-links/6-examine-end-user-experience-with>
 - <https://security.stackexchange.com/questions/230309/is-a-safelinks-protection-outlook-com-link-phishing>
+  - <https://security.stackexchange.com/a/230371>
 - <https://techcommunity.microsoft.com/t5/security-compliance-and-identity/data-sdata-and-reserved-parameters-in-office-atp-safelinks/td-p/1637050>
+
+### Observed safelinks.protection.outlook.com subdomains
+
+The following `*.safelinks.protection.outlook.com` subdomains have been found
+listed on various KB articles and forums:
+
+- `emea01`
+  - <https://answers.microsoft.com/en-us/outlook_com/forum/all/how-do-i-stop-emea01safelinksprotectionoutlook/32832d4f-e57f-4d3e-9e9e-cc967abdc15e>
+- `eur04`
+  - <https://techcommunity.microsoft.com/t5/security-compliance-and-identity/data-sdata-and-reserved-parameters-in-office-atp-safelinks/m-p/1637050>
+- `na01`
+  - <https://kb.uconn.edu/space/IKB/10730111028/Office+365+Safe+Links%3A+Advanced+Threat+Protection>
+- `nam01`
+  - <https://meta.discourse.org/t/stripping-outlook-safe-link-urls/258114>
+  - <https://answers.microsoft.com/en-us/msoffice/forum/all/safelink-url-decode-api/9e7d7ef9-261f-41c3-a352-198309f02641>
+- `nam02`
+  - <https://answers.microsoft.com/en-us/outlook_com/forum/all/safelinks-one-answer/8eb833c1-53dc-4c98-9c89-ff2f9c8dc812>
+  - <https://security.stackexchange.com/questions/230309/is-a-safelinks-protection-outlook-com-link-phishing>
+- `nam04`
+  - <https://answers.microsoft.com/en-us/outlook_com/forum/all/safelinks-redirect-to-https-rather-than-http/9bcd5342-11cc-4eca-9675-336f0c45c488>
+- `nam10`
+  - <https://kb.uconn.edu/space/IKB/10803643182/Test+a+Link+%2F+Decoding+SafeLinks+URLs>
+- `nam11`
+  - <https://it.arizona.edu/news/new-security-feature-urls-outlook-email>
+- `nam12`
+  - <https://it.cornell.edu/news/microsoft-safe-links-will-soon-provide-more-protection-against-malicious-links/20230913>
+
+### Alternative decoders
+
+The following alternative tools were encountered while researching valid Safe
+Links subdomains. These tools are listed here for informational purposes; no
+endorsement is implied.
+
+> [!IMPORTANT]
+> No guarantees are made regarding the functionality or privacy policies of the following online or local tools. YMMV.
+
+Online decoders:
+
+- <https://safelinks.apps.buffalo.edu/>
+- <https://digital.va.gov/employee-resource-center/safe-link-decoder/>
+- <https://wmich.edu/oit/converter/>
+- <https://it.cornell.edu/decode>
+- <https://www.ohio.edu/oit/security/safe-computing/identifying-malicious-email/safelinks-decoder>
+- <https://www.umsystem.edu/forms/safe-link-decoder>
+- <https://stockton.edu/omni-cms-support/safelinks-decoder.html>
+- <https://infosecurity.utdallas.edu/safelink/>
+
+Local decoders:
+
+- <https://github.com/franta/atp-safelinks>
+- <https://github.com/infosecB/normalize-atp-safelink>
+- <https://gist.github.com/milnak/5100fd003fa3f9281e8f417a1cd46fde>
 
 <!-- Footnotes here  -->
 
