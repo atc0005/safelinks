@@ -44,7 +44,7 @@ func ReadURLsFromInput(inputURL string) ([]string, error) {
 	// We received one or more URLs via standard input.
 	case (stat.Mode() & os.ModeCharDevice) == 0:
 		// fmt.Fprintln(os.Stderr, "Received URL via standard input")
-		return safelinks.ReadURLsFromFile(os.Stdin)
+		return safelinks.ReadFromFile(os.Stdin)
 
 	// We received a URL via positional argument. We ignore all but the first
 	// one.

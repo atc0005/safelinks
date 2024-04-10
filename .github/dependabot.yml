@@ -139,7 +139,25 @@ updates:
   ######################################################################
 
   - package-ecosystem: docker
-    directory: "/dependabot/docker/builds"
+    directory: "/dependabot/docker/builds/x86"
+    open-pull-requests-limit: 10
+    target-branch: "master"
+    schedule:
+      interval: "daily"
+      time: "02:00"
+      timezone: "America/Chicago"
+    assignees:
+      - "atc0005"
+    labels:
+      - "dependencies"
+      - "builds"
+    allow:
+      - dependency-type: "all"
+    commit-message:
+      prefix: "Build image"
+
+  - package-ecosystem: docker
+    directory: "/dependabot/docker/builds/x64"
     open-pull-requests-limit: 10
     target-branch: "master"
     schedule:

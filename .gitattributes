@@ -18,7 +18,8 @@
 #
 # $ git config --global merge.ours.driver true
 
-dependabot/docker/builds/Dockerfile merge=ours
+dependabot/docker/builds/x86/Dockerfile merge=ours
+dependabot/docker/builds/x64/Dockerfile merge=ours
 dependabot/docker/go/Dockerfile merge=ours
 
 # Preserve existing line endings in testdata files; explicitly disable any

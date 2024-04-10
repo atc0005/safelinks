@@ -45,7 +45,7 @@ func main() {
 			os.Exit(1)
 		}
 
-		input, err := safelinks.ReadURLsFromFile(f)
+		input, err := safelinks.ReadFromFile(f)
 		if err != nil {
 			fmt.Fprintf(userFeedbackOut, "Failed to read URLs from %q: %v\n", cfg.Filename, err)
 			os.Exit(1)
