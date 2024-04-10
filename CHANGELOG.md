@@ -26,6 +26,42 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.0] - 2024-04-10
+
+### Added
+
+- (GH-268) Add .gitattributes file to ignore merge conflicts
+- (GH-308) Evaluate URLs within angle brackets
+- (GH-309) Add GUI apps for encoding & decoding input text
+- (GH-310) Add tests using testdata input files
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-219) Build image: Bump atc0005/go-ci from go-ci-oldstable-build-v0.15.4 to go-ci-oldstable-build-v0.16.0 in /dependabot/docker/builds
+- (GH-222) Build image: Bump atc0005/go-ci from go-ci-oldstable-build-v0.16.0 to go-ci-oldstable-build-v0.16.1 in /dependabot/docker/builds
+- (GH-224) Build image: Bump atc0005/go-ci from go-ci-oldstable-build-v0.16.1 to go-ci-oldstable-build-v0.19.0 in /dependabot/docker/builds
+- (GH-265) Build image: Bump atc0005/go-ci from go-ci-oldstable-build-v0.19.0 to go-ci-oldstable-build-v0.20.0 in /dependabot/docker/builds
+- (GH-287) Build image: Bump atc0005/go-ci from go-ci-oldstable-build-v0.20.0 to go-ci-oldstable-build-v0.20.1 in /dependabot/docker/builds
+- (GH-281) Go Runtime: Bump golang from 1.21.8 to 1.21.9 in /dependabot/docker/go
+- (GH-313) Update `github.com/go-text/render` pseudo-version
+
+#### Other Changes
+
+- (GH-269) Disable potential auto EOL conversion for testdata
+- (GH-299) Update workflows to specify OS deps for GUI apps
+- (GH-304) Disable internal/safelinks logging by default
+- (GH-305) Update cmd/usl to use userFeedbackOut output sink
+- (GH-307) Minor refactoring and cleanup
+
+### Fixed
+
+- (GH-264) Update Dependabot build Dockerfile paths
+- (GH-300) Fix project URL and app name value
+- (GH-301) Fix GetURLPatternsUsingIndex URL end pos matching
+- (GH-311) Fix Dockerfile paths
+
 ## [v0.4.0] - 2024-03-15
 
 ### Added
@@ -287,7 +323,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.0...HEAD
+[v0.5.0]: https://github.com/atc0005/safelinks/releases/tag/v0.5.0
 [v0.4.0]: https://github.com/atc0005/safelinks/releases/tag/v0.4.0
 [v0.3.5]: https://github.com/atc0005/safelinks/releases/tag/v0.3.5
 [v0.3.4]: https://github.com/atc0005/safelinks/releases/tag/v0.3.4
