@@ -79,7 +79,7 @@ github.com/go-gl/glfw/v3.3/glfw/glfw/deps/mingw
 github.com/go-gl/glfw/v3.3/glfw/glfw/deps/vs2008
 github.com/go-gl/glfw/v3.3/glfw/glfw/include/GLFW
 github.com/go-gl/glfw/v3.3/glfw/glfw/src
-# github.com/go-text/render v0.0.0-20240410160112-301cb7dc78d6
+# github.com/go-text/render v0.1.0
 ## explicit; go 1.17
 github.com/go-text/render
 # github.com/go-text/typesetting v0.1.1

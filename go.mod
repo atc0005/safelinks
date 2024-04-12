@@ -17,7 +17,7 @@ require (
 	github.com/fyne-io/image v0.0.0-20240121103648-c3c798e60e6b // indirect
 	github.com/go-gl/gl v0.0.0-20231021071112-07e5d0ea2e71 // indirect
 	github.com/go-gl/glfw/v3.3/glfw v0.0.0-20240307211618-a69d953ea142 // indirect
-	github.com/go-text/render v0.0.0-20240410160112-301cb7dc78d6 // indirect
+	github.com/go-text/render v0.1.0 // indirect
 	github.com/go-text/typesetting v0.1.1 // indirect
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/gopherjs/gopherjs v1.17.2 // indirect
