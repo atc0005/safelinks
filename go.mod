@@ -3,7 +3,7 @@ module github.com/atc0005/safelinks
 go 1.20
 
 require (
-	fyne.io/fyne/v2 v2.4.4
+	fyne.io/fyne/v2 v2.4.5
 	github.com/google/go-cmp v0.6.0
 )
 
