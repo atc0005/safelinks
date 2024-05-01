@@ -188,7 +188,7 @@ this requirement and will require building from source.
 ### From source
 
 > [!TIP]
-> Use `make docker-release-build` or `podman-release-build` Makefile recipes to use generate/use build containers compatible with this project.
+> Use `docker-release-build` or `podman-release-build` Makefile recipes to use build containers compatible with this project.
 
 1. [Download][go-docs-download] Go
 1. [Install][go-docs-install] Go
@@ -198,9 +198,19 @@ this requirement and will require building from source.
    1. `cd safelinks`
 1. Install dependencies (optional)
    - for Ubuntu Linux
-     - `sudo apt-get install make gcc libgl1-mesa-dev xorg-dev`
+     - if building for the current architecture
+       - `sudo apt-get install make gcc xz-utils libgl1-mesa-dev xorg-dev`
+     - if building x86 binaries on x64 OS
+       - `sudo dpkg --add-architecture i386`
+       - `sudo dpkg --configure -a`
+       - `sudo apt-get update`
+       - `sudo apt-get install make bsdmainutils gcc gcc-multilib
+         gcc-mingw-w64 xz-utils libgl1-mesa-dev xorg-dev`
+       - `sudo apt-get install libxinerama-dev:i386 libgl1-mesa-dev:i386
+         libxrandr-dev:i386 libxxf86vm-dev:i386 libxi-dev:i386
+         libxcursor-dev:i386`
    - for CentOS Linux
-     1. `sudo yum install make gcc gcc libXcursor-devel libXrandr-devel
+     1. `sudo yum install make gcc libXcursor-devel libXrandr-devel
         mesa-libGL-devel libXi-devel libXinerama-devel libXxf86vm-devel`
 1. Build
    - for the detected current operating system and architecture, explicitly
@@ -263,7 +273,7 @@ binaries.
 1. Place `eslg` in a location where it can be easily accessed
 
 > [!NOTE]
-> The `libgl1` package was needed on target Ubuntu systems for the `dslg` and `eslg` apps.
+> The `libgl1` package is needed on target Ubuntu systems for the `dslg` and `eslg` apps.
 
 ## Configuration
 

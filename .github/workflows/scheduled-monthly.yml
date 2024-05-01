@@ -15,9 +15,26 @@ on:
     # * * * * *
     - cron: "30 4 1 * *"
 
+  # Allow triggering workflow manually
+  # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch
+  workflow_dispatch:
+
 jobs:
   monthly:
     name: Monthly Tasks
     with:
-      os-dependencies: "make bsdmainutils gcc gcc-multilib gcc-mingw-w64 xz-utils libgl1-mesa-dev xorg-dev"
+      # As specified here, the called workflow adds the i386 architecture to
+      # allow installing i386 package variants within a Debian-based x64 OS.
+      makefile-enable-i386-architecture: true
+
+      # We provide dependencies used for building CGO-enabled x86 and x64
+      # assets within a x64 environment.
+      #
+      # NOTE: The *:i386 packages are only available once the i386
+      # architecture has been explicitly added within the build environment.
+      os-dependencies: "make bsdmainutils gcc gcc-multilib gcc-mingw-w64 xz-utils libgl1-mesa-dev xorg-dev libxinerama-dev:i386 libgl1-mesa-dev:i386 libxrandr-dev:i386 libxxf86vm-dev:i386 libxi-dev:i386 libxcursor-dev:i386"
+
+      # Explicitly opt into running `make all` as part of scheduled monthly
+      # test build tasks.
+      makefile-build-all: true
     uses: atc0005/shared-project-resources/.github/workflows/scheduled-monthly.yml@master
