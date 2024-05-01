@@ -669,7 +669,7 @@ linux-links: linux-x86-links linux-x64-links
 
 .PHONY: packages-stable
 ## packages-stable: generates "stable" release series DEB and RPM packages
-packages-stable:
+packages-stable: linux-x64-build
 
 	@echo
 	@echo Generating stable release series packages ...
