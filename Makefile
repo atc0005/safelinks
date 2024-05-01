@@ -302,6 +302,9 @@ depsinstall:
 	@echo "Installing latest git-describe-semver version ..."
 	go install github.com/choffmeister/git-describe-semver@latest
 
+	@echo "NOTE: Review README directions for additional Linux x86 build requirements."
+	@echo "NOTE: See also docker-release-build and podman-release-build Makefile recipes."
+
 	@echo "Finished installing or updating build dependencies"
 
 .PHONY: all
