@@ -26,6 +26,35 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.1] - 2024-05-11
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-335) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.20.1 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.20.2 in /dependabot/docker/builds/x64
+- (GH-350) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.20.2 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.20.3 in /dependabot/docker/builds/x64
+- (GH-352) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.20.3 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.20.4 in /dependabot/docker/builds/x64
+- (GH-334) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.20.1 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.20.2 in /dependabot/docker/builds/x86
+- (GH-348) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.20.2 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.20.3 in /dependabot/docker/builds/x86
+- (GH-353) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.20.3 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.20.4 in /dependabot/docker/builds/x86
+- (GH-318) Go Dependency: Bump fyne.io/fyne/v2 from 2.4.4 to 2.4.5
+- (GH-316) Go Dependency: Bump github.com/go-text/render from 0.0.0-20240410160112-301cb7dc78d6 to 0.1.0
+- (GH-338) Go Dependency: Bump golang.org/x/image from 0.15.0 to 0.16.0
+- (GH-345) Go Dependency: Bump golang.org/x/net from 0.24.0 to 0.25.0
+- (GH-336) Go Dependency: Bump golang.org/x/sys from 0.19.0 to 0.20.0
+- (GH-337) Go Dependency: Bump golang.org/x/text from 0.14.0 to 0.15.0
+- (GH-347) Go Runtime: Bump golang from 1.21.9 to 1.21.10 in /dependabot/docker/go
+- (GH-326) Update `github.com/fyne-io/image` pseudo-version
+- (GH-356) Update `github.com/go-gl/glfw/v3.3/glfw`
+- (GH-358) Update `golang.org/x/mobile` pseudo-version
+
+### Fixed
+
+- (GH-322) Fix `packages` Makefile recipe
+- (GH-328) Enable i386 arch for Makefile `all` builds
+- (GH-330) Rework support for i386 arch for Makefile `all`
+
 ## [v0.5.0] - 2024-04-10
 
 ### Added
@@ -323,7 +352,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.1...HEAD
+[v0.5.1]: https://github.com/atc0005/safelinks/releases/tag/v0.5.1
 [v0.5.0]: https://github.com/atc0005/safelinks/releases/tag/v0.5.0
 [v0.4.0]: https://github.com/atc0005/safelinks/releases/tag/v0.4.0
 [v0.3.5]: https://github.com/atc0005/safelinks/releases/tag/v0.3.5
