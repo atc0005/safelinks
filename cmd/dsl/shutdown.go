@@ -43,7 +43,7 @@ func shutdownListener(
 
 	select {
 	case <-timer.C:
-		fmt.Fprintln(w, "Timeout reached. Exiting application.")
+		_, _ = fmt.Fprintln(w, "Timeout reached. Exiting application.")
 
 		log.Println("Calling cancel func")
 		cancel()
@@ -69,9 +69,9 @@ func shutdownListener(
 		}
 
 		if gracefulShutdownSignal {
-			fmt.Fprintln(w, gracefulExitMsg)
+			_, _ = fmt.Fprintln(w, gracefulExitMsg)
 		} else {
-			fmt.Fprintln(w, failureExitMsg)
+			_, _ = fmt.Fprintln(w, failureExitMsg)
 		}
 
 		done <- true

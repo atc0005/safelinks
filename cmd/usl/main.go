@@ -41,13 +41,13 @@ func main() {
 	case cfg.Filename != "":
 		f, err := os.Open(cfg.Filename)
 		if err != nil {
-			fmt.Fprintf(userFeedbackOut, "Failed to open %q: %v\n", cfg.Filename, err)
+			_, _ = fmt.Fprintf(userFeedbackOut, "Failed to open %q: %v\n", cfg.Filename, err)
 			os.Exit(1)
 		}
 
 		input, err := safelinks.ReadFromFile(f)
 		if err != nil {
-			fmt.Fprintf(userFeedbackOut, "Failed to read URLs from %q: %v\n", cfg.Filename, err)
+			_, _ = fmt.Fprintf(userFeedbackOut, "Failed to read URLs from %q: %v\n", cfg.Filename, err)
 			os.Exit(1)
 		}
 
@@ -56,7 +56,7 @@ func main() {
 	default:
 		input, err := ReadURLsFromInput(cfg.URL)
 		if err != nil {
-			fmt.Fprintf(userFeedbackOut, "Failed to parse input as URL: %v\n", err)
+			_, _ = fmt.Fprintf(userFeedbackOut, "Failed to parse input as URL: %v\n", err)
 			os.Exit(1)
 		}
 

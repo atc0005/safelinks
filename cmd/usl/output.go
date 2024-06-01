@@ -32,7 +32,7 @@ func simpleOutput(u *url.URL, w io.Writer) {
 	urlValues := u.Query()
 	maskedURL := urlValues.Get("url")
 
-	fmt.Fprintln(w, maskedURL)
+	_, _ = fmt.Fprintln(w, maskedURL)
 }
 
 // verboseOutput handles generating extended or "verbose" output when
@@ -47,11 +47,11 @@ func verboseOutput(u *url.URL, w io.Writer) {
 	}
 	sort.Strings(keys)
 
-	fmt.Fprintf(w, "\nExpanded values from the given link:\n\n")
+	_, _ = fmt.Fprintf(w, "\nExpanded values from the given link:\n\n")
 
 	for _, key := range keys {
 		if len(urlValues[key]) > 0 {
-			fmt.Fprintf(w, "  %-10s: %s\n", key, urlValues[key][0])
+			_, _ = fmt.Fprintf(w, "  %-10s: %s\n", key, urlValues[key][0])
 		}
 	}
 }
