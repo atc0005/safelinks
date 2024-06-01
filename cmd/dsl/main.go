@@ -90,10 +90,10 @@ func main() {
 			return
 
 		case result := <-resultsChan:
-			fmt.Fprintln(os.Stdout, result)
+			_, _ = fmt.Fprintln(os.Stdout, result)
 
 		case err := <-errChan:
-			fmt.Fprintln(userFeedbackOut, err.Error())
+			_, _ = fmt.Fprintln(userFeedbackOut, err.Error())
 			appExitCode = 1
 
 			return
