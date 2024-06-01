@@ -34,14 +34,14 @@ func showAppUsageInfo(appInput *os.File, timerDuration time.Duration, appOutput 
 		//
 		// To keep things simple, it is best to only advertise Ctrl-C or
 		// waiting for the configured timeout to stop input processing.
-		fmt.Fprintf(
+		_, _ = fmt.Fprintf(
 			appOutput,
 			"Enter single or multi-line input. Press Ctrl-C to stop "+
 				"(or wait %v for timeout).\n\n",
 			timerDuration,
 		)
 
-		fmt.Fprintf(
+		_, _ = fmt.Fprintf(
 			appOutput,
 			"  - Feedback from this app is sent to stderr.\n"+
 				"  - Decoding results are sent to stdout.\n"+

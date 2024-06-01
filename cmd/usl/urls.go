@@ -43,13 +43,13 @@ func ReadURLsFromInput(inputURL string) ([]string, error) {
 
 	// We received one or more URLs via standard input.
 	case (stat.Mode() & os.ModeCharDevice) == 0:
-		// fmt.Fprintln(os.Stderr, "Received URL via standard input")
+		// _, _ = fmt.Fprintln(os.Stderr, "Received URL via standard input")
 		return safelinks.ReadFromFile(os.Stdin)
 
 	// We received a URL via positional argument. We ignore all but the first
 	// one.
 	case len(flag.Args()) > 0:
-		// fmt.Fprintln(os.Stderr, "Received URL via positional argument")
+		// _, _ = fmt.Fprintln(os.Stderr, "Received URL via positional argument")
 
 		if strings.TrimSpace(flag.Args()[0]) == "" {
 			return nil, safelinks.ErrInvalidURL
@@ -59,14 +59,14 @@ func ReadURLsFromInput(inputURL string) ([]string, error) {
 
 	// We received a URL via flag.
 	case inputURL != "":
-		// fmt.Fprintln(os.Stderr, "Received URL via flag")
+		// _, _ = fmt.Fprintln(os.Stderr, "Received URL via flag")
 
 		inputURLs = append(inputURLs, inputURL)
 
 	// Input URL not given via positional argument, not given via flag either.
 	// We prompt the user for a single input value.
 	default:
-		// fmt.Fprintln(os.Stderr, "default switch case triggered")
+		// _, _ = fmt.Fprintln(os.Stderr, "default switch case triggered")
 
 		input, err := safelinks.ReadURLFromUser()
 		if err != nil {
@@ -98,14 +98,14 @@ func ProcessInputURLs(inputURLs []string, okOut io.Writer, errOut io.Writer, ver
 		cleanedURL := safelinks.CleanURL(inputURL)
 		safelink, err := url.Parse(cleanedURL)
 		if err != nil {
-			fmt.Fprintf(errOut, "Failed to parse URL: %v\n", err)
+			_, _ = fmt.Fprintf(errOut, "Failed to parse URL: %v\n", err)
 
 			errEncountered = true
 			continue
 		}
 
 		if !safelinks.ValidSafeLinkURL(safelink) {
-			fmt.Fprintf(errOut, "Invalid Safelinks URL %q\n", safelink)
+			_, _ = fmt.Fprintf(errOut, "Invalid Safelinks URL %q\n", safelink)
 
 			errEncountered = true
 			continue
