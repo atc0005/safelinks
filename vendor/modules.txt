@@ -150,7 +150,7 @@ golang.org/x/image/math/fixed
 golang.org/x/image/tiff
 golang.org/x/image/tiff/lzw
 golang.org/x/image/vector
-# golang.org/x/mobile v0.0.0-20240506190922-a1a533f289d3
+# golang.org/x/mobile v0.0.0-20240604190613-2782386b8afd
 ## explicit; go 1.18
 golang.org/x/mobile/exp/f32
 # golang.org/x/net v0.26.0
