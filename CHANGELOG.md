@@ -26,6 +26,30 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.2] - 2024-06-07
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-366) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.20.4 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.20.5 in /dependabot/docker/builds/x64
+- (GH-368) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.20.5 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.20.6 in /dependabot/docker/builds/x64
+- (GH-387) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.20.6 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.20.7 in /dependabot/docker/builds/x64
+- (GH-365) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.20.4 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.20.5 in /dependabot/docker/builds/x86
+- (GH-370) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.20.5 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.20.6 in /dependabot/docker/builds/x86
+- (GH-388) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.20.6 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.20.7 in /dependabot/docker/builds/x86
+- (GH-380) Go Dependency: Bump golang.org/x/image from 0.16.0 to 0.17.0
+- (GH-377) Go Dependency: Bump golang.org/x/net from 0.25.0 to 0.26.0
+- (GH-379) Go Dependency: Bump golang.org/x/sys from 0.20.0 to 0.21.0
+- (GH-378) Go Dependency: Bump golang.org/x/text from 0.15.0 to 0.16.0
+- (GH-376) Go Runtime: Bump golang from 1.21.10 to 1.21.11 in /dependabot/docker/go
+- (GH-386) Update `golang.org/x/mobile` pseudo-version
+
+### Fixed
+
+- (GH-371) Remove inactive maligned linter
+- (GH-372) Fix errcheck linting errors
+
 ## [v0.5.1] - 2024-05-11
 
 ### Changed
@@ -352,7 +376,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.1...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.2...HEAD
+[v0.5.2]: https://github.com/atc0005/safelinks/releases/tag/v0.5.2
 [v0.5.1]: https://github.com/atc0005/safelinks/releases/tag/v0.5.1
 [v0.5.0]: https://github.com/atc0005/safelinks/releases/tag/v0.5.0
 [v0.4.0]: https://github.com/atc0005/safelinks/releases/tag/v0.4.0
