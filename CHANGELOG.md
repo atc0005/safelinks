@@ -26,6 +26,30 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.3] - 2024-07-10
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-395) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.20.7 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.20.8 in /dependabot/docker/builds/x64
+- (GH-415) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.20.8 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.2 in /dependabot/docker/builds/x64
+- (GH-420) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.2 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.3 in /dependabot/docker/builds/x64
+- (GH-425) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.3 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.4 in /dependabot/docker/builds/x64
+- (GH-394) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.20.7 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.20.8 in /dependabot/docker/builds/x86
+- (GH-404) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.20.8 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.2 in /dependabot/docker/builds/x86
+- (GH-417) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.2 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.3 in /dependabot/docker/builds/x86
+- (GH-422) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.3 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.4 in /dependabot/docker/builds/x86
+- (GH-400) Go Dependency: Bump fyne.io/systray from 1.10.1-0.20231115130155-104f5ef7839e to 1.11.0
+- (GH-399) Go Dependency: Bump github.com/yuin/goldmark from 1.7.1 to 1.7.2
+- (GH-401) Go Dependency: Bump github.com/yuin/goldmark from 1.7.2 to 1.7.3
+- (GH-411) Go Dependency: Bump github.com/yuin/goldmark from 1.7.3 to 1.7.4
+- (GH-410) Go Dependency: Bump golang.org/x/image from 0.17.0 to 0.18.0
+- (GH-430) Go Dependency: Bump golang.org/x/net from 0.26.0 to 0.27.0
+- (GH-427) Go Dependency: Bump golang.org/x/sys from 0.21.0 to 0.22.0
+- (GH-418) Go Runtime: Bump golang from 1.21.11 to 1.21.12 in /dependabot/docker/go
+- (GH-433) Update `golang.org/x/mobile` pseudo-version
+
 ## [v0.5.2] - 2024-06-07
 
 ### Changed
@@ -376,7 +400,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.2...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.3...HEAD
+[v0.5.3]: https://github.com/atc0005/safelinks/releases/tag/v0.5.3
 [v0.5.2]: https://github.com/atc0005/safelinks/releases/tag/v0.5.2
 [v0.5.1]: https://github.com/atc0005/safelinks/releases/tag/v0.5.1
 [v0.5.0]: https://github.com/atc0005/safelinks/releases/tag/v0.5.0
