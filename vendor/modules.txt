@@ -1,16 +1,18 @@
-# fyne.io/fyne/v2 v2.4.5
-## explicit; go 1.17
+# fyne.io/fyne/v2 v2.5.0
+## explicit; go 1.19
 fyne.io/fyne/v2
 fyne.io/fyne/v2/app
 fyne.io/fyne/v2/canvas
 fyne.io/fyne/v2/container
 fyne.io/fyne/v2/data/binding
+fyne.io/fyne/v2/driver
 fyne.io/fyne/v2/driver/desktop
 fyne.io/fyne/v2/driver/mobile
 fyne.io/fyne/v2/internal
 fyne.io/fyne/v2/internal/animation
 fyne.io/fyne/v2/internal/app
 fyne.io/fyne/v2/internal/async
+fyne.io/fyne/v2/internal/build
 fyne.io/fyne/v2/internal/cache
 fyne.io/fyne/v2/internal/color
 fyne.io/fyne/v2/internal/driver
@@ -26,6 +28,7 @@ fyne.io/fyne/v2/internal/driver/mobile/event/size
 fyne.io/fyne/v2/internal/driver/mobile/event/touch
 fyne.io/fyne/v2/internal/driver/mobile/gl
 fyne.io/fyne/v2/internal/driver/mobile/mobileinit
+fyne.io/fyne/v2/internal/metadata
 fyne.io/fyne/v2/internal/painter
 fyne.io/fyne/v2/internal/painter/gl
 fyne.io/fyne/v2/internal/painter/software
@@ -34,7 +37,9 @@ fyne.io/fyne/v2/internal/repository/mime
 fyne.io/fyne/v2/internal/scale
 fyne.io/fyne/v2/internal/svg
 fyne.io/fyne/v2/internal/test
+fyne.io/fyne/v2/internal/theme
 fyne.io/fyne/v2/internal/widget
+fyne.io/fyne/v2/lang
 fyne.io/fyne/v2/layout
 fyne.io/fyne/v2/storage
 fyne.io/fyne/v2/storage/repository
@@ -46,6 +51,10 @@ fyne.io/fyne/v2/widget
 fyne.io/systray
 fyne.io/systray/internal/generated/menu
 fyne.io/systray/internal/generated/notifier
+# github.com/BurntSushi/toml v1.4.0
+## explicit; go 1.18
+github.com/BurntSushi/toml
+github.com/BurntSushi/toml/internal
 # github.com/davecgh/go-spew v1.1.1
 ## explicit
 github.com/davecgh/go-spew/spew
@@ -86,12 +95,14 @@ github.com/go-text/render
 ## explicit; go 1.17
 github.com/go-text/typesetting/di
 github.com/go-text/typesetting/font
+github.com/go-text/typesetting/fontscan
 github.com/go-text/typesetting/harfbuzz
 github.com/go-text/typesetting/language
 github.com/go-text/typesetting/opentype/api
 github.com/go-text/typesetting/opentype/api/font
 github.com/go-text/typesetting/opentype/api/font/cff
 github.com/go-text/typesetting/opentype/api/font/cff/interpreter
+github.com/go-text/typesetting/opentype/api/metadata
 github.com/go-text/typesetting/opentype/loader
 github.com/go-text/typesetting/opentype/tables
 github.com/go-text/typesetting/segmenter
@@ -112,12 +123,30 @@ github.com/google/go-cmp/cmp/internal/value
 # github.com/gopherjs/gopherjs v1.17.2
 ## explicit; go 1.17
 github.com/gopherjs/gopherjs/js
+# github.com/jeandeaual/go-locale v0.0.0-20240223122105-ce5225dcaa49
+## explicit; go 1.18
+github.com/jeandeaual/go-locale
 # github.com/jsummers/gobmp v0.0.0-20230614200233-a9de23ed2e25
 ## explicit
 github.com/jsummers/gobmp
+# github.com/nicksnyder/go-i18n/v2 v2.4.0
+## explicit; go 1.18
+github.com/nicksnyder/go-i18n/v2/i18n
+github.com/nicksnyder/go-i18n/v2/i18n/template
+github.com/nicksnyder/go-i18n/v2/internal
+github.com/nicksnyder/go-i18n/v2/internal/plural
 # github.com/pmezard/go-difflib v1.0.0
 ## explicit
 github.com/pmezard/go-difflib/difflib
+# github.com/rymdport/portal v0.2.2
+## explicit; go 1.19
+github.com/rymdport/portal
+github.com/rymdport/portal/internal/apis
+github.com/rymdport/portal/internal/convert
+github.com/rymdport/portal/notification
+github.com/rymdport/portal/openuri
+github.com/rymdport/portal/settings
+github.com/rymdport/portal/settings/appearance
 # github.com/srwiley/oksvg v0.0.0-20221011165216-be6e8873101c
 ## explicit; go 1.17
 github.com/srwiley/oksvg
@@ -157,7 +186,6 @@ golang.org/x/net/html/atom
 golang.org/x/net/html/charset
 # golang.org/x/sys v0.22.0
 ## explicit; go 1.18
-golang.org/x/sys/execabs
 golang.org/x/sys/unix
 golang.org/x/sys/windows
 golang.org/x/sys/windows/registry
@@ -184,6 +212,3 @@ golang.org/x/text/unicode/bidi
 # gopkg.in/yaml.v3 v3.0.1
 ## explicit
 gopkg.in/yaml.v3
-# honnef.co/go/js/dom v0.0.0-20231112215516-51f43a291193
-## explicit
-honnef.co/go/js/dom
