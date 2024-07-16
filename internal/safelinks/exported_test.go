@@ -81,6 +81,12 @@ var (
 	//go:embed testdata/output/standalone/decoded-list-of-urls-with-lf-eol.txt
 	outputDecodedListOfURLsWithLFEol string
 
+	//go:embed testdata/output/standalone/decoded-list-of-markdown-formatted-urls-with-crlf-eol.txt
+	outputDecodedListOfMarkdownFormattedURLsWithCRLFEol string
+
+	//go:embed testdata/output/standalone/decoded-list-of-markdown-formatted-urls-with-lf-eol.txt
+	outputDecodedListOfMarkdownFormattedURLsWithLFEol string
+
 	//go:embed testdata/output/standalone/decoded-single-url-with-angle-brackets-with-crlf-eol.txt
 	outputDecodedSingleURLWithAngleBracketsWithCRLFEol string
 
@@ -129,6 +135,12 @@ var (
 
 	//go:embed testdata/input/encoded-all/list-of-urls-with-lf-eol.txt
 	inputEncodedAllListOfURLsWithLFEol string
+
+	//go:embed testdata/input/encoded-all/list-of-markdown-formatted-urls-with-crlf-eol.txt
+	inputEncodedAllListOfMarkdownFormattedURLsWithCRLFEol string
+
+	//go:embed testdata/input/encoded-all/list-of-markdown-formatted-urls-with-lf-eol.txt
+	inputEncodedAllListOfMarkdownFormattedURLsWithLFEol string
 )
 
 // The format used by the test files is VERY specific; trailing space plus
@@ -247,6 +259,14 @@ func TestURLsFindsAllValidURLs(t *testing.T) {
 		"Encoded list of URLs with CRLF EOL": {
 			input:          inputEncodedAllListOfURLsWithCRLFEol,
 			foundURLsCount: 17,
+		},
+		"Encoded list of Markdown formatted URLs with LF EOL": {
+			input:          inputEncodedAllListOfMarkdownFormattedURLsWithLFEol,
+			foundURLsCount: 2,
+		},
+		"Encoded list of Markdown formatted URLs with CRLF EOL": {
+			input:          inputEncodedAllListOfMarkdownFormattedURLsWithCRLFEol,
+			foundURLsCount: 2,
 		},
 		"Encoded single URL with angle brackets with LF EOL": {
 			input:          inputEncodedSingleSafelinksURLWithAngleBracketsWithLFEol,
@@ -489,6 +509,16 @@ func TestFilterURLsCorrectlyFiltersByType(t *testing.T) {
 			foundEncodedLinksURLsCount: 17,
 			foundUnencodedURLsCount:    0,
 		},
+		"Encoded list of Markdown formatted URLs with CRLF EOL": {
+			input:                      inputEncodedAllListOfMarkdownFormattedURLsWithCRLFEol,
+			foundEncodedLinksURLsCount: 2,
+			foundUnencodedURLsCount:    0,
+		},
+		"Encoded list of Markdown formatted URLs with LF EOL": {
+			input:                      inputEncodedAllListOfMarkdownFormattedURLsWithLFEol,
+			foundEncodedLinksURLsCount: 2,
+			foundUnencodedURLsCount:    0,
+		},
 		"Encoded single URL with angle brackets with LF EOL": {
 			input:                      inputEncodedSingleSafelinksURLWithAngleBracketsWithLFEol,
 			foundEncodedLinksURLsCount: 1,
@@ -658,6 +688,14 @@ func TestSafeLinkURLsFindsAllValidSafeLinks(t *testing.T) {
 			input:                 inputEncodedAllListOfURLsWithLFEol,
 			foundEncodedURLsCount: 17,
 		},
+		"Encoded list of Markdown formatted URLs with CRLF EOL": {
+			input:                 inputEncodedAllListOfMarkdownFormattedURLsWithCRLFEol,
+			foundEncodedURLsCount: 2,
+		},
+		"Encoded list of Markdown formatted URLs with LF EOL": {
+			input:                 inputEncodedAllListOfMarkdownFormattedURLsWithLFEol,
+			foundEncodedURLsCount: 2,
+		},
 		"Encoded single URL with angle brackets with LF EOL": {
 			input:                 inputEncodedSingleSafelinksURLWithAngleBracketsWithLFEol,
 			foundEncodedURLsCount: 1,
@@ -752,6 +790,14 @@ func TestDecodeInputSucceedsForValidInput(t *testing.T) {
 		"Encoded list of URLs with CRLF EOL": {
 			input:  inputEncodedAllListOfURLsWithCRLFEol,
 			result: outputDecodedListOfURLsWithCRLFEol,
+		},
+		"Encoded list of Markdown formatted URLs with LF EOL": {
+			input:  inputEncodedAllListOfMarkdownFormattedURLsWithLFEol,
+			result: outputDecodedListOfMarkdownFormattedURLsWithLFEol,
+		},
+		"Encoded list of Markdown formatted URLs with CRLF EOL": {
+			input:  inputEncodedAllListOfMarkdownFormattedURLsWithCRLFEol,
+			result: outputDecodedListOfMarkdownFormattedURLsWithCRLFEol,
 		},
 		"Encoded single URL with angle brackets with LF EOL": {
 			input:  inputEncodedSingleSafelinksURLWithAngleBracketsWithLFEol,
