@@ -1,0 +1,2 @@
+[Retirement of Office 365 connectors within Microsoft Teams](https://devblogs.microsoft.com/microsoft365dev/retirement-of-office-365-connectors-within-microsoft-teams/)
+[Retirement of Office 365 connectors within Microsoft Teams](https://aka.ms/O365ConnectorDeprecation)
