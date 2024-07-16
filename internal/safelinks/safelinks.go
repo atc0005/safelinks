@@ -206,6 +206,10 @@ func trimEnclosingURLCharacters(url string) string {
 	// Remove potential enclosing angle brackets.
 	url = strings.Trim(url, `<>`)
 
+	// Remove potential enclosing parenthesis used with Markdown formatted
+	// URLs.
+	url = strings.Trim(url, `()`)
+
 	return url
 }
 
@@ -306,7 +310,7 @@ func GetURLPatternsUsingRegex(input string, evalPlainHTTP bool) ([]FoundURLPatte
 // whitespace character or a right angle bracket. The caller is responsible
 // for trimming angle brackets and other unwanted characters.
 func GetURLPatternsUsingIndex(input string, evalAllHTTPURLs bool) ([]FoundURLPattern, error) {
-	if !strings.Contains(input, SafeLinksURLRequiredPrefix) && !evalAllHTTPURLs {
+	if !hasAcceptableURLPrefix(input, evalAllHTTPURLs) {
 		return nil, ErrNoURLsFound
 	}
 
