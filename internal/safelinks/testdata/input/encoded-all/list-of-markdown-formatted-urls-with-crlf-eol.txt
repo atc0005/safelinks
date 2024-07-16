@@ -1,0 +1,2 @@
+[Retirement of Office 365 connectors within Microsoft Teams](https://nam11.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdevblogs.microsoft.com%2Fmicrosoft365dev%2Fretirement-of-office-365-connectors-within-microsoft-teams%2F&data=data_placeholder&sdata=sdata_placeholder&reserved=0)
+[Retirement of Office 365 connectors within Microsoft Teams](https://nam10.safelinks.protection.outlook.com/?url=https%3A%2F%2Faka.ms%2FO365ConnectorDeprecation&data=data_placeholder&sdata=sdata_placeholder&reserved=0)
