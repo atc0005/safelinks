@@ -81,11 +81,17 @@ var (
 	//go:embed testdata/output/standalone/decoded-list-of-urls-with-lf-eol.txt
 	outputDecodedListOfURLsWithLFEol string
 
-	//go:embed testdata/output/standalone/decoded-single-url-with-crlf-eol.txt
-	outputDecodedSingleURLWithCRLFEol string
+	//go:embed testdata/output/standalone/decoded-single-url-with-angle-brackets-with-crlf-eol.txt
+	outputDecodedSingleURLWithAngleBracketsWithCRLFEol string
 
-	//go:embed testdata/output/standalone/decoded-single-url-with-lf-eol.txt
-	outputDecodedSingleURLWithLFEol string
+	//go:embed testdata/output/standalone/decoded-single-url-with-angle-brackets-with-lf-eol.txt
+	outputDecodedSingleURLWithAngleBracketsWithLFEol string
+
+	//go:embed testdata/output/standalone/decoded-single-url-without-angle-brackets-with-crlf-eol.txt
+	outputDecodedSingleURLWithoutAngleBracketsWithCRLFEol string
+
+	//go:embed testdata/output/standalone/decoded-single-url-without-angle-brackets-with-lf-eol.txt
+	outputDecodedSingleURLWithoutAngleBracketsWithLFEol string
 )
 
 // The format used by the test files is VERY specific; trailing space plus
@@ -106,17 +112,23 @@ var (
 	//go:embed testdata/input/encoded-all/email-without-angle-brackets-with-lf-eol.txt
 	inputEncodedAllEmailWithoutAngleBracketsWithLFEol string
 
-	//go:embed testdata/input/encoded-all/single-safelinks-url-with-crlf-eol.txt
-	inputEncodedSingleSafelinksURLWithCRLFEol string
+	//go:embed testdata/input/encoded-all/single-safelinks-url-with-angle-brackets-with-crlf-eol.txt
+	inputEncodedSingleSafelinksURLWithAngleBracketsWithCRLFEol string
+
+	//go:embed testdata/input/encoded-all/single-safelinks-url-with-angle-brackets-with-lf-eol.txt
+	inputEncodedSingleSafelinksURLWithAngleBracketsWithLFEol string
+
+	//go:embed testdata/input/encoded-all/single-safelinks-url-without-angle-brackets-with-crlf-eol.txt
+	inputEncodedSingleSafelinksURLWithoutAngleBracketsWithCRLFEol string
+
+	//go:embed testdata/input/encoded-all/single-safelinks-url-without-angle-brackets-with-lf-eol.txt
+	inputEncodedSingleSafelinksURLWithoutAngleBracketsWithLFEol string
 
 	//go:embed testdata/input/encoded-all/list-of-urls-with-crlf-eol.txt
 	inputEncodedAllListOfURLsWithCRLFEol string
 
 	//go:embed testdata/input/encoded-all/list-of-urls-with-lf-eol.txt
 	inputEncodedAllListOfURLsWithLFEol string
-
-	//go:embed testdata/input/encoded-all/single-safelinks-url-with-lf-eol.txt
-	inputEncodedSingleSafelinksURLWithLFEol string
 )
 
 // The format used by the test files is VERY specific; trailing space plus
@@ -236,12 +248,20 @@ func TestURLsFindsAllValidURLs(t *testing.T) {
 			input:          inputEncodedAllListOfURLsWithCRLFEol,
 			foundURLsCount: 17,
 		},
-		"Encoded single URL with LF EOL": {
-			input:          inputEncodedSingleSafelinksURLWithLFEol,
+		"Encoded single URL with angle brackets with LF EOL": {
+			input:          inputEncodedSingleSafelinksURLWithAngleBracketsWithLFEol,
 			foundURLsCount: 1,
 		},
-		"Encoded single URL with CRLF EOL": {
-			input:          inputEncodedSingleSafelinksURLWithCRLFEol,
+		"Encoded single URL with angle brackets with CRLF EOL": {
+			input:          inputEncodedSingleSafelinksURLWithAngleBracketsWithCRLFEol,
+			foundURLsCount: 1,
+		},
+		"Encoded single URL without angle brackets with LF EOL": {
+			input:          inputEncodedSingleSafelinksURLWithoutAngleBracketsWithLFEol,
+			foundURLsCount: 1,
+		},
+		"Encoded single URL without angle brackets with CRLF EOL": {
+			input:          inputEncodedSingleSafelinksURLWithoutAngleBracketsWithCRLFEol,
 			foundURLsCount: 1,
 		},
 		"Encoded email with angle brackets with CRLF EOL": {
@@ -469,13 +489,23 @@ func TestFilterURLsCorrectlyFiltersByType(t *testing.T) {
 			foundEncodedLinksURLsCount: 17,
 			foundUnencodedURLsCount:    0,
 		},
-		"Encoded single URL with CRLF EOL": {
-			input:                      inputEncodedSingleSafelinksURLWithCRLFEol,
+		"Encoded single URL with angle brackets with LF EOL": {
+			input:                      inputEncodedSingleSafelinksURLWithAngleBracketsWithLFEol,
 			foundEncodedLinksURLsCount: 1,
 			foundUnencodedURLsCount:    0,
 		},
-		"Encoded single URL with LF EOL": {
-			input:                      inputEncodedSingleSafelinksURLWithLFEol,
+		"Encoded single URL with angle brackets with CRLF EOL": {
+			input:                      inputEncodedSingleSafelinksURLWithAngleBracketsWithCRLFEol,
+			foundEncodedLinksURLsCount: 1,
+			foundUnencodedURLsCount:    0,
+		},
+		"Encoded single URL without angle brackets with LF EOL": {
+			input:                      inputEncodedSingleSafelinksURLWithoutAngleBracketsWithLFEol,
+			foundEncodedLinksURLsCount: 1,
+			foundUnencodedURLsCount:    0,
+		},
+		"Encoded single URL without angle brackets with CRLF EOL": {
+			input:                      inputEncodedSingleSafelinksURLWithoutAngleBracketsWithCRLFEol,
 			foundEncodedLinksURLsCount: 1,
 			foundUnencodedURLsCount:    0,
 		},
@@ -490,13 +520,23 @@ func TestFilterURLsCorrectlyFiltersByType(t *testing.T) {
 			foundEncodedLinksURLsCount: 0,
 			foundUnencodedURLsCount:    17,
 		},
-		"Unencoded single URL with LF EOL": {
-			input:                      outputDecodedSingleURLWithLFEol,
+		"Unencoded single URL with angle brackets with LF EOL": {
+			input:                      outputDecodedSingleURLWithAngleBracketsWithLFEol,
 			foundEncodedLinksURLsCount: 0,
 			foundUnencodedURLsCount:    1,
 		},
-		"Unencoded single URL with CRLF EOL": {
-			input:                      outputDecodedSingleURLWithCRLFEol,
+		"Unencoded single URL with angle brackets with CRLF EOL": {
+			input:                      outputDecodedSingleURLWithAngleBracketsWithCRLFEol,
+			foundEncodedLinksURLsCount: 0,
+			foundUnencodedURLsCount:    1,
+		},
+		"Unencoded single URL without angle brackets with LF EOL": {
+			input:                      outputDecodedSingleURLWithoutAngleBracketsWithLFEol,
+			foundEncodedLinksURLsCount: 0,
+			foundUnencodedURLsCount:    1,
+		},
+		"Unencoded single URL without angle brackets with CRLF EOL": {
+			input:                      outputDecodedSingleURLWithoutAngleBracketsWithCRLFEol,
 			foundEncodedLinksURLsCount: 0,
 			foundUnencodedURLsCount:    1,
 		},
@@ -618,12 +658,20 @@ func TestSafeLinkURLsFindsAllValidSafeLinks(t *testing.T) {
 			input:                 inputEncodedAllListOfURLsWithLFEol,
 			foundEncodedURLsCount: 17,
 		},
-		"Encoded single URL with CRLF EOL": {
-			input:                 inputEncodedSingleSafelinksURLWithCRLFEol,
+		"Encoded single URL with angle brackets with LF EOL": {
+			input:                 inputEncodedSingleSafelinksURLWithAngleBracketsWithLFEol,
 			foundEncodedURLsCount: 1,
 		},
-		"Encoded single URL with LF EOL": {
-			input:                 inputEncodedSingleSafelinksURLWithLFEol,
+		"Encoded single URL with angle brackets with CRLF EOL": {
+			input:                 inputEncodedSingleSafelinksURLWithAngleBracketsWithCRLFEol,
+			foundEncodedURLsCount: 1,
+		},
+		"Encoded single URL without angle brackets with LF EOL": {
+			input:                 inputEncodedSingleSafelinksURLWithoutAngleBracketsWithLFEol,
+			foundEncodedURLsCount: 1,
+		},
+		"Encoded single URL without angle brackets with CRLF EOL": {
+			input:                 inputEncodedSingleSafelinksURLWithoutAngleBracketsWithCRLFEol,
 			foundEncodedURLsCount: 1,
 		},
 
@@ -705,14 +753,23 @@ func TestDecodeInputSucceedsForValidInput(t *testing.T) {
 			input:  inputEncodedAllListOfURLsWithCRLFEol,
 			result: outputDecodedListOfURLsWithCRLFEol,
 		},
-		"Encoded single URL with LF EOL": {
-			input:  inputEncodedSingleSafelinksURLWithLFEol,
-			result: outputDecodedSingleURLWithLFEol,
+		"Encoded single URL with angle brackets with LF EOL": {
+			input:  inputEncodedSingleSafelinksURLWithAngleBracketsWithLFEol,
+			result: outputDecodedSingleURLWithAngleBracketsWithLFEol,
 		},
-		"Encoded single URL with CRLF EOL": {
-			input:  inputEncodedSingleSafelinksURLWithCRLFEol,
-			result: outputDecodedSingleURLWithCRLFEol,
+		"Encoded single URL with angle brackets with CRLF EOL": {
+			input:  inputEncodedSingleSafelinksURLWithAngleBracketsWithCRLFEol,
+			result: outputDecodedSingleURLWithAngleBracketsWithCRLFEol,
 		},
+		"Encoded single URL without angle brackets with LF EOL": {
+			input:  inputEncodedSingleSafelinksURLWithoutAngleBracketsWithLFEol,
+			result: outputDecodedSingleURLWithoutAngleBracketsWithLFEol,
+		},
+		"Encoded single URL without angle brackets with CRLF EOL": {
+			input:  inputEncodedSingleSafelinksURLWithoutAngleBracketsWithCRLFEol,
+			result: outputDecodedSingleURLWithoutAngleBracketsWithCRLFEol,
+		},
+
 		"Encoded email with angle brackets with CRLF EOL": {
 			input:  inputEncodedAllEmailWithAngleBracketsWithCRLFEol,
 			result: outputDecodedEmailWithAngleBracketsWithCRLFEol,
@@ -791,11 +848,17 @@ func TestDecodeInputFailsForInvalidInput(t *testing.T) {
 		"Unencoded list of URLs with CRLF EOL": {
 			input: outputDecodedListOfURLsWithCRLFEol,
 		},
-		"Unencoded single URL with LF EOL": {
-			input: outputDecodedSingleURLWithLFEol,
+		"Unencoded single URL with angle brackets with LF EOL": {
+			input: outputDecodedSingleURLWithAngleBracketsWithLFEol,
 		},
-		"Unencoded single URL with CRLF EOL": {
-			input: outputDecodedSingleURLWithCRLFEol,
+		"Unencoded single URL with angle brackets with CRLF EOL": {
+			input: outputDecodedSingleURLWithAngleBracketsWithCRLFEol,
+		},
+		"Unencoded single URL without angle brackets with LF EOL": {
+			input: outputDecodedSingleURLWithoutAngleBracketsWithLFEol,
+		},
+		"Unencoded single URL without angle brackets CRLF EOL": {
+			input: outputDecodedSingleURLWithoutAngleBracketsWithCRLFEol,
 		},
 		"Unencoded email with angle brackets with LF EOL": {
 			input: outputDecodedEmailWithAngleBracketsWithLFEol,
