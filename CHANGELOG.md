@@ -26,6 +26,25 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.4] - 2024-07-17
+
+### Added
+
+- (GH-449) Add cases for single URL with(out) angle brackets
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-445) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.4 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.5 in /dependabot/docker/builds/x64
+- (GH-443) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.4 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.5 in /dependabot/docker/builds/x86
+- (GH-438) Go Dependency: Bump fyne.io/fyne/v2 from 2.4.5 to 2.5.0
+- (GH-447) Go Dependency: Bump github.com/rymdport/portal from 0.2.2 to 0.2.3
+
+### Fixed
+
+- (GH-450) Fix decoding of Markdown formatted URLs
+
 ## [v0.5.3] - 2024-07-10
 
 ### Changed
@@ -400,7 +419,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.3...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.4...HEAD
+[v0.5.4]: https://github.com/atc0005/safelinks/releases/tag/v0.5.4
 [v0.5.3]: https://github.com/atc0005/safelinks/releases/tag/v0.5.3
 [v0.5.2]: https://github.com/atc0005/safelinks/releases/tag/v0.5.2
 [v0.5.1]: https://github.com/atc0005/safelinks/releases/tag/v0.5.1
