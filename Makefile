@@ -914,6 +914,7 @@ docker-release-build: clean helper-builder-setup
 	@echo
 	@echo "Using x64 release builder image to generate project release assets"
 	$(CONTAINER_COMMAND) container run \
+		--env REPO_VERSION=$(REPO_VERSION) \
 		--platform linux/amd64 \
 		--user builduser:builduser \
 		--rm \
@@ -925,6 +926,7 @@ docker-release-build: clean helper-builder-setup
 
 	@echo "Using x86 release builder image to generate project release assets"
 	$(CONTAINER_COMMAND) container run \
+		--env REPO_VERSION=$(REPO_VERSION) \
 		--platform linux/i386 \
 		--user builduser:builduser \
 		--rm \
@@ -946,6 +948,7 @@ podman-release-build: clean helper-builder-setup
 	@echo
 	@echo "Using x64 release builder image to generate project release assets"
 	$(CONTAINER_COMMAND) container run \
+		--env REPO_VERSION=$(REPO_VERSION) \
 		--platform linux/amd64 \
 		--rm \
 		-i \
@@ -956,6 +959,7 @@ podman-release-build: clean helper-builder-setup
 
 	@echo "Using x86 release builder image to generate project release assets"
 	$(CONTAINER_COMMAND) container run \
+		--env REPO_VERSION=$(REPO_VERSION) \
 		--platform linux/i386 \
 		--rm \
 		-i \
@@ -976,6 +980,7 @@ docker-dev-build: clean helper-builder-setup
 	@echo
 	@echo "Using x64 release builder image to generate project release assets"
 	$(CONTAINER_COMMAND) container run \
+		--env REPO_VERSION=$(REPO_VERSION) \
 		--platform linux/amd64 \
 		--user builduser:builduser \
 		--rm \
@@ -997,6 +1002,7 @@ podman-dev-build: clean helper-builder-setup
 	@echo
 	@echo "Using release builder image to generate project release assets"
 	$(CONTAINER_COMMAND) container run \
+		--env REPO_VERSION=$(REPO_VERSION) \
 		--platform linux/amd64 \
 		--rm \
 		-i \
@@ -1019,6 +1025,7 @@ docker-packages: helper-builder-setup
 
 	@echo "Building with $(CONTAINER_COMMAND)"
 	$(CONTAINER_COMMAND) container run \
+		--env REPO_VERSION=$(REPO_VERSION) \
 		--platform linux/amd64 \
 		--user builduser:builduser \
 		--rm \
@@ -1042,6 +1049,7 @@ podman-packages: helper-builder-setup
 
 	@echo "Building with $(CONTAINER_COMMAND)"
 	$(CONTAINER_COMMAND) container run \
+		--env REPO_VERSION=$(REPO_VERSION) \
 		--platform linux/amd64 \
 		--rm \
 		-i \
@@ -1081,6 +1089,7 @@ podman-quick-build-linux:
 	@echo
 	@echo "Using x64 builder image to generate project release assets"
 	$(CONTAINER_COMMAND) container run \
+		--env REPO_VERSION=$(REPO_VERSION) \
 		--platform linux/amd64 \
 		--rm \
 		-i \
@@ -1122,6 +1131,7 @@ podman-quick-build-windows:
 	@echo
 	@echo "Using x64 builder image to generate project release assets"
 	$(CONTAINER_COMMAND) container run \
+		--env REPO_VERSION=$(REPO_VERSION) \
 		--platform linux/amd64 \
 		--rm \
 		-i \
@@ -1163,6 +1173,7 @@ podman-quick-build: clean podman-quick-build-linux podman-quick-build-windows
 	@echo
 	@echo "Using x64 builder image to generate project release assets"
 	$(CONTAINER_COMMAND) container run \
+		--env REPO_VERSION=$(REPO_VERSION) \
 		--platform linux/amd64 \
 		--rm \
 		-i \
