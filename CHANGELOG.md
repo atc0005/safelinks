@@ -26,6 +26,32 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.5] - 2024-08-13
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-461) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.5 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.6 in /dependabot/docker/builds/x64
+- (GH-462) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.6 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.7 in /dependabot/docker/builds/x64
+- (GH-483) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.7 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.8 in /dependabot/docker/builds/x64
+- (GH-459) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.5 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.6 in /dependabot/docker/builds/x86
+- (GH-463) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.6 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.7 in /dependabot/docker/builds/x86
+- (GH-479) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.7 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.8 in /dependabot/docker/builds/x86
+- (GH-478) Go Dependency: Bump github.com/rymdport/portal from 0.2.3 to 0.2.4
+- (GH-487) Go Dependency: Bump github.com/rymdport/portal from 0.2.4 to 0.2.6
+- (GH-472) Go Dependency: Bump golang.org/x/image from 0.18.0 to 0.19.0
+- (GH-473) Go Dependency: Bump golang.org/x/net from 0.27.0 to 0.28.0
+- (GH-469) Go Dependency: Bump golang.org/x/sys from 0.22.0 to 0.23.0
+- (GH-485) Go Dependency: Bump golang.org/x/sys from 0.23.0 to 0.24.0
+- (GH-471) Go Dependency: Bump golang.org/x/text from 0.16.0 to 0.17.0
+- (GH-477) Go Runtime: Bump golang from 1.21.12 to 1.21.13 in /dependabot/docker/go
+- (GH-490) Update `golang.org/x/mobile` pseudo-version
+
+#### Other
+
+- (GH-466) Push `REPO_VERSION` var into containers for builds
+
 ## [v0.5.4] - 2024-07-17
 
 ### Added
@@ -419,7 +445,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.4...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.5...HEAD
+[v0.5.5]: https://github.com/atc0005/safelinks/releases/tag/v0.5.5
 [v0.5.4]: https://github.com/atc0005/safelinks/releases/tag/v0.5.4
 [v0.5.3]: https://github.com/atc0005/safelinks/releases/tag/v0.5.3
 [v0.5.2]: https://github.com/atc0005/safelinks/releases/tag/v0.5.2
