@@ -26,6 +26,17 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.6] - 2024-08-22
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-499) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.8 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.9 in /dependabot/docker/builds/x64
+- (GH-498) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.8 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.9 in /dependabot/docker/builds/x86
+- (GH-501) Go Runtime: Bump golang from 1.21.13 to 1.22.6 in /dependabot/docker/go
+- (GH-500) Update project to Go 1.22 series
+
 ## [v0.5.5] - 2024-08-13
 
 ### Changed
@@ -445,7 +456,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.5...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.6...HEAD
+[v0.5.6]: https://github.com/atc0005/safelinks/releases/tag/v0.5.6
 [v0.5.5]: https://github.com/atc0005/safelinks/releases/tag/v0.5.5
 [v0.5.4]: https://github.com/atc0005/safelinks/releases/tag/v0.5.4
 [v0.5.3]: https://github.com/atc0005/safelinks/releases/tag/v0.5.3
