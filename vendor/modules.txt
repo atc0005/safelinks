@@ -157,7 +157,7 @@ github.com/srwiley/rasterx
 ## explicit; go 1.17
 github.com/stretchr/testify/assert
 github.com/stretchr/testify/require
-# github.com/yuin/goldmark v1.7.4
+# github.com/yuin/goldmark v1.7.7
 ## explicit; go 1.19
 github.com/yuin/goldmark
 github.com/yuin/goldmark/ast
