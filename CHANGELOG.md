@@ -26,6 +26,28 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.7] - 2024-10-16
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-527) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.11 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.12 in /dependabot/docker/builds/x64
+- (GH-534) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.12 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.13 in /dependabot/docker/builds/x64
+- (GH-511) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.9 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.11 in /dependabot/docker/builds/x64
+- (GH-529) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.11 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.12 in /dependabot/docker/builds/x86
+- (GH-535) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.12 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.13 in /dependabot/docker/builds/x86
+- (GH-514) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.9 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.11 in /dependabot/docker/builds/x86
+- (GH-510) Go Dependency: Bump fyne.io/fyne/v2 from 2.5.0 to 2.5.1
+- (GH-530) Go Dependency: Bump github.com/go-text/render from 0.1.1-0.20240418202334-dd62631dae9b to 0.1.1
+- (GH-518) Go Dependency: Bump golang.org/x/image from 0.19.0 to 0.20.0
+- (GH-524) Go Dependency: Bump golang.org/x/net from 0.28.0 to 0.29.0
+- (GH-517) Go Dependency: Bump golang.org/x/sys from 0.24.0 to 0.25.0
+- (GH-519) Go Dependency: Bump golang.org/x/text from 0.17.0 to 0.18.0
+- (GH-525) Go Runtime: Bump golang from 1.22.6 to 1.22.7 in /dependabot/docker/go
+- (GH-539) Update `golang.org/x/mobile` pseudo-version
+- (GH-538) Update project Go version to 1.22.0
+
 ## [v0.5.6] - 2024-08-22
 
 ### Changed
@@ -456,7 +478,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.6...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.7...HEAD
+[v0.5.7]: https://github.com/atc0005/safelinks/releases/tag/v0.5.7
 [v0.5.6]: https://github.com/atc0005/safelinks/releases/tag/v0.5.6
 [v0.5.5]: https://github.com/atc0005/safelinks/releases/tag/v0.5.5
 [v0.5.4]: https://github.com/atc0005/safelinks/releases/tag/v0.5.4
