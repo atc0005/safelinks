@@ -32,7 +32,7 @@ require (
 	github.com/stretchr/testify v1.9.0 // indirect
 	github.com/yuin/goldmark v1.7.8 // indirect
 	golang.org/x/image v0.21.0 // indirect
-	golang.org/x/mobile v0.0.0-20241004191011-08a83c5af9f8 // indirect
+	golang.org/x/mobile v0.0.0-20241016134751-7ff83004ec2c // indirect
 	golang.org/x/net v0.30.0 // indirect
 	golang.org/x/sys v0.26.0 // indirect
 	golang.org/x/text v0.19.0 // indirect
