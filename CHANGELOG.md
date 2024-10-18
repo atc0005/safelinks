@@ -26,6 +26,25 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.8] - 2024-10-18
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-547) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.13 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.14 in /dependabot/docker/builds/x64
+- (GH-554) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.13 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.14 in /dependabot/docker/builds/x86
+- (GH-559) Go Dependency: Bump fyne.io/fyne/v2 from 2.5.1 to 2.5.2
+- (GH-555) Go Dependency: Bump github.com/nicksnyder/go-i18n/v2 from 2.4.0 to 2.4.1
+- (GH-566) Go Dependency: Bump github.com/yuin/goldmark from 1.7.4 to 1.7.8
+- (GH-546) Go Dependency: Bump golang.org/x/image from 0.20.0 to 0.21.0
+- (GH-545) Go Dependency: Bump golang.org/x/net from 0.29.0 to 0.30.0
+- (GH-543) Go Dependency: Bump golang.org/x/sys from 0.25.0 to 0.26.0
+- (GH-544) Go Dependency: Bump golang.org/x/text from 0.18.0 to 0.19.0
+- (GH-542) Go Runtime: Bump golang from 1.22.7 to 1.22.8 in /dependabot/docker/go
+- (GH-569) Update `golang.org/x/mobile` pseudo-version
+- (GH-571) Update `golang.org/x/mobile` pseudo-version
+
 ## [v0.5.7] - 2024-10-16
 
 ### Changed
@@ -478,7 +497,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.7...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.8...HEAD
+[v0.5.8]: https://github.com/atc0005/safelinks/releases/tag/v0.5.8
 [v0.5.7]: https://github.com/atc0005/safelinks/releases/tag/v0.5.7
 [v0.5.6]: https://github.com/atc0005/safelinks/releases/tag/v0.5.6
 [v0.5.5]: https://github.com/atc0005/safelinks/releases/tag/v0.5.5
