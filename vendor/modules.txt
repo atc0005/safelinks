@@ -136,7 +136,7 @@ github.com/nicksnyder/go-i18n/v2/internal/plural
 # github.com/pmezard/go-difflib v1.0.0
 ## explicit
 github.com/pmezard/go-difflib/difflib
-# github.com/rymdport/portal v0.2.6
+# github.com/rymdport/portal v0.3.0
 ## explicit; go 1.19
 github.com/rymdport/portal
 github.com/rymdport/portal/internal/apis
