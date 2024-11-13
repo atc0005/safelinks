@@ -26,6 +26,23 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.9] - 2024-11-13
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-591) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.14 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.15 in /dependabot/docker/builds/x64
+- (GH-586) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.14 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.15 in /dependabot/docker/builds/x86
+- (GH-576) Go Dependency: Bump github.com/fsnotify/fsnotify from 1.7.0 to 1.8.0
+- (GH-589) Go Dependency: Bump github.com/rymdport/portal from 0.2.6 to 0.3.0
+- (GH-584) Go Dependency: Bump golang.org/x/image from 0.21.0 to 0.22.0
+- (GH-590) Go Dependency: Bump golang.org/x/net from 0.30.0 to 0.31.0
+- (GH-582) Go Dependency: Bump golang.org/x/sys from 0.26.0 to 0.27.0
+- (GH-583) Go Dependency: Bump golang.org/x/text from 0.19.0 to 0.20.0
+- (GH-578) Go Runtime: Bump golang from 1.22.8 to 1.22.9 in /dependabot/docker/go
+- (GH-595) Update `golang.org/x/mobile` pseudo-version
+
 ## [v0.5.8] - 2024-10-18
 
 ### Changed
@@ -497,7 +514,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.8...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.9...HEAD
+[v0.5.9]: https://github.com/atc0005/safelinks/releases/tag/v0.5.9
 [v0.5.8]: https://github.com/atc0005/safelinks/releases/tag/v0.5.8
 [v0.5.7]: https://github.com/atc0005/safelinks/releases/tag/v0.5.7
 [v0.5.6]: https://github.com/atc0005/safelinks/releases/tag/v0.5.6
