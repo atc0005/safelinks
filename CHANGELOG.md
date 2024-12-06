@@ -26,6 +26,28 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.10] - 2024-12-06
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-603) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.15 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.16 in /dependabot/docker/builds/x64
+- (GH-607) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.16 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.17 in /dependabot/docker/builds/x64
+- (GH-617) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.17 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.18 in /dependabot/docker/builds/x64
+- (GH-604) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.15 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.16 in /dependabot/docker/builds/x86
+- (GH-609) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.16 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.17 in /dependabot/docker/builds/x86
+- (GH-618) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.17 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.18 in /dependabot/docker/builds/x86
+- (GH-605) Go Dependency: Bump github.com/stretchr/testify from 1.9.0 to 1.10.0
+- (GH-624) Go Dependency: Bump golang.org/x/image from 0.22.0 to 0.23.0
+- (GH-622) Go Dependency: Bump golang.org/x/net from 0.31.0 to 0.32.0
+- (GH-621) Go Dependency: Bump golang.org/x/sys from 0.27.0 to 0.28.0
+- (GH-623) Go Dependency: Bump golang.org/x/text from 0.20.0 to 0.21.0
+- (GH-611) Go Runtime: Bump golang from 1.22.9 to 1.22.10 in /dependabot/docker/go
+- (GH-629) Update `github.com/fyne-io/glfw-js` pseudo-version
+- (GH-631) Update `golang.org/x/mobile` pseudo-version
+- (GH-630) Update `jeandeaual/go-locale` pseudo-version
+
 ## [v0.5.9] - 2024-11-13
 
 ### Changed
@@ -514,7 +536,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.9...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.10...HEAD
+[v0.5.10]: https://github.com/atc0005/safelinks/releases/tag/v0.5.10
 [v0.5.9]: https://github.com/atc0005/safelinks/releases/tag/v0.5.9
 [v0.5.8]: https://github.com/atc0005/safelinks/releases/tag/v0.5.8
 [v0.5.7]: https://github.com/atc0005/safelinks/releases/tag/v0.5.7
