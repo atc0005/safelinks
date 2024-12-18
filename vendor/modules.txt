@@ -121,7 +121,7 @@ github.com/google/go-cmp/cmp/internal/value
 # github.com/gopherjs/gopherjs v1.17.2
 ## explicit; go 1.17
 github.com/gopherjs/gopherjs/js
-# github.com/jeandeaual/go-locale v0.0.0-20241204123234-32dda1c00a20
+# github.com/jeandeaual/go-locale v0.0.0-20241217141322-fcc2cadd6f08
 ## explicit; go 1.18
 github.com/jeandeaual/go-locale
 # github.com/jsummers/gobmp v0.0.0-20230614200233-a9de23ed2e25
