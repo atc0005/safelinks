@@ -26,6 +26,17 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.11] - 2024-12-18
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-635) Go Dependency: Bump fyne.io/fyne/v2 from 2.5.2 to 2.5.3
+- (GH-640) Go Dependency: Bump github.com/go-text/typesetting from 0.2.0 to 0.2.1
+- (GH-638) Update `golang.org/x/mobile` pseudo-version
+- (GH-642) Update `jeandeaual/go-locale` pseudo-version
+
 ## [v0.5.10] - 2024-12-06
 
 ### Changed
@@ -536,7 +547,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.10...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.11...HEAD
+[v0.5.11]: https://github.com/atc0005/safelinks/releases/tag/v0.5.11
 [v0.5.10]: https://github.com/atc0005/safelinks/releases/tag/v0.5.10
 [v0.5.9]: https://github.com/atc0005/safelinks/releases/tag/v0.5.9
 [v0.5.8]: https://github.com/atc0005/safelinks/releases/tag/v0.5.8
