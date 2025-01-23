@@ -127,7 +127,7 @@ github.com/jeandeaual/go-locale
 # github.com/jsummers/gobmp v0.0.0-20230614200233-a9de23ed2e25
 ## explicit
 github.com/jsummers/gobmp
-# github.com/nicksnyder/go-i18n/v2 v2.4.1
+# github.com/nicksnyder/go-i18n/v2 v2.5.0
 ## explicit; go 1.18
 github.com/nicksnyder/go-i18n/v2/i18n
 github.com/nicksnyder/go-i18n/v2/i18n/template
