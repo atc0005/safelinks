@@ -65,8 +65,8 @@ github.com/fredbi/uri
 ## explicit; go 1.17
 github.com/fsnotify/fsnotify
 github.com/fsnotify/fsnotify/internal
-# github.com/fyne-io/gl-js v0.0.0-20230506162202-1fdaa286a934
-## explicit; go 1.14
+# github.com/fyne-io/gl-js v0.1.0
+## explicit; go 1.19
 github.com/fyne-io/gl-js
 # github.com/fyne-io/glfw-js v0.1.0
 ## explicit; go 1.19
@@ -118,15 +118,14 @@ github.com/google/go-cmp/cmp/internal/diff
 github.com/google/go-cmp/cmp/internal/flags
 github.com/google/go-cmp/cmp/internal/function
 github.com/google/go-cmp/cmp/internal/value
-# github.com/gopherjs/gopherjs v1.17.2
-## explicit; go 1.17
-github.com/gopherjs/gopherjs/js
 # github.com/jeandeaual/go-locale v0.0.0-20241217141322-fcc2cadd6f08
 ## explicit; go 1.18
 github.com/jeandeaual/go-locale
 # github.com/jsummers/gobmp v0.0.0-20230614200233-a9de23ed2e25
 ## explicit
 github.com/jsummers/gobmp
+# github.com/kr/text v0.2.0
+## explicit
 # github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 ## explicit
 github.com/nfnt/resize
