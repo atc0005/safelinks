@@ -26,6 +26,26 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.12] - 2025-02-20
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-699) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.21.18 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.22.3 in /dependabot/docker/builds/x64
+- (GH-698) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.21.18 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.22.3 in /dependabot/docker/builds/x86
+- (GH-677) Go Dependency: Bump fyne.io/fyne/v2 from 2.5.3 to 2.5.4
+- (GH-697) Go Dependency: Bump github.com/fyne-io/gl-js from 0.0.0-20230506162202-1fdaa286a934 to 0.1.0
+- (GH-696) Go Dependency: Bump github.com/fyne-io/glfw-js from 0.0.0-20241126112943-313d8a0fe1d0 to 0.1.0
+- (GH-695) Go Dependency: Bump github.com/fyne-io/image from 0.0.0-20240417123036-dc0ee9e7c964 to 0.1.0
+- (GH-678) Go Dependency: Bump github.com/nicksnyder/go-i18n/v2 from 2.4.1 to 2.5.1
+- (GH-702) Go Dependency: Bump github.com/rymdport/portal from 0.3.0 to 0.4.0
+- (GH-685) Go Dependency: Bump golang.org/x/image from 0.23.0 to 0.24.0
+- (GH-700) Go Dependency: Bump golang.org/x/net from 0.32.0 to 0.35.0
+- (GH-684) Go Dependency: Bump golang.org/x/sys from 0.28.0 to 0.30.0
+- (GH-683) Go Dependency: Bump golang.org/x/text from 0.21.0 to 0.22.0
+- (GH-681) Go Runtime: Bump golang from 1.22.10 to 1.22.12 in /dependabot/docker/go
+
 ## [v0.5.11] - 2024-12-18
 
 ### Changed
@@ -547,7 +567,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.11...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.12...HEAD
+[v0.5.12]: https://github.com/atc0005/safelinks/releases/tag/v0.5.12
 [v0.5.11]: https://github.com/atc0005/safelinks/releases/tag/v0.5.11
 [v0.5.10]: https://github.com/atc0005/safelinks/releases/tag/v0.5.10
 [v0.5.9]: https://github.com/atc0005/safelinks/releases/tag/v0.5.9
