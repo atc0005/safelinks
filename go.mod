@@ -4,7 +4,7 @@ go 1.22.0
 
 require (
 	fyne.io/fyne/v2 v2.5.4
-	github.com/google/go-cmp v0.6.0
+	github.com/google/go-cmp v0.7.0
 )
 
 require (
