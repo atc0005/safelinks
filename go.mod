@@ -1,6 +1,6 @@
 module github.com/atc0005/safelinks
 
-go 1.22.0
+go 1.23.0
 
 require (
 	fyne.io/fyne/v2 v2.5.4
