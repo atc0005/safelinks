@@ -357,7 +357,10 @@ func TestURLsFindsAllValidURLs(t *testing.T) {
 		//
 		// https://stackoverflow.com/questions/68559574/using-the-variable-on-range-scope-x-in-function-literal-scopelint
 		// https://github.com/golang/go/wiki/CommonMistakes#using-goroutines-on-loop-iterator-variables
-		tt := tt
+		//
+		// NOTE: Not needed as of Go 1.22.
+		//
+		// tt := tt
 
 		t.Run(name, func(t *testing.T) {
 			want := tt.foundURLsCount
@@ -418,7 +421,10 @@ func TestURLsFailsForInvalidURLs(t *testing.T) {
 		//
 		// https://stackoverflow.com/questions/68559574/using-the-variable-on-range-scope-x-in-function-literal-scopelint
 		// https://github.com/golang/go/wiki/CommonMistakes#using-goroutines-on-loop-iterator-variables
-		tt := tt
+		//
+		// NOTE: Not needed as of Go 1.22.
+		//
+		// tt := tt
 
 		t.Run(name, func(t *testing.T) {
 			result, err := safelinks.URLs(tt.input, true)
@@ -597,7 +603,10 @@ func TestFilterURLsCorrectlyFiltersByType(t *testing.T) {
 		//
 		// https://stackoverflow.com/questions/68559574/using-the-variable-on-range-scope-x-in-function-literal-scopelint
 		// https://github.com/golang/go/wiki/CommonMistakes#using-goroutines-on-loop-iterator-variables
-		tt := tt
+		//
+		// NOTE: Not needed as of Go 1.22.
+		//
+		// tt := tt
 
 		t.Run(name, func(t *testing.T) {
 			allURLs, err := safelinks.URLs(tt.input, true)
@@ -744,7 +753,10 @@ func TestSafeLinkURLsFindsAllValidSafeLinks(t *testing.T) {
 		//
 		// https://stackoverflow.com/questions/68559574/using-the-variable-on-range-scope-x-in-function-literal-scopelint
 		// https://github.com/golang/go/wiki/CommonMistakes#using-goroutines-on-loop-iterator-variables
-		tt := tt
+		//
+		// NOTE: Not needed as of Go 1.22.
+		//
+		// tt := tt
 
 		t.Run(name, func(t *testing.T) {
 			want := tt.foundEncodedURLsCount
@@ -863,7 +875,10 @@ func TestDecodeInputSucceedsForValidInput(t *testing.T) {
 		//
 		// https://stackoverflow.com/questions/68559574/using-the-variable-on-range-scope-x-in-function-literal-scopelint
 		// https://github.com/golang/go/wiki/CommonMistakes#using-goroutines-on-loop-iterator-variables
-		tt := tt
+		//
+		// NOTE: Not needed as of Go 1.22.
+		//
+		// tt := tt
 
 		t.Run(name, func(t *testing.T) {
 			want := tt.result
@@ -969,7 +984,10 @@ func TestDecodeInputFailsForInvalidInput(t *testing.T) {
 		//
 		// https://stackoverflow.com/questions/68559574/using-the-variable-on-range-scope-x-in-function-literal-scopelint
 		// https://github.com/golang/go/wiki/CommonMistakes#using-goroutines-on-loop-iterator-variables
-		tt := tt
+		//
+		// NOTE: Not needed as of Go 1.22.
+		//
+		// tt := tt
 
 		t.Run(name, func(t *testing.T) {
 			result, err := safelinks.DecodeInput(tt.input)
