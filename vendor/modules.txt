@@ -68,7 +68,7 @@ github.com/fsnotify/fsnotify/internal
 # github.com/fyne-io/gl-js v0.1.0
 ## explicit; go 1.19
 github.com/fyne-io/gl-js
-# github.com/fyne-io/glfw-js v0.1.0
+# github.com/fyne-io/glfw-js v0.2.0
 ## explicit; go 1.19
 github.com/fyne-io/glfw-js
 # github.com/fyne-io/image v0.1.0
