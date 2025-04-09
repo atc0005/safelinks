@@ -26,6 +26,42 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.13] - 2025-04-09
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-765) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.22.3 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.22.9 in /dependabot/docker/builds/x64
+- (GH-763) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.22.3 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.22.9 in /dependabot/docker/builds/x86
+- (GH-770) Disable Dependabot automatic PR rebasing
+- (GH-746) Go Dependency: Bump fyne.io/fyne/v2 from 2.5.4 to 2.5.5
+- (GH-748) Go Dependency: Bump github.com/BurntSushi/toml from 1.4.0 to 1.5.0
+- (GH-781) Go Dependency: Bump github.com/fsnotify/fsnotify from 1.8.0 to 1.9.0
+- (GH-714) Go Dependency: Bump github.com/fyne-io/glfw-js from 0.1.0 to 0.2.0
+- (GH-768) Go Dependency: Bump github.com/fyne-io/image from 0.1.0 to 0.1.1
+- (GH-710) Go Dependency: Bump github.com/go-text/typesetting from 0.2.1 to 0.3.0
+- (GH-709) Go Dependency: Bump github.com/google/go-cmp from 0.6.0 to 0.7.0
+- (GH-780) Go Dependency: Bump github.com/nicksnyder/go-i18n/v2 from 2.5.1 to 2.6.0
+- (GH-716) Go Dependency: Bump github.com/rymdport/portal from 0.4.0 to 0.4.1
+- (GH-731) Go Dependency: Bump golang.org/x/image from 0.24.0 to 0.25.0
+- (GH-778) Go Dependency: Bump golang.org/x/image from 0.25.0 to 0.26.0
+- (GH-755) Go Dependency: Bump golang.org/x/net from 0.35.0 to 0.38.0
+- (GH-783) Go Dependency: Bump golang.org/x/net from 0.38.0 to 0.39.0
+- (GH-734) Go Dependency: Bump golang.org/x/sys from 0.30.0 to 0.31.0
+- (GH-775) Go Dependency: Bump golang.org/x/sys from 0.31.0 to 0.32.0
+- (GH-733) Go Dependency: Bump golang.org/x/text from 0.22.0 to 0.23.0
+- (GH-779) Go Dependency: Bump golang.org/x/text from 0.23.0 to 0.24.0
+- (GH-760) Go Runtime: Bump golang from 1.22.12 to 1.23.8 in /dependabot/docker/go
+- (GH-744) go.mod: update minimum Go version to 1.23.0
+- (GH-788) Update `github.com/go-gl/glfw/v3.3/glfw`
+- (GH-786) Update `golang.org/x/mobile` pseudo-version
+- (GH-721) Update project to Go 1.23 series
+
+### Fixed
+
+- (GH-767) Fix `copyloopvar` linting errors
+
 ## [v0.5.12] - 2025-02-20
 
 ### Changed
@@ -567,7 +603,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.12...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.13...HEAD
+[v0.5.13]: https://github.com/atc0005/safelinks/releases/tag/v0.5.13
 [v0.5.12]: https://github.com/atc0005/safelinks/releases/tag/v0.5.12
 [v0.5.11]: https://github.com/atc0005/safelinks/releases/tag/v0.5.11
 [v0.5.10]: https://github.com/atc0005/safelinks/releases/tag/v0.5.10
