@@ -43,7 +43,7 @@ func main() {
 	errorOutput := NewErrorOutputTextField()
 	output := NewOutputTextLabel()
 
-	copyButton := newCopyButton(w, output)
+	copyButton := newCopyButton(a, output)
 	encodeAllButton := newEncodeButton(false, input, copyButton, errorOutput, output)
 	encodeRandomButton := newEncodeButton(true, input, copyButton, errorOutput, output)
 	queryEscapeAllButton := newQueryEscapeButton(false, input, copyButton, errorOutput, output)
