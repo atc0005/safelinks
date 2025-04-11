@@ -125,7 +125,7 @@ github.com/google/go-cmp/cmp/internal/value
 ## explicit; go 1.18
 github.com/hack-pad/go-indexeddb/idb
 github.com/hack-pad/go-indexeddb/idb/internal/jscache
-# github.com/hack-pad/safejs v0.1.0
+# github.com/hack-pad/safejs v0.1.1
 ## explicit; go 1.18
 github.com/hack-pad/safejs
 github.com/hack-pad/safejs/internal/catch
