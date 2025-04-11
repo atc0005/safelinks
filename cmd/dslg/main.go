@@ -32,7 +32,7 @@ func main() {
 	errorOutput := NewErrorOutputTextField()
 	output := NewOutputTextLabel()
 
-	copyButton := newCopyButton(w, output)
+	copyButton := newCopyButton(a, output)
 	decodeButton := newDecodeButton(input, copyButton, errorOutput, output)
 	resetButton := newResetButton(w, input, copyButton, errorOutput, output)
 	aboutButton := newAboutButton(w, input, copyButton, errorOutput, output)

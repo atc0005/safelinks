@@ -18,10 +18,10 @@ import (
 	"github.com/atc0005/safelinks/internal/safelinks"
 )
 
-func newCopyButton(w fyne.Window, outputField *widget.Label) *widget.Button {
+func newCopyButton(a fyne.App, outputField *widget.Label) *widget.Button {
 	copyButton := widget.NewButton("Copy to Clipboard", func() {
 		log.Println("Copying decoded text to clipboard")
-		w.Clipboard().SetContent(outputField.Text)
+		a.Clipboard().SetContent(outputField.Text)
 	})
 
 	copyButton.Importance = widget.DangerImportance
