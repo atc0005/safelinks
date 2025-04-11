@@ -19,11 +19,15 @@ In an effort to align with the Go standard library API, some breaking changes ma
 
 ## Quick start
 
-1. Import `safejs`:
+1. Get `safejs`:
+```
+go get github.com/hack-pad/safejs
+```
+2. Import `safejs`:
 ```go
 import "github.com/hack-pad/safejs"
 ```
-2. Replace uses of `syscall/js` with the `safejs` alternative. 
+3. Replace uses of `syscall/js` with the `safejs` alternative. 
 
 Before:
 ```go
@@ -76,6 +80,7 @@ For additional JavaScript safety, use the `jsguard` linter too.
 `jsguard` reports the locations of unsafe JavaScript calls, which should be replaced with calls to SafeJS.
 
 ```bash
+# When installed without specifying a version, uses the go.mod version.
 go install github.com/hack-pad/safejs/jsguard/cmd/jsguard
 export GOOS=js GOARCH=wasm
 jsguard ./...
