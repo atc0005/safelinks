@@ -26,6 +26,19 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.14] - 2025-04-14
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-792) Go Dependency: Bump fyne.io/fyne/v2 from 2.5.5 to 2.6.0
+- (GH-795) Go Dependency: Bump github.com/hack-pad/safejs from 0.1.0 to 0.1.1
+
+### Fixed
+
+- (GH-797) Fix deprecated func use after fyne v2.6.0 update
+
 ## [v0.5.13] - 2025-04-09
 
 ### Changed
@@ -603,7 +616,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.13...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.14...HEAD
+[v0.5.14]: https://github.com/atc0005/safelinks/releases/tag/v0.5.14
 [v0.5.13]: https://github.com/atc0005/safelinks/releases/tag/v0.5.13
 [v0.5.12]: https://github.com/atc0005/safelinks/releases/tag/v0.5.12
 [v0.5.11]: https://github.com/atc0005/safelinks/releases/tag/v0.5.11
