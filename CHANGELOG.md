@@ -26,6 +26,17 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.15] - 2025-05-02
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-805) Go Dependency: Bump github.com/yuin/goldmark from 1.7.10 to 1.7.11
+- (GH-801) Go Dependency: Bump github.com/yuin/goldmark from 1.7.8 to 1.7.9
+- (GH-804) Go Dependency: Bump github.com/yuin/goldmark from 1.7.9 to 1.7.10
+- (GH-808) Update `jeandeaual/go-locale` pseudo-version
+
 ## [v0.5.14] - 2025-04-14
 
 ### Changed
@@ -616,7 +627,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.14...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.15...HEAD
+[v0.5.15]: https://github.com/atc0005/safelinks/releases/tag/v0.5.15
 [v0.5.14]: https://github.com/atc0005/safelinks/releases/tag/v0.5.14
 [v0.5.13]: https://github.com/atc0005/safelinks/releases/tag/v0.5.13
 [v0.5.12]: https://github.com/atc0005/safelinks/releases/tag/v0.5.12
