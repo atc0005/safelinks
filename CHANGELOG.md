@@ -26,6 +26,21 @@ The following types of changes will be recorded in this file:
 
 - placeholder
 
+## [v0.5.16] - 2025-05-20
+
+### Changed
+
+#### Dependency Updates
+
+- (GH-828) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx64-v0.22.9 to go-ci-oldstable-cgo-mingw-w64-buildx64-v0.22.10 in /dependabot/docker/builds/x64
+- (GH-825) Build image: Bump atc0005/go-ci from go-ci-oldstable-cgo-mingw-w64-buildx86-v0.22.9 to go-ci-oldstable-cgo-mingw-w64-buildx86-v0.22.10 in /dependabot/docker/builds/x86
+- (GH-823) Go Dependency: Bump fyne.io/fyne/v2 from 2.6.0 to 2.6.1
+- (GH-818) Go Dependency: Bump golang.org/x/image from 0.26.0 to 0.27.0
+- (GH-816) Go Dependency: Bump golang.org/x/net from 0.39.0 to 0.40.0
+- (GH-819) Go Dependency: Bump golang.org/x/sys from 0.32.0 to 0.33.0
+- (GH-817) Go Dependency: Bump golang.org/x/text from 0.24.0 to 0.25.0
+- (GH-821) Go Runtime: Bump golang from 1.23.8 to 1.23.9 in /dependabot/docker/go
+
 ## [v0.5.15] - 2025-05-02
 
 ### Changed
@@ -627,7 +642,8 @@ This release provides an early release version of one new tool:
 
 See the project README for additional details.
 
-[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.15...HEAD
+[Unreleased]: https://github.com/atc0005/safelinks/compare/v0.5.16...HEAD
+[v0.5.16]: https://github.com/atc0005/safelinks/releases/tag/v0.5.16
 [v0.5.15]: https://github.com/atc0005/safelinks/releases/tag/v0.5.15
 [v0.5.14]: https://github.com/atc0005/safelinks/releases/tag/v0.5.14
 [v0.5.13]: https://github.com/atc0005/safelinks/releases/tag/v0.5.13
