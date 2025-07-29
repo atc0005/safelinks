@@ -1,4 +1,4 @@
-# fyne.io/fyne/v2 v2.6.1
+# fyne.io/fyne/v2 v2.6.2
 ## explicit; go 1.19
 fyne.io/fyne/v2
 fyne.io/fyne/v2/app
@@ -65,10 +65,10 @@ github.com/fredbi/uri
 ## explicit; go 1.17
 github.com/fsnotify/fsnotify
 github.com/fsnotify/fsnotify/internal
-# github.com/fyne-io/gl-js v0.1.0
+# github.com/fyne-io/gl-js v0.2.0
 ## explicit; go 1.19
 github.com/fyne-io/gl-js
-# github.com/fyne-io/glfw-js v0.2.0
+# github.com/fyne-io/glfw-js v0.3.0
 ## explicit; go 1.19
 github.com/fyne-io/glfw-js
 # github.com/fyne-io/image v0.1.1
@@ -130,7 +130,7 @@ github.com/hack-pad/go-indexeddb/idb/internal/jscache
 github.com/hack-pad/safejs
 github.com/hack-pad/safejs/internal/catch
 github.com/hack-pad/safejs/internal/stackerr
-# github.com/jeandeaual/go-locale v0.0.0-20250421151639-a9d6ed1b3d45
+# github.com/jeandeaual/go-locale v0.0.0-20250612000132-0ef82f21eade
 ## explicit; go 1.18
 github.com/jeandeaual/go-locale
 # github.com/jsummers/gobmp v0.0.0-20230614200233-a9de23ed2e25
