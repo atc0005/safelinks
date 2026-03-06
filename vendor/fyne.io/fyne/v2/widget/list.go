@@ -19,8 +19,10 @@ import (
 type ListItemID = int
 
 // Declare conformity with interfaces.
-var _ fyne.Widget = (*List)(nil)
-var _ fyne.Focusable = (*List)(nil)
+var (
+	_ fyne.Widget    = (*List)(nil)
+	_ fyne.Focusable = (*List)(nil)
+)
 
 // List is a widget that pools list items for performance and
 // lays the items out in a vertical direction inside of a scroller.
@@ -48,7 +50,7 @@ type List struct {
 	// in the list has been selected.
 	OnSelected func(id ListItemID) `json:"-"`
 
-	// OnSelected is a callback to be notified when a given item
+	// OnUnselected is a callback to be notified when a given item
 	// in the list has been unselected.
 	OnUnselected func(id ListItemID) `json:"-"`
 
@@ -65,6 +67,7 @@ type List struct {
 	itemHeights   map[ListItemID]float32
 	offsetY       float32
 	offsetUpdated func(fyne.Position)
+	minSizeCache  fyne.Size
 }
 
 // NewList creates and returns a list widget for displaying items in
@@ -115,16 +118,12 @@ func (l *List) CreateRenderer() fyne.WidgetRenderer {
 }
 
 // FocusGained is called after this List has gained focus.
-//
-// Implements: fyne.Focusable
 func (l *List) FocusGained() {
 	l.focused = true
 	l.RefreshItem(l.currentFocus)
 }
 
 // FocusLost is called after this List has lost focus.
-//
-// Implements: fyne.Focusable
 func (l *List) FocusLost() {
 	l.focused = false
 	l.RefreshItem(l.currentFocus)
@@ -140,6 +139,7 @@ func (l *List) MinSize() fyne.Size {
 //
 // Since: 2.4
 func (l *List) RefreshItem(id ListItemID) {
+	l.minSizeCache = fyne.Size{}
 	if l.scroller == nil {
 		return
 	}
@@ -300,8 +300,6 @@ func (l *List) GetScrollOffset() float32 {
 }
 
 // TypedKey is called if a key event happens while this List is focused.
-//
-// Implements: fyne.Focusable
 func (l *List) TypedKey(event *fyne.KeyEvent) {
 	switch event.Name {
 	case fyne.KeySpace:
@@ -326,8 +324,6 @@ func (l *List) TypedKey(event *fyne.KeyEvent) {
 }
 
 // TypedRune is called if a text event happens while this List is focused.
-//
-// Implements: fyne.Focusable
 func (l *List) TypedRune(_ rune) {
 	// intentionally left blank
 }
@@ -363,7 +359,17 @@ func (l *List) UnselectAll() {
 	}
 }
 
+// Refresh causes this List to be redrawn in its current state
+func (l *List) Refresh() {
+	l.minSizeCache = fyne.Size{}
+	l.BaseWidget.Refresh()
+}
+
 func (l *List) contentMinSize() fyne.Size {
+	if !l.minSizeCache.IsZero() {
+		return l.minSizeCache
+	}
+
 	separatorThickness := l.Theme().Size(theme.SizeNamePadding)
 	if l.Length == nil {
 		return fyne.NewSize(0, 0)
@@ -386,7 +392,9 @@ func (l *List) contentMinSize() fyne.Size {
 	}
 	height += float32(items-totalCustom) * templateHeight
 
-	return fyne.NewSize(l.itemMin.Width, height+separatorThickness*float32(items-1))
+	size := fyne.NewSize(l.itemMin.Width, height+separatorThickness*float32(items-1))
+	l.minSizeCache = size
+	return size
 }
 
 // fills l.visibleRowHeights and also returns offY and minRow
@@ -396,7 +404,7 @@ func (l *listLayout) calculateVisibleRowHeights(itemHeight float32, length int, 
 	l.visibleRowHeights = l.visibleRowHeights[:0]
 
 	if l.list.scroller.Size().Height <= 0 {
-		return
+		return offY, minRow
 	}
 
 	padding := th.Size(theme.SizeNamePadding)
@@ -423,7 +431,7 @@ func (l *listLayout) calculateVisibleRowHeights(itemHeight float32, length int, 
 		for i := 0; i <= maxRow-minRow; i++ {
 			l.visibleRowHeights = append(l.visibleRowHeights, itemHeight)
 		}
-		return
+		return offY, minRow
 	}
 
 	for i := 0; i < length; i++ {
@@ -448,7 +456,7 @@ func (l *listLayout) calculateVisibleRowHeights(itemHeight float32, length int, 
 			l.visibleRowHeights = append(l.visibleRowHeights, height)
 		}
 	}
-	return
+	return offY, minRow
 }
 
 // Declare conformity with WidgetRenderer interface.
@@ -477,6 +485,7 @@ func (l *listRenderer) MinSize() fyne.Size {
 }
 
 func (l *listRenderer) Refresh() {
+	l.list.minSizeCache = fyne.Size{}
 	if f := l.list.CreateItem; f != nil {
 		item := createItemAndApplyThemeScope(f, l.list)
 		l.list.itemMin = item.MinSize()
@@ -493,9 +502,11 @@ func (l *listRenderer) Refresh() {
 }
 
 // Declare conformity with interfaces.
-var _ fyne.Widget = (*listItem)(nil)
-var _ fyne.Tappable = (*listItem)(nil)
-var _ desktop.Hoverable = (*listItem)(nil)
+var (
+	_ fyne.Widget       = (*listItem)(nil)
+	_ fyne.Tappable     = (*listItem)(nil)
+	_ desktop.Hoverable = (*listItem)(nil)
+)
 
 type listItem struct {
 	BaseWidget
@@ -675,9 +686,9 @@ func (l *listLayout) setupListItem(li *listItem, id ListItemID, focus bool) {
 	}
 	li.onTapped = func() {
 		if !fyne.CurrentDevice().IsMobile() {
-			canvas := fyne.CurrentApp().Driver().CanvasForObject(l.list)
+			canvas := fyne.CurrentApp().Driver().CanvasForObject(l.list.super())
 			if canvas != nil {
-				canvas.Focus(l.list.impl.(fyne.Focusable))
+				canvas.Focus(l.list.super().(fyne.Focusable))
 			}
 
 			l.list.currentFocus = id
