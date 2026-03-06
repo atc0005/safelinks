@@ -76,10 +76,10 @@ normalize/decode) Microsoft Office 365 "Safe Links" URLs.
 
 | Tool Name | Overall Status | Description                                                               |
 | --------- | -------------- | ------------------------------------------------------------------------- |
-| `usl`     | 🆗Beta          | Small CLI tool for decoding a given Safe Links URL.                       |
-| `dsl`     | 💥Alpha         | Small CLI tool for decoding Safe Links URLs within input text.            |
-| `dslg`    | 💥Alpha         | GUI tool for decoding Safe Links URLs within input text.                  |
-| `eslg`    | 💥Alpha         | GUI tool for encoding normal URLs within input text for testing purposes. |
+| `usl`     | Beta           | Small CLI tool for decoding a given Safe Links URL.                       |
+| `dsl`     | Alpha          | Small CLI tool for decoding Safe Links URLs within input text.            |
+| `dslg`    | Alpha          | GUI tool for decoding Safe Links URLs within input text.                  |
+| `eslg`    | Alpha          | GUI tool for encoding normal URLs within input text for testing purposes. |
 
 ## Features
 
