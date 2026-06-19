@@ -58,7 +58,7 @@ func lookupLangFont(family string, aspect font.Aspect) *font.Face {
 	}
 
 	fm.SetQuery(fontscan.Query{Families: []string{family}, Aspect: aspect})
-	l, _ := fontscan.NewLangID(language.Language(lang.SystemLocale().LanguageString()))
+	l, _ := language.NewLangID(language.Language(lang.SystemLocale().LanguageString()))
 	return fm.ResolveFaceForLang(l)
 }
 
@@ -74,6 +74,7 @@ func lookupRuneFont(r rune, family string, aspect font.Aspect) *font.Face {
 	}
 
 	fm.SetQuery(fontscan.Query{Families: []string{family}, Aspect: aspect})
+	fm.SetScript(language.LookupScript(r))
 	return fm.ResolveFace(r)
 }
 
@@ -253,7 +254,8 @@ func tabStop(spacew, x float32, tabWidth int) float32 {
 }
 
 func walkString(faces shaping.Fontmap, s string, textSize fixed.Int26_6, style fyne.TextStyle, advance *float32, scale float32,
-	cb func(run shaping.Output, x float32)) (size fyne.Size, base float32) {
+	cb func(run shaping.Output, x float32),
+) (size fyne.Size, base float32) {
 	s = strings.ReplaceAll(s, "\r", "")
 
 	runes := []rune(s)
@@ -324,7 +326,7 @@ func shapeCallback(shaper shaping.Shaper, in shaping.Input, x, scale float32, cb
 
 			out.Glyphs = glyphs[i : i+1]
 			cb(out, x)
-			x += fixed266ToFloat32(glyphs[i].XAdvance) * scale
+			x += fixed266ToFloat32(glyphs[i].Advance) * scale
 			adv = 0
 
 			start = i + 1
@@ -332,7 +334,7 @@ func shapeCallback(shaper shaping.Shaper, in shaping.Input, x, scale float32, cb
 		} else {
 			pending = true
 		}
-		adv += g.XAdvance
+		adv += g.Advance
 	}
 
 	if pending {
@@ -353,8 +355,10 @@ type cacheID struct {
 	scope string
 }
 
-var fontCache async.Map[cacheID, *FontCacheItem]
-var fontCustomCache async.Map[fyne.Resource, *FontCacheItem] // for custom resources
+var (
+	fontCache       async.Map[cacheID, *FontCacheItem]
+	fontCustomCache async.Map[fyne.Resource, *FontCacheItem] // for custom resources
+)
 
 type noopLogger struct{}
 
@@ -366,7 +370,6 @@ type dynamicFontMap struct {
 }
 
 func (d *dynamicFontMap) ResolveFace(r rune) *font.Face {
-
 	for _, f := range d.faces {
 		if _, ok := f.NominalGlyph(r); ok {
 			return f
