@@ -80,6 +80,12 @@ func (m *MultipleWindows) refreshChildren() {
 
 func (m *MultipleWindows) setupChild(w *InnerWindow) {
 	w.OnDragged = func(ev *fyne.DragEvent) {
+		abs := fyne.CurrentApp().Driver().AbsolutePositionForObject(m)
+		rel := ev.AbsolutePosition.Subtract(abs)
+		if rel.X < 0 || rel.Y < 0 || rel.X > m.Size().Width || rel.Y > m.Size().Height {
+			return
+		}
+
 		w.Move(w.Position().Add(ev.Dragged))
 	}
 	w.OnResized = func(ev *fyne.DragEvent) {
@@ -91,8 +97,7 @@ func (m *MultipleWindows) setupChild(w *InnerWindow) {
 	}
 }
 
-type multiWinLayout struct {
-}
+type multiWinLayout struct{}
 
 func (m *multiWinLayout) Layout(objects []fyne.CanvasObject, _ fyne.Size) {
 	for _, w := range objects { // update the windows so they have real size

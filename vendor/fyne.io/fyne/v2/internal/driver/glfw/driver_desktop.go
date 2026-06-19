@@ -9,9 +9,9 @@ import (
 	"os/signal"
 	"runtime"
 	"syscall"
-	"time"
 
 	"fyne.io/fyne/v2/canvas"
+	"fyne.io/fyne/v2/driver/software"
 	"fyne.io/fyne/v2/internal/painter"
 	"fyne.io/fyne/v2/internal/svg"
 	"fyne.io/fyne/v2/lang"
@@ -21,7 +21,7 @@ import (
 	"fyne.io/fyne/v2/theme"
 )
 
-const desktopDefaultDoubleTapDelay = 300 * time.Millisecond
+const systrayIconSize = 64
 
 var (
 	systrayIcon    fyne.Resource
@@ -58,10 +58,12 @@ func (d *gLDriver) runSystray(m *fyne.Menu) {
 			systray.SetTitle(title)
 		}
 
-		// it must be refreshed after init, so an earlier call would have been ineffective
-		runOnMain(func() {
-			d.refreshSystray(m)
-		})
+		if m != nil {
+			// it must be refreshed after init, so an earlier call would have been ineffective
+			runOnMain(func() {
+				d.refreshSystray(m)
+			})
+		}
 	}, func() {
 		// anything required for tear-down
 	})
@@ -70,7 +72,6 @@ func (d *gLDriver) runSystray(m *fyne.Menu) {
 	w := d.CreateWindow("SystrayMonitor")
 	w.(*window).create()
 	w.SetCloseIntercept(d.Quit)
-	w.SetOnClosed(systray.Quit)
 }
 
 func itemForMenuItem(i *fyne.MenuItem, parent *systray.MenuItem) *systray.MenuItem {
@@ -108,7 +109,7 @@ func itemForMenuItem(i *fyne.MenuItem, parent *systray.MenuItem) *systray.MenuIt
 			if runtime.GOOS == "windows" && isDark() { // windows menus don't match dark mode so invert icons
 				res = theme.NewInvertedThemedResource(i.Icon)
 			}
-			img := painter.PaintImage(canvas.NewImageFromResource(res), nil, 64, 64)
+			img := painter.PaintImage(canvas.NewImageFromResource(res), nil, systrayIconSize, systrayIconSize)
 			err := png.Encode(b, img)
 			if err != nil {
 				fyne.LogError("Failed to encode SVG icon for menu", err)
@@ -141,6 +142,10 @@ func (d *gLDriver) refreshSystray(m *fyne.Menu) {
 }
 
 func (d *gLDriver) refreshSystrayMenu(m *fyne.Menu, parent *systray.MenuItem) {
+	if m == nil {
+		return
+	}
+
 	for _, i := range m.Items {
 		item := itemForMenuItem(i, parent)
 		if item == nil {
@@ -164,6 +169,23 @@ func (d *gLDriver) refreshSystrayMenu(m *fyne.Menu, parent *systray.MenuItem) {
 func (d *gLDriver) SetSystemTrayIcon(resource fyne.Resource) {
 	systrayIcon = resource // in case we need it later
 
+	// only macOS supports SVG system tray
+	if runtime.GOOS != "darwin" && svg.IsResourceSVG(resource) {
+		img := canvas.NewImageFromResource(resource)
+		c := software.NewTransparentCanvas()
+		c.SetContent(img)
+		c.SetPadded(false)
+		c.Resize(fyne.NewSquareSize(systrayIconSize))
+
+		buf := &bytes.Buffer{}
+		err := png.Encode(buf, c.Capture())
+		if err != nil {
+			fyne.LogError("Failed to encode SVG icon for system tray icon", err)
+			return
+		}
+		resource = fyne.NewStaticResource(resource.Name()+".png", buf.Bytes())
+	}
+
 	img, err := toOSIcon(resource.Content())
 	if err != nil {
 		fyne.LogError("Failed to convert systray icon", err)
@@ -174,6 +196,21 @@ func (d *gLDriver) SetSystemTrayIcon(resource fyne.Resource) {
 		systray.SetTemplateIcon(img, img)
 	} else {
 		systray.SetIcon(img)
+	}
+}
+
+func (d *gLDriver) SetSystemTrayWindow(w fyne.Window) {
+	if !systrayRunning {
+		systrayRunning = true
+		d.runSystray(nil)
+	}
+
+	w.SetCloseIntercept(w.Hide)
+	glw := w.(*window)
+	if glw.decorate {
+		systray.SetOnTapped(glw.Show)
+	} else {
+		systray.SetOnTapped(glw.toggleVisible)
 	}
 }
 
